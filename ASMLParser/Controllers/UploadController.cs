@@ -24,11 +24,26 @@ namespace ASMLXMLParser.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(IFormFile file)
         {
+            //Bron: https://code-maze.com/file-upload-aspnetcore-mvc/
+            //Bron: https://www.c-sharpcorner.com/blogs/save-stream-as-file-in-c-sharp
+            //Bron: https://www.c-sharpcorner.com/blogs/how-to-select-xml-node-by-name-in-c-sharp
+            
                 string name = file.FileName.ToString();
                 Console.WriteLine($"Naam: {name}");
+            
+                var stream = file.OpenReadStream();
+                    
+                 XmlDocument doc = new XmlDocument();
+                 doc.Load(stream);
 
-                // XmlDocument doc = new XmlDocument();
-                // doc.Load(file);
+                 XmlNodeList xmlNodeList = doc.SelectNodes("/people/person");
+                 
+                 foreach (XmlNode xmlNode in xmlNodeList)
+                 {
+                     string personName = xmlNode["name"].InnerText;
+                     string personAge = xmlNode["age"].InnerText;
+                     Console.WriteLine($"{personName} + {personAge}");
+                 }
                 
                 return View("Index");
         }
