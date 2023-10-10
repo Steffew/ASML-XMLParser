@@ -1,7 +1,4 @@
-﻿using ASMLXMLParser.Models;
-using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics;
-using System.Xml;
+﻿using Microsoft.AspNetCore.Mvc;
 using Business;
 
 namespace ASMLXMLParser.Controllers
@@ -21,7 +18,6 @@ namespace ASMLXMLParser.Controllers
             return View();
         }
 
-        // POST: Upload/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(IFormFile file)
@@ -52,8 +48,6 @@ namespace ASMLXMLParser.Controllers
                 return View("Index");
             }
         }
-
-
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
