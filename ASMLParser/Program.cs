@@ -16,17 +16,17 @@ if (!app.Environment.IsDevelopment())
 }
 
 //SQL connection
-using (SqlConnection connection = new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")))
+// using (SqlConnection connection = new SqlConnection(builder.Configuration.GetConnectionString("DefaultConnection")))
+using (SqlConnection connection = new SqlConnection("Data Source=edaparser.database.windows.net;Initial Catalog=EDA_Parser;User ID=EDA_Manager_Admin;Password=x*79oli*mbJm#8X* ;Connect Timeout=30;Encrypt=True;"))
 {
     try
     {
         connection.Open();
     }
-    catch 
+    catch
     {
-        throw new Exception("Database connection error. (Don't forget the VPN)");
+        throw new Exception("Database connection error.");
     }
-
 
     string sql = "SELECT @@VERSION";
     using (SqlCommand command = new SqlCommand(sql, connection))

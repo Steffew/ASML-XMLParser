@@ -5,8 +5,7 @@
     },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "ConnectionStringSQL",
-      "dynamicId": null
+      "connectionId": "EDA_ParserDBConnection"
     }
   }
 }
