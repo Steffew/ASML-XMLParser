@@ -1,6 +1,7 @@
 ﻿using ASMLXMLParser.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Xml;
 
 namespace ASMLXMLParser.Controllers
 {
@@ -21,18 +22,15 @@ namespace ASMLXMLParser.Controllers
         // POST: Upload/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult UploadFile(IFormCollection collection)
+        public ActionResult UploadFile(IFormFile file)
         {
-            try
-            {
-                // TODO: Add insert logic here
+                string name = file.FileName.ToString();
+                Console.WriteLine($"Naam: {name}");
 
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+                // XmlDocument doc = new XmlDocument();
+                // doc.Load(file);
+                
                 return View("Index");
-            }
         }
         
 
