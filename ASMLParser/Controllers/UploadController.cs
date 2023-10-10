@@ -2,12 +2,14 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using System.Xml;
+using Business;
 
 namespace ASMLXMLParser.Controllers
 {
     public class UploadController : Controller
     {
         private readonly ILogger<DashboardController> _logger;
+        private readonly FileService FileService = new FileService();
 
         public UploadController(ILogger<DashboardController> logger)
         {
@@ -18,36 +20,21 @@ namespace ASMLXMLParser.Controllers
         {
             return View();
         }
-        
+
         // POST: Upload/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(IFormFile file)
         {
-            //Bron: https://code-maze.com/file-upload-aspnetcore-mvc/
-            //Bron: https://www.c-sharpcorner.com/blogs/save-stream-as-file-in-c-sharp
-            //Bron: https://www.c-sharpcorner.com/blogs/how-to-select-xml-node-by-name-in-c-sharp
-            
-                string name = file.FileName.ToString();
-                Console.WriteLine($"Naam: {name}");
-            
-                var stream = file.OpenReadStream();
-                    
-                 XmlDocument doc = new XmlDocument();
-                 doc.Load(stream);
+            string name = file.FileName.ToString();
+            Console.WriteLine($"Uploaded file name: {name}");
 
-                 XmlNodeList xmlNodeList = doc.SelectNodes("/people/person");
-                 
-                 foreach (XmlNode xmlNode in xmlNodeList)
-                 {
-                     string personName = xmlNode["name"].InnerText;
-                     string personAge = xmlNode["age"].InnerText;
-                     Console.WriteLine($"{personName} + {personAge}");
-                 }
-                
-                return View("Index");
+            var stream = file.OpenReadStream();
+            FileService.ReadFile(stream);
+
+            return View("Index");
         }
-        
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
