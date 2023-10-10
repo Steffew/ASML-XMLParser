@@ -38,7 +38,8 @@ namespace ASMLXMLParser.Controllers
             }
             catch
             {
-                return View("Error");
+                ViewBag.ErrorMessage = "No files selected!";
+                return View("Index");
             }
         }
 
