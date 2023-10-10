@@ -26,7 +26,8 @@ namespace ASMLXMLParser.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(IFormFile file)
         {
-            string name = file.FileName.ToString();
+            //TODO: add the option to upload multiple files.
+            string name = file.FileName;
             Console.WriteLine($"Uploaded file name: {name}");
 
             var stream = file.OpenReadStream();
