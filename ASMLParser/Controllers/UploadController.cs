@@ -26,21 +26,27 @@ namespace ASMLXMLParser.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult UploadFile(IFormFile file)
         {
-            //TODO: add the option to upload multiple files.
-            string name = file.FileName;
-            Console.WriteLine($"Uploaded file name: {name}");
+            try
+            {
+                string name = file.FileName;
+                Console.WriteLine($"Uploaded file name: {name}");
 
-            var stream = file.OpenReadStream();
-            FileService.ReadFile(stream);
+                var stream = file.OpenReadStream();
+                FileService.ReadFile(stream);
 
-            return View("Index");
+                return View("Index");
+            }
+            catch
+            {
+                return View("Error");
+            }
         }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return View();
         }
     }
 }
