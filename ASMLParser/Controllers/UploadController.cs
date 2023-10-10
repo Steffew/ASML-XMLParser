@@ -41,9 +41,6 @@ namespace ASMLXMLParser.Controllers
                     return View("Index");
                 }
 
-                string name = file.FileName;
-                Console.WriteLine($"Uploaded file name: {name}");
-
                 var stream = file.OpenReadStream();
                 FileService.ReadFile(stream);
 
