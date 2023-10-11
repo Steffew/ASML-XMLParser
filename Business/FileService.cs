@@ -25,7 +25,7 @@ namespace Business
             
             nsManager.AddNamespace("ns","Cimetrix.EDAConnect.E134-0707");
             
-            XmlNodeList? eventNodes = document.SelectNodes("/ns:DCP", nsManager);
+            XmlNodeList? eventNodes = document.SelectNodes("/ns:DCP/ns:Event", nsManager);
             
             foreach (XmlNode eventNode in eventNodes)
             {
