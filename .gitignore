@@ -399,3 +399,4 @@ FodyWeavers.xsd
 View/appsettings.Development.json
 ASMLParser/appsettings.Development.json
 ASMLParser/appsettings.json
+ASMLParser/.idea/
