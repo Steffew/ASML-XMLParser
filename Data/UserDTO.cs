@@ -8,5 +8,8 @@ namespace Data
 {
     internal class UserDTO
     {
+        //name
+        //email
+        //password
     }
 }
