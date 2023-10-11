@@ -4,7 +4,7 @@ namespace Business
 {
     public class FileService
     {
-        public void ReadFileData(Stream stream)
+        public void RetrieveFileData(Stream stream)
         {
             XmlDocument document = new XmlDocument();
             document.Load(stream);
@@ -27,8 +27,9 @@ namespace Business
             }
         }
 
-        public void SendFileData()
+        public void SaveFileData()
         {
+            
         }
     }
 }
