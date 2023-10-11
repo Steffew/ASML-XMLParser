@@ -10,6 +10,6 @@ namespace Data.Models
     {
         public string machineId;
         public string machineName;
-        // events moet nog
+        public List<Event> Events = new();
     }
 }

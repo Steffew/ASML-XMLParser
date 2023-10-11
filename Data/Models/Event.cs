@@ -10,7 +10,7 @@ namespace Data.Models
     {
         public string EventId { get; set; }
         public string EventName { get; set; }
-        // parameter moet nog
+        public List<Parameter> event_parameterss = new();
 
     }
 }

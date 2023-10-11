@@ -10,7 +10,7 @@ namespace Data.Models
     {
         public Guid Id { get; set; }
         public string Username { get; set; } = "Username";
-        // Role moet nog
+        public int RoleId;
 
     }
 }
