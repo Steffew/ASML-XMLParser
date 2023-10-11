@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class User
+    public class User
     {
+        public Guid Id { get; set; }
+        public string Username { get; set; } = "Username";
+        // Role moet nog
+
     }
 }

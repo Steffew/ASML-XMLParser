@@ -6,7 +6,10 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class Machine
+    public class Machine
     {
+        public string machineId;
+        public string machineName;
+        // events moet nog
     }
 }

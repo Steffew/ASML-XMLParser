@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class Event
+    public class Event
     {
+        public string EventId { get; set; }
+        public string EventName { get; set; }
+        // parameter moet nog
+
     }
 }

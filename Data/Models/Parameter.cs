@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace Data.Models
 {
-    internal class Parameter
+    public class Parameter
     {
+        public string ParamaterId;
+        public string ParamaterName;
     }
 }
