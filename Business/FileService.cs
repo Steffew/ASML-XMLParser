@@ -4,7 +4,7 @@ namespace Business
 {
     public class FileService
     {
-        public void ReadFile(Stream stream) //TODO: return het model bijv.
+        public void ReadFileData(Stream stream) //TODO: return het model bijv.
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(stream);

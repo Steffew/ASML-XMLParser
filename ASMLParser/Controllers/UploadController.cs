@@ -38,7 +38,7 @@ namespace ASMLXMLParser.Controllers
                 }
 
                 var stream = file.OpenReadStream();
-                FileService.ReadFile(stream);
+                FileService.ReadFileData(stream);
 
                 return View("Index");
             }
