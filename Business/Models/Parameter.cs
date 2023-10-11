@@ -4,4 +4,11 @@ public class Parameter
 {
     public string Name;
     public string SourceId;
+
+    public Parameter(string name, string sourceId)
+    {
+        Name = name;
+        SourceId = sourceId;
+    }
 }
+

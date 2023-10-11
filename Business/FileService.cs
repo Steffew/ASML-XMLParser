@@ -4,6 +4,7 @@ namespace Business
 {
     public class FileService
     {
+        public List<Machine> Machines = new List<Machine>();
         public void RetrieveFileData(Stream stream)
         {
             XmlDocument document = new XmlDocument();
@@ -13,18 +14,32 @@ namespace Business
             nsManager.AddNamespace("ns", "Cimetrix.EDAConnect.E134-0707");
 
             XmlNodeList eventNodes = document.SelectNodes("/ns:DCP/ns:Event", nsManager);
-            //todo: Machine class that contains Events, each events contains Parameters. List of machine should be saved and loaded from db.
+            //todo: List of machine should be saved and loaded from db.
+            Machine newMachine = new Machine();
+            
             foreach (XmlNode eventNode in eventNodes)
             {
-                Console.WriteLine($"Event: {eventNode.Attributes["Id"].Value}");
+                string eventId = eventNode.Attributes["Id"].Value;
+                
+                Event newEvent = new Event(eventId);
+                newMachine.Events.Add(newEvent);
+                
+                Console.WriteLine($"Event: {eventId}");
                 
                 foreach (XmlNode parameterNode in eventNode.SelectNodes("ns:Parameters/ns:Parameter", nsManager))
                 {
-                    Console.WriteLine($"Parameter: {parameterNode.Attributes["Name"].Value} / {parameterNode.Attributes["SourceId"].Value}");
+                    string name = parameterNode.Attributes["Name"].Value;
+                    string sourceId = parameterNode.Attributes["SourceId"].Value;
+                    
+                    Parameter newParameter = new Parameter(name, sourceId);
+                    newEvent.Parameters.Add(newParameter);
+                    
+                    Console.WriteLine($"Parameter: {name} / {sourceId}");
                 }
                 
                 Console.WriteLine();
             }
+            Machines.Add(newMachine);
         }
 
         public void SaveFileData()
