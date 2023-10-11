@@ -13,7 +13,7 @@ namespace Business
             nsManager.AddNamespace("ns", "Cimetrix.EDAConnect.E134-0707");
 
             XmlNodeList eventNodes = document.SelectNodes("/ns:DCP/ns:Event", nsManager);
-
+            //todo: Machine class that contains Events, each events contains Parameters. List of machine should be saved and loaded from db.
             foreach (XmlNode eventNode in eventNodes)
             {
                 Console.WriteLine($"Event: {eventNode.Attributes["Id"].Value}");
