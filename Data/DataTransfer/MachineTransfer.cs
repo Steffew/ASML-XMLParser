@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Data.DataTransfer
 {
-    internal class MachineTransfer
+    public class MachineTransfer
     {
     }
 }
