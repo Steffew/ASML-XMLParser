@@ -14,7 +14,7 @@ html {
 
 html {
   position: relative;
-  min-height: 100%;
+  border-bottom-color: black ;
 }
 
 body {

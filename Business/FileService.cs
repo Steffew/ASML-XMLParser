@@ -20,16 +20,19 @@ namespace Business
             
             XmlDocument document = new XmlDocument();
             document.Load(stream);
+            
+            XmlNamespaceManager nsManager = new XmlNamespaceManager(document.NameTable);
+            
 
-            XmlNodeList? eventNodes = document.SelectNodes("/DCP");
+            XmlNodeList? eventNodes = document.SelectNodes("/DCP", nsManager);
             if (eventNodes != null)
             {
                 foreach (XmlNode eventNode in eventNodes)
                 {
-                    Console.WriteLine($"{eventNode.Attributes["Id"].Value}");
+                    Console.WriteLine($"Event: {eventNode.Attributes["Id"].Value}");
                 }
             }
-            else
+            else if (eventNodes.Equals(0))
             {
                 Console.WriteLine("No event nodes!");
             }
