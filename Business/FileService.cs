@@ -23,20 +23,14 @@ namespace Business
             
             XmlNamespaceManager nsManager = new XmlNamespaceManager(document.NameTable);
             
-
-            XmlNodeList? eventNodes = document.SelectNodes("/DCP", nsManager);
-            if (eventNodes != null)
+            nsManager.AddNamespace("ns","Cimetrix.EDAConnect.E134-0707");
+            
+            XmlNodeList? eventNodes = document.SelectNodes("/ns:DCP", nsManager);
+            
+            foreach (XmlNode eventNode in eventNodes)
             {
-                foreach (XmlNode eventNode in eventNodes)
-                {
-                    Console.WriteLine($"Event: {eventNode.Attributes["Id"].Value}");
-                }
+                Console.WriteLine($"Event: {eventNode.Attributes["Id"].Value}");
             }
-            else if (eventNodes.Equals(0))
-            {
-                Console.WriteLine("No event nodes!");
-            }
-
         }
 
         public void SendFileData() //TODO: invoer is het model bijv.
