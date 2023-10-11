@@ -1,11 +1,28 @@
 ﻿@{
     ViewData["Title"] = "Upload";
 }
-
-<div class="text-center">
-    <h1 class="display-4">Upload</h1>
-    <p>This is the XML-upload page.</p>
-    <form>
-        <input type="file">Upload</input>
-    </form>
+<script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
+<link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
+<div class="upload-div">
+    <div class="upload-border">
+        <div class="upload-header">
+            <span>Upload XML</span>
+        </div>
+        <form id="form" method="post" enctype="multipart/form-data">
+            <<div id="droparea">
+                Drop files here to upload
+            </div>
+            <div id="uploadfile">
+                <ejs-uploader id="uploadFiles" dropArea="#droparea" autoUpload="false"></ejs-uploader>
+            </div>
+        </form>
+        <div class="upload-buttons">
+            <button class="upload-btn1">
+                Cancel
+            </button>
+            <button class="upload-btn2">
+                Upload
+            </button>
+        </div>
+    </div>
 </div>
