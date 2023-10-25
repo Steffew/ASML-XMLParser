@@ -23,22 +23,69 @@ namespace ASMLXMLParser.Controllers
         {
             return View();
         }
-        //public async Task<IActionResult> Upload(IFormFile file)
-        //{
-        //    var fileDic = "Files";
-        //    string filePath = Path.Combine(hostEnv.WebRootPath, fileDic);
-        //    if(!Directory.Exists(filePath))
-        //    {
-        //        Directory.CreateDirectory(filePath);
-        //    }
-        //    var fileName = file.FileName;
-        //    filePath = Path.Combine(filePath, fileName);
-        //    using (FileStream fs = System.IO.File.Create(filePath))
-        //    {
-        //        file.CopyTo(fs); 
-        //    }
-        //    return RedirectToAction("Index");
-        //}
+        public IActionResult UploadFile(IFormFile file)
+        {
+            if (file != null && file.Length != 0)
+            {
+                var fileDic = "Files";
+                string FilePath = Path.Combine(hostEnv.WebRootPath, fileDic);
+                if (!Directory.Exists(FilePath))
+                {
+                    Directory.CreateDirectory(FilePath);
+                }
+                var fileName = file.FileName;
+                var filePath = Path.Combine(FilePath, fileName);
+                using (FileStream fs = System.IO.File.Create(filePath))
+                {
+                    file.CopyTo(fs);
+                }
+            }
+            return NoContent();
+        }
+        public IActionResult ProcessFiles()
+        {
+            var fileDic = "Files";
+            string filePath = Path.Combine(hostEnv.WebRootPath, fileDic);
+            DirectoryInfo directory = new DirectoryInfo(filePath);
+            FileInfo[] files = directory.GetFiles();
+            bool onlyXml = true;
+            foreach (FileInfo file in files)
+            {
+                if(file.Extension != ".xml")
+                {
+                    onlyXml = false;
+                }
+            }
+            if(onlyXml)
+            {
+                return View("Upload");
+            }
+            else
+            {
+                return View("Upload");
+            }
+            //string filetype = path.getextension(file.filename).tostring();
+            //if (filetype != ".xml")
+            //{
+            //    viewbag.message = "please only use xml files!";
+            //    return view("upload");
+            //}
+            //else
+            //{
+            //    string filepath = path.combine(hostenv.webrootpath, filedic);
+            //    if (!directory.exists(filepath))
+            //    {
+            //        directory.createdirectory(filepath);
+            //    }
+            //    var filename = file.filename;
+            //    filepath = path.combine(filepath, filename);
+            //    using (filestream fs = system.io.file.create(filepath))
+            //    {
+            //        file.copyto(fs);
+            //    }
+            //    return view("upload");
+            //}
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

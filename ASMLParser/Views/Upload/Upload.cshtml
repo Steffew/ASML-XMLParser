@@ -8,21 +8,29 @@
         <div class="upload-header">
             <span>Upload XML</span>
         </div>
-        <form id="form" method="post" enctype="multipart/form-data">
-            <<div id="droparea">
-                Drop files here to upload
+        @using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+        {
+            <div class="upload-form">
+                    <div class="form-group">
+                        <div id="dropzone">
+                            <div action="/Upload/UploadFile" class="dropzone" id="uploader">
+                                Drop files here or click to upload.<br />
+                            </div>
+                        </div>
+                    </div>
             </div>
-            <div id="uploadfile">
-                <ejs-uploader id="uploadFiles" dropArea="#droparea" autoUpload="false"></ejs-uploader>
+            <div class="result">
+                @ViewBag.Message
             </div>
-        </form>
-        <div class="upload-buttons">
-            <button class="upload-btn1">
-                Cancel
-            </button>
-            <button class="upload-btn2">
-                Upload
-            </button>
-        </div>
+            <div class="upload-buttons">
+                <button class="upload-btn1">
+                    Cancel
+                </button>
+                <button class="upload-btn2" asp-action="ProcessFiles" asp-controller="Upload">
+                    Upload
+                </button>
+            </div>
+        }
+        
     </div>
 </div>
