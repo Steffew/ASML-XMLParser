@@ -2,7 +2,61 @@
     ViewData["Title"] = "Dashboard";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Dashboard</h1>
-    <p>See an overview here.</p>
+
+<div class="dashboard-totalborder">
+	<div class="dashboard-totaltext">
+		<div>
+			<h5>Total machines</h5>
+			<span>14</span>
+		</div>
+		<div>
+			<h5>Total events</h5>
+			<span>14</span>
+		</div>
+		<div>
+			<h5>Total parameters</h5>
+			<span>14</span>
+		</div>
+	</div>
 </div>
+
+
+<table class="datatable">
+	<tr>
+		<th></th>
+		<th>MachineID</th>
+		<th>Event</th>
+		<th>Parameter</th>
+	</tr>
+
+	@for (int i = 0; i <= 10; i++)
+	{
+		<tr>
+			<td>@i</td>
+			<td>SMOKE_Template</td>
+			<td>@GetRandomEvent()</td>
+			<td>@GetRandomParameter()</td>
+		</tr>
+	}
+	@functions {
+		// Function to generate random machine events
+		string GetRandomEvent()
+		{
+			string[] events = {"Power On", "Error", "Running", "Idle", "Shutdown"};
+			return events[new Random().Next(0, events.Length)];
+		}
+
+		// Function to generate random machine parameters
+		string GetRandomParameter()
+		{
+			string[] parameters = {"Temperature", "Pressure", "Voltage", "Speed", "Flow Rate"};
+			return parameters[new Random().Next(0, parameters.Length)];
+		}
+	}
+
+</table>
+
+
+	<h1 style=""></h1>
+
+
