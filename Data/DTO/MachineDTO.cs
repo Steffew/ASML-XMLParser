@@ -4,9 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data
+namespace Data.DTO
 {
-    internal class MachineDTO
+    public class MachineDTO
     {
+        public string MachineName { get; set; }
+        public int MachineID { get; set; }
+        public List<EventDTO> Events { get; set; }
     }
 }
