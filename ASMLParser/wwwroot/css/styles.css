@@ -66,3 +66,7 @@ html, body{
 .upload-form{
     height: 100%;
 }
+.upload-center{
+    align-items: center;
+    margin-top: 15%;
+}
