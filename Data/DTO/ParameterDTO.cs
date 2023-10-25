@@ -4,9 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data
+namespace Data.DTO
 {
-    internal class ParameterDTO
+    public class ParameterDTO
     {
+        public string ParameterName { get; set; }
+        public int ParameterID { get; set; }
     }
 }
