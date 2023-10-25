@@ -16,7 +16,7 @@ if (!app.Environment.IsDevelopment())
 }
 
 //SQL connection
- using (SqlConnection connection = new SqlConnection("Data Source=edaparser.database.windows.net;Initial Catalog=EDA_Parser;User ID=EDA_Manager_Admin;Password=x*79oli*mbJm#8X* ;Connect Timeout=30;Encrypt=True;"))
+ using (SqlConnection connection = new SqlConnection("Data Source=mssqlstud.fhict.local;Initial Catalog=dbi458166_asmleda;Persist Security Info=True;User ID=dbi458166_asmleda;Password=Mr36733duBG2"))
 {
     try
     {
