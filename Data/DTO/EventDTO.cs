@@ -10,6 +10,6 @@ namespace Data.DTO
     {
         public string EventName { get; set; }
         public int EventID { get; set; }
-
+        public List<ParameterDTO> Parameters { get; set; }
     }
 }
