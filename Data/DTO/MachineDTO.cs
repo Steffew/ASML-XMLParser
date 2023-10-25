@@ -10,5 +10,6 @@ namespace Data.DTO
     {
         public string MachineName { get; set; }
         public int MachineID { get; set; }
+        public List<EventDTO> Events { get; set; }
     }
 }
