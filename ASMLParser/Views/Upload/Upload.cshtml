@@ -21,7 +21,7 @@
                     </div>
                 </div>
                 <div class="upload-buttons">
-                    <button class="upload-btn1">
+                    <button class="upload-btn1" asp-action="CancelFiles" asp-controller="Upload">
                         Cancel
                     </button>
                     <button class="upload-btn2" asp-action="ProcessFiles" asp-controller="Upload">
@@ -42,8 +42,12 @@
                         XML files uploaded!
                     </span>
                     break;
-
-            }
+                case "nofiles":
+                    <span class="error">
+                        Please upload a file!
+                    </span>
+                    break;
+                }
             </div>
         </div>
     </div>

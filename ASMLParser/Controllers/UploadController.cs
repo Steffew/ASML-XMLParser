@@ -87,6 +87,7 @@ namespace ASMLXMLParser.Controllers
             string filePath = Path.Combine(hostEnv.WebRootPath, fileDic);
             DirectoryInfo directory = new DirectoryInfo(filePath);
             FileInfo[] files = directory.GetFiles();
+            int fileCount = files.Count();
             bool onlyXml = true;
             foreach (FileInfo file in files)
             {
@@ -95,31 +96,55 @@ namespace ASMLXMLParser.Controllers
                     onlyXml = false;
                 }
             }
-            if (onlyXml)
+            if (fileCount == 0)
             {
-                foreach (FileInfo file in files)
-                {
-                    try
-                    {
-
-                        FileStream stream = file.OpenRead();
-                        FileService.RetrieveFileData(stream);
-                        stream.Close();
-                        file.Delete();
-                        TempData["Result"] = "succes";
-                    }
-                    catch
-                    {
-                        TempData["Result"] = "An error occurred while processing the file.";
-                    }
-                }
+                TempData["Result"] = "nofiles";
                 return RedirectToAction("Upload");
             }
             else
             {
-                TempData["Result"] = "noxml";
-                return RedirectToAction("Upload");
+                if (onlyXml)
+                {
+                    foreach (FileInfo file in files)
+                    {
+                        try
+                        {
+
+                            FileStream stream = file.OpenRead();
+                            FileService.RetrieveFileData(stream);
+                            stream.Close();
+                            file.Delete();
+                            TempData["Result"] = "succes";
+                        }
+                        catch
+                        {
+                            TempData["Result"] = "An error occurred while processing the file.";
+                        }
+                    }
+                    return RedirectToAction("Upload");
+                }
+                else
+                {
+                    foreach (FileInfo file in files)
+                    {
+                        file.Delete();
+                    }
+                    TempData["Result"] = "noxml";
+                    return RedirectToAction("Upload");
+                }
             }
+        }
+        public IActionResult CancelFiles()
+        {
+            var fileDic = "Files";
+            string filePath = Path.Combine(hostEnv.WebRootPath, fileDic);
+            DirectoryInfo directory = new DirectoryInfo(filePath);
+            FileInfo[] files = directory.GetFiles();
+            foreach (FileInfo file in files)
+            {
+                file.Delete();
+            }
+            return RedirectToAction("Upload");
         }
     }
 }
