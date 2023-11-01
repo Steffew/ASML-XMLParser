@@ -7,11 +7,9 @@ using System.Threading.Tasks;
 
 namespace Data.DTO
 {
-    public class AllDTOs
+    public class MachineCollection
     {
-        public List<EventDTO> events = new();
         public List<MachineDTO> machines = new();
-        public List<ParameterDTO> parameters = new();
 
         public void CreateMachine(int id, string name)
         {
@@ -20,5 +18,7 @@ namespace Data.DTO
             // test line
             System.Diagnostics.Debug.WriteLine(newMachine);
         }
+
+        public void AddEvents();
     }
 }

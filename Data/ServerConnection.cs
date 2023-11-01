@@ -17,19 +17,26 @@ namespace Data
 
         public void LoadData()
         {
+            MachineCollection DTOs = new();
+            SqlCommand loadMachines = new("SELECT * FROM Machine", sqlConnection);
+            SqlCommand loadEvents = new("SELECT * FROM Event", sqlConnection);
+            SqlCommand loadParameters = new("SELECT * FROM Parameter", sqlConnection);
             using (sqlConnection)
             {
-                AllDTOs DTOs = new();
-                sqlConnection.Open();
-                SqlCommand downloadCommand = new("SELECT * FROM Machine", sqlConnection);
-                SqlDataReader machinesDataReader = downloadCommand.ExecuteReader();
+                sqlConnection.Open();   
+                SqlDataReader machinesDataReader = loadMachines.ExecuteReader();
                 while (machinesDataReader.Read())
                 {
                     DTOs.CreateMachine(machinesDataReader.GetInt32(0), machinesDataReader.GetString(1));
                 }
+                /* SqlDataReader eventsDataReader = loadEvents.ExecuteReader();
+                 while (eventsDataReader.Read())
+                {
+
+                }
+                SqlDataReader parametersDataReader = loadParameters.ExecuteReader(); */
                 sqlConnection.Close();
             }
         }
-
     }
 }
