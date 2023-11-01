@@ -8,8 +8,8 @@ namespace Data.DTO
 {
     public class MachineDTO
     {
-        public string MachineName { get; set; }
-        public int MachineID { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
         public List<EventDTO> Events { get; set; }
     }
 }
