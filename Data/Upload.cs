@@ -10,7 +10,6 @@ namespace Data
 {
     public class Upload
     {
-        // moet nog een manier om te kijken of het machine al in het database is
         public void UploadMachine(List<MachineDTO> machines)
         {
 

@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+﻿using Data.DTO;
+using Microsoft.Data.SqlClient;
 
 namespace Data
 {
@@ -17,7 +18,9 @@ namespace Data
         public void LoadData()
         {
             sqlConnection.Open();
-            SqlCommand downloadCommand = new("SELECT * FROM");
+            AllDTOs DTOs = new();
+            SqlCommand downloadCommand = new("SELECT * FROM Machine");
+            SqlDataReader machinesDataReader = downloadCommand.ExecuteReader();
             sqlConnection.Close();
         }
 
