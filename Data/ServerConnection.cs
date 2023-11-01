@@ -21,6 +21,10 @@ namespace Data
             AllDTOs DTOs = new();
             SqlCommand downloadCommand = new("SELECT * FROM Machine");
             SqlDataReader machinesDataReader = downloadCommand.ExecuteReader();
+            while (machinesDataReader.Read())
+            {
+                DTOs.AddMachine(machinesDataReader.get);
+            }
             sqlConnection.Close();
         }
 
