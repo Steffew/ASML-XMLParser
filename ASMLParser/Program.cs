@@ -1,3 +1,4 @@
+using Data;
 using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,26 +17,33 @@ if (!app.Environment.IsDevelopment())
 }
 
 //SQL connection
- using (SqlConnection connection = new SqlConnection("Data Source=mssqlstud.fhict.local;Initial Catalog=dbi458166_asmleda;Persist Security Info=True;User ID=dbi458166_asmleda;Password=Mr36733duBG2"))
+ /* using (SqlConnection connection = new SqlConnection("Data Source=mssqlstud.fhict.local;Initial Catalog=dbi458166_asmleda;Persist Security Info=True;User ID=dbi458166_asmleda;Password=Mr36733duBG2"))
 {
-    try
-    {
-        connection.Open();
-    }
-    catch
-    {
-        throw new Exception("Database connection error.");
-    }
+   try
+   {
+       connection.Open();
+   }
+   catch
+   {
+       throw new Exception("Database connection error.");
+   }
 
-    string sql = "SELECT @@VERSION";
-    using (SqlCommand command = new SqlCommand(sql, connection))
-    {
-        string version = command.ExecuteScalar().ToString();
-        Console.WriteLine($"SQL version is: {version}");
-    }
+   string sql = "SELECT @@VERSION";
+   using (SqlCommand command = new SqlCommand(sql, connection))
+   {
+       string version = command.ExecuteScalar().ToString();
+       Console.WriteLine($"SQL version is: {version}");
+   }
 
-    connection.Close();
-} 
+   connection.Close();
+} */
+
+
+// Testline
+ServerConnection test = new();
+test.LoadData();
+
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

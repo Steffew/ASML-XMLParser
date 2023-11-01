@@ -13,10 +13,12 @@ namespace Data.DTO
         public List<MachineDTO> machines = new();
         public List<ParameterDTO> parameters = new();
 
-        public void CreateMachine(string name, int id)
+        public void CreateMachine(int id, string name)
         {
-            MachineDTO newMachine = new(name, id);
+            MachineDTO newMachine = new(id, name);
             machines.Add(newMachine);
+            // test line
+            System.Diagnostics.Debug.WriteLine(newMachine);
         }
     }
 }

@@ -8,15 +8,19 @@ namespace Data.DTO
 {
     public class MachineDTO
     {
-        public string MachineName { get; set; }
         public int MachineID { get; set; }
+        public string MachineName { get; set; }
         public List<EventDTO> Events { get; set; }
 
-        public MachineDTO(string name, int id) 
+        public MachineDTO(int id, string name) 
         {
-            MachineName = name;
             MachineID = id;
+            MachineName = name;
+        }
 
-        } 
+        public override string ToString()
+        {
+            return MachineName + ", Machine ID: " + MachineID;
+        }
     }
 }
