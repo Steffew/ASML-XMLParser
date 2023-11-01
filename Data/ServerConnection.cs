@@ -17,6 +17,7 @@ namespace Data
         public void LoadData()
         {
             sqlConnection.Open();
+            SqlCommand downloadCommand = new("SELECT * FROM");
             sqlConnection.Close();
         }
 
