@@ -11,6 +11,5 @@ namespace Data.DTO
         public int Id { get; set; }   
         public string Name { get; set; }
         public string SourceId { get; set; }
-        public List<EventDTO> Events { get; set; }
     }
 }
