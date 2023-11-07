@@ -8,8 +8,8 @@ namespace Data.DTO
 {
     public class UserDTO
     {
-        public string UserName { get; set; }
-        public int UserID { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
         public string Role { get; set; }
     }
 }
