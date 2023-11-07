@@ -3,13 +3,18 @@
 }
 .nav-text{
     color: white!important;
+    font-size: 1em;
+    font-weight: 600;
+}
+.nav-text:hover{
+    background: rgba(255, 255, 255, 0.2);
 }
 .nav-logo{
     width: 100%;
     height: auto;
 }
 .nav-space{
-    width: 10%!important;
+    width: 5em;
     height: auto;
 }
 .navbar-light .navbar-toggler-icon {
@@ -69,4 +74,17 @@ html, body{
 .upload-center{
     align-items: center;
     margin-top: 15%;
+}
+.result-message {
+    width: 100%;
+    height: 100%;
+    font-weight: bold;
+    position: absolute;
+    text-align: center;
+}
+.succes {
+    color: green;
+}
+.error{
+    color: red;
 }

@@ -15,8 +15,7 @@ namespace DAL
     {
         public void UploadMachine(MachineDTO machine)
         {
-            string query = $"INSERT INTO Machine (MachineName) VALUES ({machine.MachineName});";
-            SqlCommand command = new SqlCommand(query);
+            SqlCommand command = new SqlCommand("INSERT INTO dbo.Machine(MachineName) VALUES('" + machine.MachineName + "');");
             ServerConnection dal = new ServerConnection();
             dal.UploadData(command);
         }
