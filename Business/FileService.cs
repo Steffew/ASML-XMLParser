@@ -61,61 +61,33 @@ namespace Business
         public void SaveFileData(Machine newMachine)
         {
             MachineDTO machineDto = new MachineDTO();
-                // machineDto.Id = machine.Id;
-                machineDto.Name = newMachine.Name;
-                machineDto.Events = new List<EventDTO>();
+            // machineDto.Id = machine.Id;
+            machineDto.Name = newMachine.Name;
+            machineDto.Events = new List<EventDTO>();
 
-                foreach (var _event in newMachine.Events)
-                {
-                    EventDTO newEventDto = new EventDTO();
-                    // newEventDto.Id = _event.Id;
-                    newEventDto.Name = _event.Name;
-                    newEventDto.SourceId = _event.SourceId;
-                    newEventDto.Parameters = new List<ParameterDTO>();
-                    
-                    foreach (var parameter in _event.Parameters)
-                    {
-                        ParameterDTO newParameterDto = new ParameterDTO();
-                        // newParameterDto.Id = parameter.Id;
-                        newParameterDto.Name = parameter.Name;
-                        newParameterDto.SourceId = parameter.SourceId;
-                        newEventDto.Parameters.Add(newParameterDto);
-                    }
-
-                    machineDto.Events.Add(newEventDto);
-                }
-
-            //MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
-        }
-        
-
-
-        //Sending file to view layer
-        public void GetFileDate(MachineDTO machineDto)
-        {
-            Machine machine = new Machine(machineDto.Name);
-            machine.Id = machineDto.Id;
-            machine.Events = new List<Event>();
-
-            foreach (var _event in machineDto.Events)
+            foreach (var _event in newMachine.Events)
             {
-                Event newEvent = new Event(_event.Name, _event.SourceId);
-                newEvent.Id = _event.Id;
-                newEvent.Parameters = new List<Parameter>();
+                EventDTO newEventDto = new EventDTO();
+                // newEventDto.Id = _event.Id;
+                newEventDto.Name = _event.Name;
+                newEventDto.SourceId = _event.SourceId;
+                newEventDto.Parameters = new List<ParameterDTO>();
 
                 foreach (var parameter in _event.Parameters)
                 {
-                    Parameter newParameter = new Parameter(parameter.Name, parameter.SourceId);
-                    newParameter.Id = parameter.Id;
-                    newEvent.Parameters.Add(newParameter);
+                    ParameterDTO newParameterDto = new ParameterDTO();
+                    // newParameterDto.Id = parameter.Id;
+                    newParameterDto.Name = parameter.Name;
+                    newParameterDto.SourceId = parameter.SourceId;
+                    newEventDto.Parameters.Add(newParameterDto);
                 }
 
-                machine.Events.Add(newEvent);
-            }  
-            
+                machineDto.Events.Add(newEventDto);
+            }
 
+            //MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
         }
-        
+
     }
 
 
