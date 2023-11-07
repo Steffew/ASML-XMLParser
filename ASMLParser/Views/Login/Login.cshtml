@@ -15,7 +15,17 @@
 
 <body>
     <div class="login-div">
-        <input class="login-form" placeholder="username" type="text">
-        <input class="login-form" placeholder="password" type="password">
+        <div>
+            <input class="login-form" placeholder="username" type="text">
+            <input class="login-form" placeholder="password" type="password">
+        </div>
+        <div class="button-container mt-3">
+            <div class="button-wrapper">
+                <a href="/Forgot">Forgot password?</a>
+            </div>
+            <div class="button-wrapper">
+                <button class="generic-button" asp-action="Login" type="button">Forgot password?</button>
+            </div>
+        </div>
     </div>
 </body>
