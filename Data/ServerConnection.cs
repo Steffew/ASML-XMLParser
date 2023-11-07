@@ -21,20 +21,41 @@ namespace Data
             SqlCommand loadMachines = new("SELECT * FROM Machine", sqlConnection);
             SqlCommand loadEvents = new("SELECT * FROM Event", sqlConnection);
             SqlCommand loadParameters = new("SELECT * FROM Parameter", sqlConnection);
+            SqlCommand LoadAllData = new("SELECT Machine.MachineID, Machine.MachineName, Event.EventID, Event.EventName, Event.EventSource, " +
+                "Parameter.ParameterID, Parameter.ParameterName, Parameter.ParameterSource FROM Machine_Event " +
+                "INNER JOIN Event ON Event.EventID = Machine_Event.EventID INNER JOIN Machine on Machine.MachineID = Machine_Event.MachineID " +
+                "INNER JOIN Event_Parameter on Event.EventID = Event_Parameter.EventID " +
+                "INNER JOIN Parameter on Event_Parameter.ParameterID = Parameter.ParameterID", sqlConnection);
+            int machineID, eventID;
+            int lastMID = 0;
+            int lastEID = 0;
             using (sqlConnection)
             {
                 sqlConnection.Open();   
-                SqlDataReader machinesDataReader = loadMachines.ExecuteReader();
+                SqlDataReader machinesDataReader = LoadAllData.ExecuteReader();
                 while (machinesDataReader.Read())
                 {
-                    DTOs.CreateMachine(machinesDataReader.GetInt32(0), machinesDataReader.GetString(1));
-                }
-                /* SqlDataReader eventsDataReader = loadEvents.ExecuteReader();
-                 while (eventsDataReader.Read())
-                {
+                    machineID = machinesDataReader.GetInt32(0);
+                    if (machineID == lastMID)
+                    {
+                        eventID = machinesDataReader.GetInt32(2);
+                        if (eventID == lastEID)
+                        {
 
+                        }
+                        else
+                        {
+                            
+                            lastEID = eventID;
+                        }
+                    }
+                    else
+                    {
+                        DTOs.CreateMachine(machineID, machinesDataReader.GetString(1));
+                        lastMID = machineID;
+                    }
+                    
                 }
-                SqlDataReader parametersDataReader = loadParameters.ExecuteReader(); */
                 sqlConnection.Close();
             }
         }
