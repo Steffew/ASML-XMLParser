@@ -9,30 +9,46 @@
             <div class="upload-header">
                 <span>Upload XML</span>
             </div>
-            @using (Html.BeginForm("UploadFile", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            @using (Html.BeginForm("SaveFiles", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="upload-form">
                     <div class="form-group">
                         <div id="dropzone">
-                            <div action="/Upload/UploadFile" class="dropzone" id="uploader">
+                            <div action="/Upload/SaveFiles" class="dropzone" id="uploader">
                                 Drop files here or click to upload.<br />
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="result">
-                    @ViewBag.Message
-                </div>
                 <div class="upload-buttons">
-                    <button class="upload-btn1">
+                    <button class="upload-btn1" asp-action="CancelFiles" asp-controller="Upload">
                         Cancel
                     </button>
-                    <button class="upload-btn2" asp-action="UploadFile" asp-controller="Upload">
+                    <button class="upload-btn2" asp-action="ProcessFiles" asp-controller="Upload">
                         Upload
                     </button>
                 </div>
             }
-
+            <div class="result-message">
+            @switch (ViewBag.Message)
+            {
+                case "noxml":
+                    <span class="error">
+                        Please upload only XML files!
+                    </span>
+                    break;
+                case "succes":
+                    <span class="succes">
+                        XML files uploaded!
+                    </span>
+                    break;
+                case "nofiles":
+                    <span class="error">
+                        Please upload a file!
+                    </span>
+                    break;
+                }
+            </div>
         </div>
     </div>
 </div>

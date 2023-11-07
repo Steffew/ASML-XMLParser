@@ -11,6 +11,7 @@ namespace DAL
         public void UploadData(SqlCommand uploadCommand)
         {
             sqlConnection.Open();
+            uploadCommand.Connection = sqlConnection;
             uploadCommand.ExecuteNonQuery();
             sqlConnection.Close();
         }
