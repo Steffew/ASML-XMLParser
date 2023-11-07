@@ -11,14 +11,19 @@ namespace DAL.DTO
     {
         public int EventID { get; set; }
         public string EventName { get; set; }
-        public string EventSource { get; set; }
-        public List<ParameterDTO> Parameters { get; set; }
+        public string EventSourceID { get; set; }
+        public List<ParameterDTO> Parameters { get; set; } = new();
 
-        public EventDTO(int id, string name, string source)
+        public EventDTO(int id, string name, string sourceid)
         {
             EventID = id;
             EventName = name;
-            EventSource = source;
+            EventSourceID = sourceid;
+        }
+
+        public override string ToString()
+        {
+            return "\tEventID ID: " + EventID + ", Event name: " + EventName + ", Event sourceID: " + EventSourceID;
         }
 
     }

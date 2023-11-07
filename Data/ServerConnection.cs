@@ -34,26 +34,20 @@ namespace DAL
                 while (DataReader.Read())
                 {
                     machineID = DataReader.GetInt32(0);
-                    if (machineID == lastMID)
-                    {
-                        eventID = DataReader.GetInt32(2);
-                        if (eventID == lastEID)
-                        {
-                            // DTOs.AddParameter();
-                        }
-                        else
-                        {
-                            DTOs.AddEvents(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
-                            lastEID = eventID;
-                        }
-                    }
-                    else
+                    if (machineID != lastMID)
                     {
                         DTOs.AddMachine(machineID, DataReader.GetString(1));
                         lastMID = machineID;
                     }
-                    
+                    eventID = DataReader.GetInt32(2);
+                    if (eventID != lastEID)
+                    {
+                        DTOs.AddEvent(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
+                        lastEID = eventID;
+                    }
+                    DTOs.AddParameter(machineID, eventID, DataReader.GetInt32(5), DataReader.GetString(6), DataReader.GetString(7));
                 }
+                DTOs.DebugTest();
                 sqlConnection.Close();
             }
         }
