@@ -15,12 +15,9 @@ namespace DAL
             sqlConnection.Close();
         }
 
-        public void LoadData()
+        public void LoadAllData()
         {
             MachineCollection DTOs = new();
-            SqlCommand loadMachines = new("SELECT * FROM Machine", sqlConnection);
-            SqlCommand loadEvents = new("SELECT * FROM Event", sqlConnection);
-            SqlCommand loadParameters = new("SELECT * FROM Parameter", sqlConnection);
             SqlCommand LoadAllData = new("SELECT Machine.MachineID, Machine.MachineName, Event.EventID, Event.EventName, Event.EventSource, " +
                 "Parameter.ParameterID, Parameter.ParameterName, Parameter.ParameterSource FROM Machine_Event " +
                 "INNER JOIN Event ON Event.EventID = Machine_Event.EventID INNER JOIN Machine on Machine.MachineID = Machine_Event.MachineID " +
@@ -32,26 +29,26 @@ namespace DAL
             using (sqlConnection)
             {
                 sqlConnection.Open();   
-                SqlDataReader machinesDataReader = LoadAllData.ExecuteReader();
-                while (machinesDataReader.Read())
+                SqlDataReader DataReader = LoadAllData.ExecuteReader();
+                while (DataReader.Read())
                 {
-                    machineID = machinesDataReader.GetInt32(0);
+                    machineID = DataReader.GetInt32(0);
                     if (machineID == lastMID)
                     {
-                        eventID = machinesDataReader.GetInt32(2);
+                        eventID = DataReader.GetInt32(2);
                         if (eventID == lastEID)
                         {
-
+                            // DTOs.AddParameter();
                         }
                         else
                         {
-                            
+                            DTOs.AddEvents(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
                             lastEID = eventID;
                         }
                     }
                     else
                     {
-                        DTOs.CreateMachine(machineID, machinesDataReader.GetString(1));
+                        DTOs.AddMachine(machineID, DataReader.GetString(1));
                         lastMID = machineID;
                     }
                     

@@ -41,7 +41,7 @@ if (!app.Environment.IsDevelopment())
 
 // Test LoadData
 ServerConnection test = new();
-test.LoadData();
+test.LoadAllData();
 
 
 

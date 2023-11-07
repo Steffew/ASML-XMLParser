@@ -11,7 +11,7 @@ namespace DAL.DTO
     {
         public List<MachineDTO> machines = new();
 
-        public void CreateMachine(int id, string name)
+        public void AddMachine(int id, string name)
         {
             MachineDTO newMachine = new(id, name);
             machines.Add(newMachine);
@@ -24,6 +24,11 @@ namespace DAL.DTO
             MachineDTO machine = machines.Find(mach => mach.MachineID == machineID);
             EventDTO newEvent = new(eventID, eventName, eventSource);
             machine.Events.Add(newEvent);
+        }
+
+        public void AddParameters(int eventID, int parameterID, string parameterName, string ParameterSource)
+        {
+            ParameterDTO newParameter = new();
         }
     }
 }
