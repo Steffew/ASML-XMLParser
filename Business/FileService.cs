@@ -64,6 +64,7 @@ namespace Business
             MachineDTO machineDto = new MachineDTO();
                 // machineDto.Id = machine.Id;
                 machineDto.Name = newMachine.Name;
+                machineDto.Events = new List<EventDTO>();
 
                 foreach (var _event in newMachine.Events)
                 {
@@ -71,6 +72,7 @@ namespace Business
                     // newEventDto.Id = _event.Id;
                     newEventDto.Name = _event.Name;
                     newEventDto.SourceId = _event.SourceId;
+                    newEventDto.Parameters = new List<ParameterDTO>();
                     
                     foreach (var parameter in _event.Parameters)
                     {
