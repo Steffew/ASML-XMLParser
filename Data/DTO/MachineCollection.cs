@@ -19,6 +19,9 @@ namespace Data.DTO
             System.Diagnostics.Debug.WriteLine(newMachine);
         }
 
-        public void AddEvents();
+        public void AddEvents(int machineID, int eventID, string eventName, string eventSource)
+        {
+            MachineDTO machine = machines.
+        }
     }
 }

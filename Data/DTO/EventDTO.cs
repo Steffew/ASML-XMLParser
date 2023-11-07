@@ -8,8 +8,9 @@ namespace Data.DTO
 {
     public class EventDTO
     {
-        public string EventName { get; set; }
         public int EventID { get; set; }
+        public string EventName { get; set; }
+        public string EventSource { get; set; }
         public List<ParameterDTO> Parameters { get; set; }
     }
 }
