@@ -39,7 +39,7 @@ if (!app.Environment.IsDevelopment())
 } */
 
 
-// Testline
+// Test LoadData
 ServerConnection test = new();
 test.LoadData();
 

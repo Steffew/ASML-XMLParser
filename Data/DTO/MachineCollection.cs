@@ -21,7 +21,9 @@ namespace Data.DTO
 
         public void AddEvents(int machineID, int eventID, string eventName, string eventSource)
         {
-            MachineDTO machine = machines.
+            MachineDTO machine = machines.Find(mach => mach.MachineID == machineID);
+            EventDTO newEvent = new(eventID, eventName, eventSource);
+            machine.Events.Add(newEvent);
         }
     }
 }
