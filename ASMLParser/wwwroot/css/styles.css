@@ -1,54 +1,66 @@
 ﻿.bg-nav {
     background: #0f238c;
 }
+
 .nav-text{
     color: white!important;
     font-size: 1em;
     font-weight: 600;
 }
+
 .nav-text:hover{
     background: rgba(255, 255, 255, 0.2);
 }
+
 .nav-logo{
     width: 100%;
     height: auto;
 }
+
 .nav-space{
     width: 5em;
     height: auto;
 }
+
 .navbar-light .navbar-toggler-icon {
     background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'><path stroke='rgba(255,255,255, 0.8)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
+
 .nav-border{
     color: white!important;
 }
+
 html, body{
     margin: 0;
     height: 100%;
     overflow: hidden;
 }
+
 .upload-div{
     display: flex;
     align-items: center;
     justify-content: center;
     height: 80%;
 }
+
 .upload-border{
     background-color: white;
     width: 50%;
     height: 50%;
     position: relative;
 }
+
 .upload-header {
     width: 100%;
     height: 10%;
     background-color: #0f238c;
     color: white;
 }
+
 .upload-header span{
     margin-left: 1%;
 }
+
 .upload-buttons {
     position: absolute;
     bottom: 2%;
@@ -58,23 +70,28 @@ html, body{
     flex-direction: row;
     gap: 10px;
 }
+
 .upload-btn1{
     border: none;
     background: none;
     color: #0f238c;
 }
+
 .upload-btn2 {
     background-color: #0f238c;
     color: white;
     width: 100%;
 }
+
 .upload-form{
     height: 100%;
 }
+
 .upload-center{
     align-items: center;
     margin-top: 15%;
 }
+
 .result-message {
     width: 100%;
     height: 100%;
@@ -82,9 +99,11 @@ html, body{
     position: absolute;
     text-align: center;
 }
+
 .succes {
     color: green;
 }
+
 .error{
     color: red;
 }
