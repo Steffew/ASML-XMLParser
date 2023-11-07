@@ -6,6 +6,8 @@ public class Machine
     public string Name { get; set; }
     public List<Event> Events = new List<Event>();
 
+
+
     public Machine(string name)
     {
         Name = name;

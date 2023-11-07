@@ -56,6 +56,8 @@ namespace Business
             SaveFileData(newMachine);
         }
 
+
+        //Sending file to data layer
         public void SaveFileData(Machine newMachine)
         {
             MachineDTO machineDto = new MachineDTO();
@@ -86,5 +88,35 @@ namespace Business
             //MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
         }
         
+
+
+        //Sending file to view layer
+        public void GetFileDate(MachineDTO machineDto)
+        {
+            Machine machine = new Machine(machineDto.Name);
+            machine.Id = machineDto.Id;
+            machine.Events = new List<Event>();
+
+            foreach (var _event in machineDto.Events)
+            {
+                Event newEvent = new Event(_event.Name, _event.SourceId);
+                newEvent.Id = _event.Id;
+                newEvent.Parameters = new List<Parameter>();
+
+                foreach (var parameter in _event.Parameters)
+                {
+                    Parameter newParameter = new Parameter(parameter.Name, parameter.SourceId);
+                    newParameter.Id = parameter.Id;
+                    newEvent.Parameters.Add(newParameter);
+                }
+
+                machine.Events.Add(newEvent);
+            }  
+            
+
+        }
+        
     }
+
+
 }
