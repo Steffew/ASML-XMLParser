@@ -30,13 +30,16 @@ namespace DAL
             {
                 machineId = machine.MachineID;
             }
+            foreach(EventDTO eventDTO in machine.Events)
+            {
 
+            }
         }
 
 
-        public void UploadEvents(List<EventDTO> events)
+        public void UploadEvents(EventDTO eventDTO)
         {
-
+            
         }
 
         public void UploadParameters()
