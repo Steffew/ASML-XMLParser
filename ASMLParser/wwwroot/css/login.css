@@ -6,6 +6,7 @@
     justify-content: center;
     align-items: center;
 }
+
 .login-div {
     width: 500px;
     padding: 20px;
@@ -13,11 +14,41 @@
     border: 1px solid #ddd;
     border-radius: 4px;
 }
+
 .login-form {
     width: 100%;
     border: 1px solid #ddd;
+    background-color: efefef;
 }
 
 .login-form + .login-form {
     margin-top: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-wrapper {
+    flex: 1;
+}
+
+.generic-button {
+    width: 100%;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: 0f238c;
+    border-style: solid;
+    border-width: 2px;
+    border-color: transparent;
+    border-radius: 4px;
+}
+
+.generic-button:hover {
+    width: 100%;
+    color: rgba(255, 255, 255, 0.8);
+    background-color: 0f238c;
+    border-style: solid;
+    border-width: 2px;
+    border-color: rgba(255, 255, 255, 0.8);
 }
