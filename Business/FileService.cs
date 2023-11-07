@@ -5,7 +5,7 @@ namespace Business
 {
     public class FileService
     {
-        public List<Machine> Machines = new List<Machine>();
+        //public List<Machine> Machines = new List<Machine>();
         
         // private readonly MachineRepository MachineRepository;
         //
@@ -53,13 +53,10 @@ namespace Business
                 
                 Console.WriteLine();
             }
-            MachineDTO testResultMachineDto = SaveFileData(newMachine);
-            Console.WriteLine(testResultMachineDto.Name);
-            // Machines.Add(newMachine);
-
+            SaveFileData(newMachine);
         }
 
-        public MachineDTO SaveFileData(Machine newMachine)
+        public void SaveFileData(Machine newMachine)
         {
             MachineDTO machineDto = new MachineDTO();
                 // machineDto.Id = machine.Id;
@@ -86,7 +83,6 @@ namespace Business
                     machineDto.Events.Add(newEventDto);
                 }
 
-            return machineDto;
             //MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
         }
         
