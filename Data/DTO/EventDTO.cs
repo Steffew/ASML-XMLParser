@@ -5,7 +5,7 @@ using System.Reflection.PortableExecutable;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DTO
+namespace DAL.DTO
 {
     public class EventDTO
     {

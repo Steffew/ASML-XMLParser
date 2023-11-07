@@ -1,4 +1,6 @@
 ﻿using System.Xml;
+using DAL;
+using DAL.DTO;
 
 namespace Business
 {
@@ -40,6 +42,9 @@ namespace Business
                 Console.WriteLine();
             }
             Machines.Add(newMachine);
+            Upload dal = new Upload();
+            MachineDTO invoer = new MachineDTO(1, "test");
+            dal.UploadMachine(invoer);
         }
 
         public void SaveFileData()

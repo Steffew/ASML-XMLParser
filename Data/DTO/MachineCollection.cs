@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DTO
+namespace DAL.DTO
 {
     public class MachineCollection
     {
