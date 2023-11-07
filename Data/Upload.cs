@@ -1,4 +1,4 @@
-﻿using Data.DTO;
+﻿using DAL.DTO;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -7,20 +7,18 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using DAL;
 
-namespace Data
+namespace DAL
 {
     public class Upload
     {
-
-        
-
         public void UploadMachine(MachineDTO machine)
         {
-            MachineDTO invoer = new MachineDTO(1, "test");
-            string query = $"INSERT INTO Machine (MachineName) VALUES ({invoer.MachineName});";
+            string query = $"INSERT INTO Machine (MachineName) VALUES ({machine.MachineName});";
             SqlCommand command = new SqlCommand(query);
-            
+            ServerConnection dal = new ServerConnection();
+            dal.UploadData(command);
         }
 
 

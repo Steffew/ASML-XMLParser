@@ -1,7 +1,7 @@
-﻿using Data.DTO;
+﻿using DAL.DTO;
 using Microsoft.Data.SqlClient;
 
-namespace Data
+namespace DAL
 {
     public class ServerConnection
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DTO
+namespace DAL.DTO
 {
     public class MachineCollection
     {
@@ -21,7 +21,7 @@ namespace Data.DTO
 
         public void AddEvents(int machineID, int eventID, string eventName, string eventSource)
         {
-            MachineDTO machine = machines.
+//            MachineDTO machine = machines.
         }
     }
 }
