@@ -25,11 +25,8 @@ namespace Business
 
 				machineDto.Events.Add(newEventDto);
 			}
-
 			//MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
-
 		}
-
 
 		//Getting machines from database
 		public List<Machine> GetAll()
@@ -66,5 +63,33 @@ namespace Business
             }
             return machines;
         }
-    }
+
+		public Machine GetById(int id)
+        { 
+			// TODO: methode testen nadat machinerepository correct is
+
+            MachineDTO machineDto = new MachineDTO();
+            //machineDto = MachineRepository.GetById(id); //TODO: machinerepository method toevoegen.
+            Machine machine = new Machine(machineDto.MachineName);
+            machine.Id = machineDto.MachineID;
+
+			foreach (var _event in machineDto.Events)
+			{
+				Event newEvent = new Event(_event.EventName, _event.EventSourceID);
+				newEvent.Id = _event.EventID;
+				newEvent.Parameters = new List<Parameter>();
+
+				foreach (var parameter in _event.Parameters)
+				{
+					Parameter newParameter = new Parameter(parameter.ParameterName, parameter.ParameterSourceID);
+					newParameter.Id = parameter.ParameterID;
+					newEvent.Parameters.Add(newParameter);
+				}
+
+				machine.Events.Add(newEvent);
+			}
+
+			return machine;
+		}
+	}
 }
