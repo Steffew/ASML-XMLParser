@@ -27,7 +27,7 @@ namespace DAL
             }
             DataReader.Close();
             sqlConnection.Close();
-            return machineDTO; */
-        }
+            return machineDTO; 
+        } */
     }
 }
