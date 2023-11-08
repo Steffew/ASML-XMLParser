@@ -16,14 +16,14 @@ namespace DAL
         public void UploadMachine(MachineDTO machine)
         {
             ServerConnection dal = new ServerConnection();
-            MachineDTO machineCheck = dal.LoadMachineByName(machine.MachineName);
+            MachineRepository machineRepository = new();
+            MachineDTO machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
             int machineId;
-
             if (machineCheck.MachineName == null)
             {
                 SqlCommand command = new SqlCommand("INSERT INTO dbo.Machine(MachineName) VALUES('" + machine.MachineName + "');");
                 dal.UploadData(command);
-                machineCheck = dal.LoadMachineByName(machine.MachineName);
+                machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
                 machineId = machineCheck.MachineID;
             }
             else

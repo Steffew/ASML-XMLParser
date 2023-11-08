@@ -9,6 +9,11 @@ namespace DAL
         private static string ConnectionString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi458166_asmleda;TrustServerCertificate=True;Persist Security Info=True;User ID=dbi458166_asmleda;Password=Mr36733duBG2";
         private SqlConnection sqlConnection = new(ConnectionString);
 
+        public SqlConnection GetConnection()
+        {
+            return sqlConnection;
+        }
+
         public void UploadData(SqlCommand uploadCommand)
         {
             sqlConnection.Open();
@@ -17,27 +22,7 @@ namespace DAL
             sqlConnection.Close();
         }
 
-        public MachineDTO LoadMachineByName(string machineName)
-        {
-            SqlCommand command = new SqlCommand("SELECT * FROM Machine WHERE MachineName = '" + machineName + "';", sqlConnection);
-            MachineDTO machineDTO = new MachineDTO();
-
-            sqlConnection.Open();
-            SqlDataReader DataReader = command.ExecuteReader();
-            if (DataReader.HasRows)
-            {
-                while (DataReader.Read())
-                {
-                    machineDTO.MachineID = DataReader.GetInt32(0);
-                    machineDTO.MachineName = DataReader.GetString(1);
-                }
-            }
-            DataReader.Close();
-            sqlConnection.Close();
-            return machineDTO;
-        }
-
-        public void LoadAllData()
+        public List<MachineDTO> LoadAllData()
         {
             MachineCollection DTOs = new();
             SqlCommand LoadAllData = new("SELECT Machine.MachineID, Machine.MachineName, Event.EventID, Event.EventName, Event.EventSource, " +
@@ -55,27 +40,22 @@ namespace DAL
                 while (DataReader.Read())
                 {
                     machineID = DataReader.GetInt32(0);
-                    if (machineID == lastMID)
-                    {
-                        eventID = DataReader.GetInt32(2);
-                        if (eventID == lastEID)
-                        {
-                            // DTOs.AddParameter();
-                        }
-                        else
-                        {
-                            DTOs.AddEvent(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
-                            lastEID = eventID;
-                        }
-                    }
-                    else
+                    if (machineID != lastMID)
                     {
                         DTOs.AddMachine(machineID, DataReader.GetString(1));
                         lastMID = machineID;
                     }
-                    
+                    eventID = DataReader.GetInt32(2);
+                    if (eventID != lastEID)
+                    {
+                        DTOs.AddEvent(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
+                        lastEID = eventID;
+                    }
+                    DTOs.AddParameter(machineID, eventID, DataReader.GetInt32(5), DataReader.GetString(6), DataReader.GetString(7));
                 }
+                DTOs.DebugTest();
                 sqlConnection.Close();
+                return DTOs.machines;
             }
         }
     }
