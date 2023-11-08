@@ -35,18 +35,6 @@ namespace DAL
 
             }
         }
-
-
-        public void UploadEvents(EventDTO eventDTO)
-        {
-            
-        }
-
-        public void UploadParameters()
-        {
-
-        }
-
     }
 
 
