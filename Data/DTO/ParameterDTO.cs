@@ -1,15 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DTO
+namespace DAL.DTO
 {
     public class ParameterDTO
     {
-        public string ParameterName { get; set; }
         public int ParameterID { get; set; }
-        public List<EventDTO> Events { get; set; }
+        public string ParameterName { get; set; }
+        public string ParameterSourceID { get; set; }
+
+        public ParameterDTO(int id, string name, string source)
+        {
+            ParameterID = id;
+            ParameterName = name;
+            ParameterSourceID = source;
+        }
+
+        public override string ToString()
+        {
+            return "\t\tParameterID ID: " + ParameterID + ", Parameter name: " + ParameterName + ", Parameter source: " + ParameterSourceID;
+        }
     }
 }

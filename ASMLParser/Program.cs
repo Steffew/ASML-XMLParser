@@ -1,3 +1,4 @@
+using DAL;
 using System.Data.SqlClient;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,27 +16,11 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-//SQL connection
- using (SqlConnection connection = new SqlConnection("Data Source=mssqlstud.fhict.local;Initial Catalog=dbi458166_asmleda;Persist Security Info=True;User ID=dbi458166_asmleda;Password=Mr36733duBG2"))
-{
-    try
-    {
-        connection.Open();
-    }
-    catch
-    {
-        throw new Exception("Database connection error.");
-    }
+// Test LoadAllData
+// ServerConnection test = new();
+// test.LoadAllData();
 
-    string sql = "SELECT @@VERSION";
-    using (SqlCommand command = new SqlCommand(sql, connection))
-    {
-        string version = command.ExecuteScalar().ToString();
-        Console.WriteLine($"SQL version is: {version}");
-    }
 
-    connection.Close();
-} 
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

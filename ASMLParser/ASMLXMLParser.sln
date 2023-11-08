@@ -5,7 +5,7 @@ VisualStudioVersion = 17.7.34031.279
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASMLXMLParser", "ASMLXMLParser.csproj", "{209AF47A-224C-4059-978D-7247F7611647}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Data", "..\Data\Data.csproj", "{91C8B9D3-6E85-4B23-90BF-019E8E0B3A7A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DAL", "..\Data\DAL.csproj", "{91C8B9D3-6E85-4B23-90BF-019E8E0B3A7A}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Business", "..\Business\Business.csproj", "{FB66231D-2E95-4A12-B228-6C7DE0B1224D}"
 EndProject

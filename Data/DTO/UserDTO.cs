@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Data.DTO
+namespace DAL.DTO
 {
     public class UserDTO
     {
-        public string UserName { get; set; }
-        public int UserID { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
         public string Role { get; set; }
     }
 }
