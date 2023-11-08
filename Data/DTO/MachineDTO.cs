@@ -8,8 +8,8 @@ namespace DAL.DTO
 {
     public class MachineDTO
     {
-        public int? MachineID { get; set; }
-        public string? MachineName { get; set; }
+        public int MachineID { get; set; }
+        public string MachineName { get; set; }
         public List<EventDTO> Events { get; set; } = new();
 
         public MachineDTO(int id, string name) 
