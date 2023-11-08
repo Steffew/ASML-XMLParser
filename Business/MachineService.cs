@@ -40,6 +40,7 @@ namespace Business
 
                     machine.Events.Add(newEvent);
                 }
+                machines.Add(machine);
             }
             return machines;
         }
