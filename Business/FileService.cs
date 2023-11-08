@@ -1,5 +1,5 @@
 ﻿using System.Xml;
-using Data.DTO;
+using DAL.DTO;
 
 namespace Business
 {
@@ -62,23 +62,23 @@ namespace Business
         {
             MachineDTO machineDto = new MachineDTO();
             // machineDto.Id = machine.Id;
-            machineDto.Name = newMachine.Name;
+            machineDto.MachineName = newMachine.Name;
             machineDto.Events = new List<EventDTO>();
 
             foreach (var _event in newMachine.Events)
             {
-                EventDTO newEventDto = new EventDTO();
+                EventDTO newEventDto = new EventDTO(_event.Id, _event.Name, _event.SourceId);
                 // newEventDto.Id = _event.Id;
-                newEventDto.Name = _event.Name;
-                newEventDto.SourceId = _event.SourceId;
+                // newEventDto.EventName = _event.Name;
+                // newEventDto.EventSourceID = _event.SourceId;
                 newEventDto.Parameters = new List<ParameterDTO>();
 
                 foreach (var parameter in _event.Parameters)
                 {
-                    ParameterDTO newParameterDto = new ParameterDTO();
+                    ParameterDTO newParameterDto = new ParameterDTO(parameter.Id, parameter.Name, parameter.SourceId);
                     // newParameterDto.Id = parameter.Id;
-                    newParameterDto.Name = parameter.Name;
-                    newParameterDto.SourceId = parameter.SourceId;
+                    // newParameterDto.ParameterName = parameter.Name;
+                    // newParameterDto.ParameterSourceID = parameter.SourceId;
                     newEventDto.Parameters.Add(newParameterDto);
                 }
 
@@ -86,6 +86,7 @@ namespace Business
             }
 
             //MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
+
         }
 
     }

@@ -1,4 +1,6 @@
-﻿using Data.DTO;
+﻿using DAL;
+using DAL.DTO;
+using Data.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,41 +11,43 @@ namespace Business
 {
     public class MachineService
     {
-    //        //TO DO: move SaveFileData to here
-    //        //TO DO: Finishing GetAll method
+        //        //TO DO: move SaveFileData to here
+        //        //TO DO: Finishing GetAll method
 
 
-    //        //Getting file from data layer
-    //        public void GetAll(MachineDTO machineDto)
-    //        {
-    //            //Repository repository = new Repository();
-    //            //List<MachineDto> machineDtos = repository.GetAll();
+        //Getting file from data layer
+        public List<Machine> GetAll()
+        {
+            List<MachineDTO> machineDtos = new List<MachineDTO>();
+            ServerConnection serverConnection = new ServerConnection();
 
-    //            List<Machine> machines = new List<Machine>();
+            machineDtos = serverConnection.LoadAllData();
 
-    //            foreach (machineDto in machineDtos)
-    //            {
-    //                Machine machine = new Machine(machineDto.Name);
-    //                machine.Id = machineDto.Id;
-    //                machine.Events = new List<Event>();
+            List<Machine> machines = new List<Machine>();
 
-    //                foreach (var _event in machineDto.Events)
-    //                {
-    //                    Event newEvent = new Event(_event.Name, _event.SourceId);
-    //                    newEvent.Id = _event.Id;
-    //                    newEvent.Parameters = new List<Parameter>();
+            foreach (MachineDTO machineDto in machineDtos)
+            {
+                Machine machine = new Machine(machineDto.MachineName);
+                machine.Id = machineDto.MachineID;
+                machine.Events = new List<Event>();
 
-    //                    foreach (var parameter in _event.Parameters)
-    //                    {
-    //                        Parameter newParameter = new Parameter(parameter.Name, parameter.SourceId);
-    //                        newParameter.Id = parameter.Id;
-    //                        newEvent.Parameters.Add(newParameter);
-    //                    }
+                foreach (var _event in machineDto.Events)
+                {
+                    Event newEvent = new Event(_event.EventName, _event.EventSourceID);
+                    newEvent.Id = _event.EventID;
+                    newEvent.Parameters = new List<Parameter>();
 
-    //                    machine.Events.Add(newEvent);
-    //                }
-    //            }
+                    foreach (var parameter in _event.Parameters)
+                    {
+                        Parameter newParameter = new Parameter(parameter.ParameterName, parameter.ParameterSourceID);
+                        newParameter.Id = parameter.ParameterID;
+                        newEvent.Parameters.Add(newParameter);
+                    }
 
-    //        }
+                    machine.Events.Add(newEvent);
+                }
+            }
+            return machines;
+        }
     }
 }
