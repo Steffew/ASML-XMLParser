@@ -43,7 +43,7 @@ namespace Business
             }
             Machines.Add(newMachine);
             Upload dal = new Upload();
-            MachineDTO invoer = new MachineDTO(1, "test");
+            MachineDTO invoer = new MachineDTO(1, "test2");
             dal.UploadMachine(invoer);
         }
 

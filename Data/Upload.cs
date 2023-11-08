@@ -15,15 +15,31 @@ namespace DAL
     {
         public void UploadMachine(MachineDTO machine)
         {
-            SqlCommand command = new SqlCommand("INSERT INTO dbo.Machine(MachineName) VALUES('" + machine.MachineName + "');");
             ServerConnection dal = new ServerConnection();
-            dal.UploadData(command);
+            MachineDTO machineCheck = dal.LoadMachineByName(machine.MachineName);
+            int machineId;
+
+            if (machineCheck.MachineName == null)
+            {
+                SqlCommand command = new SqlCommand("INSERT INTO dbo.Machine(MachineName) VALUES('" + machine.MachineName + "');");
+                dal.UploadData(command);
+                machineCheck = dal.LoadMachineByName(machine.MachineName);
+                machineId = machineCheck.MachineID;
+            }
+            else
+            {
+                machineId = machine.MachineID;
+            }
+            foreach(EventDTO eventDTO in machine.Events)
+            {
+
+            }
         }
 
 
-        public void UploadEvents(List<EventDTO> events)
+        public void UploadEvents(EventDTO eventDTO)
         {
-
+            
         }
 
         public void UploadParameters()

@@ -17,7 +17,10 @@ namespace DAL.DTO
             MachineID = id;
             MachineName = name;
         }
+        public MachineDTO()
+        {
 
+        }
         public override string ToString()
         {
             return MachineName + ", Machine ID: " + MachineID;
