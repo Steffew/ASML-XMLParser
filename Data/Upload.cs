@@ -28,7 +28,7 @@ namespace DAL
             }
             else
             {
-                machineId = machine.MachineID;
+                machineId = machineCheck.MachineID;
             }
             foreach(EventDTO eventDTO in machine.Events)
             {
