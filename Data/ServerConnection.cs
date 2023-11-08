@@ -1,6 +1,5 @@
 ﻿using DAL.DTO;
 using Microsoft.Data.SqlClient;
-using System.Reflection.PortableExecutable;
 
 namespace DAL
 {
