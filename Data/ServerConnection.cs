@@ -37,7 +37,7 @@ namespace DAL
             return machineDTO;
         }
 
-        public void LoadAllData()
+        public List<MachineDTO> LoadAllData()
         {
             MachineCollection DTOs = new();
             SqlCommand LoadAllData = new("SELECT Machine.MachineID, Machine.MachineName, Event.EventID, Event.EventName, Event.EventSource, " +
@@ -70,6 +70,7 @@ namespace DAL
                 }
                 DTOs.DebugTest();
                 sqlConnection.Close();
+                return DTOs.machines;
             }
         }
     }
