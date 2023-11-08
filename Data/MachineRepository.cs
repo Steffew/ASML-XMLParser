@@ -10,7 +10,7 @@ namespace DAL
 {
     public class MachineRepository
     {
-        public MachineDTO LoadMachineByName(string machineName)
+        /* public MachineDTO LoadMachineByName(string machineName)
         {
             SqlCommand command = new SqlCommand("SELECT * FROM Machine WHERE MachineName = '" + machineName + "';", sqlConnection);
             MachineDTO machineDTO = new MachineDTO();
@@ -27,7 +27,7 @@ namespace DAL
             }
             DataReader.Close();
             sqlConnection.Close();
-            return machineDTO;
+            return machineDTO; */
         }
     }
 }

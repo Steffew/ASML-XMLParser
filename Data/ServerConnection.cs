@@ -64,7 +64,7 @@ namespace DAL
                         }
                         else
                         {
-                            DTOs.AddEvents(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
+                            DTOs.AddEvent(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
                             lastEID = eventID;
                         }
                     }
