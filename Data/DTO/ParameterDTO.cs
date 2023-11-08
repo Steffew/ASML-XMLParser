@@ -19,6 +19,10 @@ namespace DAL.DTO
             ParameterName = name;
             ParameterSourceID = source;
         }
+        public ParameterDTO() 
+        {
+        
+        }
 
         public override string ToString()
         {

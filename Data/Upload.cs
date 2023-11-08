@@ -32,10 +32,10 @@ namespace DAL
             }
             foreach(EventDTO eventDTO in machine.Events)
             {
-
+                SqlCommand eventCommand = new SqlCommand("INSERT INTO dbo.Events(EventName, EventSourceID) VALUES(@EventName, @EventSourceID)");
+                eventCommand.Parameters.AddWithValue("@EventName", eventDTO.EventName);
+                eventCommand.Parameters.AddWithValue("@EventSourceID", eventDTO.EventSourceID);
             }
         }
     }
-
-
 }
