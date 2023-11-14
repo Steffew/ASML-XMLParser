@@ -10,10 +10,17 @@ namespace DAL
 {
     public class MachineRepository
     {
+        ServerConnection con = new();
+        SqlConnection sqlConnection;
+
+        public MachineRepository()
+        {
+            sqlConnection = con.GetConnection();
+        }
+
+
         public MachineDTO LoadMachineByName(string machineName)
         {
-            ServerConnection con = new();
-            SqlConnection sqlConnection = con.GetConnection();
             SqlCommand command = new SqlCommand("SELECT * FROM Machine WHERE MachineName = '" + machineName + "';", sqlConnection);
             MachineDTO machineDTO = new MachineDTO();
             sqlConnection.Open();
@@ -32,8 +39,6 @@ namespace DAL
         }
         public EventDTO LoadEventByName(string eventName)
         {
-            ServerConnection con = new();
-            SqlConnection sqlConnection = con.GetConnection();
             SqlCommand command = new SqlCommand("SELECT * FROM Event WHERE MachineName = '" + eventName + "';", sqlConnection);
             EventDTO eventDTO = new EventDTO();
             sqlConnection.Open();
@@ -52,8 +57,6 @@ namespace DAL
         }
         public ParameterDTO LoadParameterByName(string parameterName)
         {
-            ServerConnection con = new();
-            SqlConnection sqlConnection = con.GetConnection();
             SqlCommand command = new SqlCommand("SELECT * FROM Parameter WHERE MachineName = '" + parameterName + "';", sqlConnection);
             ParameterDTO parameterDTO = new ParameterDTO();
             sqlConnection.Open();
@@ -69,6 +72,42 @@ namespace DAL
             DataReader.Close();
             sqlConnection.Close();
             return parameterDTO;
+        }
+
+        public List<EventDTO> LoadEventsByMachineID(int machineID)
+        {
+            List<EventDTO> dtos = new();
+            SqlCommand MachineEventcommand = new("SELECT * FROM Machine_Event WHERE MachineID = " + machineID, sqlConnection);
+            List<int> EventIDs = new();
+            int id;
+            sqlConnection.Open();
+            SqlDataReader machineReader = MachineEventcommand.ExecuteReader();
+            while(machineReader.Read())
+            {
+                id = machineReader.GetInt32(1);
+                EventIDs.Add(id);
+            }
+            machineReader.Close();
+            foreach (int eventID in EventIDs)
+            {
+                SqlCommand eventCommand = new("SELECT * FROM Event WHERE EventID = " + eventID, sqlConnection);
+                SqlDataReader eventReader = eventCommand.ExecuteReader();
+                eventReader.Read();
+                EventDTO dto = new(eventReader.GetInt32(0), eventReader.GetString(1), eventReader.GetString(2));
+                eventReader.Close();
+                dtos.Add(dto);
+            }
+            sqlConnection.Close();
+            return dtos;
+        }
+
+
+        public int LatestUploadEventID()
+        {
+            SqlCommand command = new("SELECT * FROM Event ORDER BY ID DESC LIMIT 1");
+            sqlConnection.Open();
+            int id = (Int32)command.ExecuteScalar();
+            return id;
         }
     }
     
