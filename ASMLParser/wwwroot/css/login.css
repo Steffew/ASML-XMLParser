@@ -1,5 +1,5 @@
 ﻿html, body {
-    height: 100%;
+    height: 75%;
     margin: 0;
     padding: 0;
     display: flex;
@@ -10,15 +10,15 @@
 .login-div {
     width: 500px;
     padding: 10px;
-    background: #fff;
-    border: 1px solid #ddd;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(0, 0, 0, 0.25);
     border-radius: 4px;
 }
 
 .login-form {
     width: 100%;
-    border: 1px solid #ddd;
-    background-color: efefef;
+    background: rgba(0, 0, 0, .05);
+    border: 1px solid rgba(0, 0, 0, 0.25);
 }
 
 .login-form + .login-form {
@@ -36,7 +36,7 @@
 
 .generic-button {
     width: 100%;
-    color: rgba(255, 255, 255, 0.75);
+    color: rgba(255, 255, 255, 0.95);
     transition: all 0.2s linear;
     background-color: rgba(15, 35, 140, 1);
     border-style: none;
