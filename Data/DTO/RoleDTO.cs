@@ -6,10 +6,9 @@ using System.Threading.Tasks;
 
 namespace DAL.DTO
 {
-    public class UserDTO
+    public class RoleDTO
     {
         public string Name { get; set; }
         public int Id { get; set; }
-        public RoleDTO Role { get; set; }
     }
 }

@@ -1,15 +1,13 @@
 namespace Business;
 
-public class User
+public class Role
 {
     public int Id;
     public string Name;
-    public Role Role;
 
-    public User(int id, string name)
+    public Role(int id, string name)
     {
         Id = id;
         Name = name;
     }
 }
-

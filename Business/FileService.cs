@@ -5,15 +5,6 @@ namespace Business
 {
     public class FileService
     {
-        //public List<Machine> Machines = new List<Machine>();
-        
-        // private readonly MachineRepository MachineRepository;
-        //
-        // public ProductService(MachineRepository machineRepository)
-        // {
-        //     MachineRepository = machineRepository;
-        // }
-        
         public void RetrieveFileData(Stream stream)
         {
             XmlDocument document = new XmlDocument();
@@ -50,46 +41,10 @@ namespace Business
                     
                     Console.WriteLine($"Parameter: {parameterName} / {parameterSourceId}");
                 }
-                
                 Console.WriteLine();
             }
-            SaveFileData(newMachine);
+            MachineService machineService = new MachineService();
+			machineService.CreateAndSend(newMachine);
         }
-
-
-        //Sending file to data layer
-        public void SaveFileData(Machine newMachine)
-        {
-            MachineDTO machineDto = new MachineDTO();
-            // machineDto.Id = machine.Id;
-            machineDto.MachineName = newMachine.Name;
-            machineDto.Events = new List<EventDTO>();
-
-            foreach (var _event in newMachine.Events)
-            {
-                EventDTO newEventDto = new EventDTO(_event.Id, _event.Name, _event.SourceId);
-                // newEventDto.Id = _event.Id;
-                // newEventDto.EventName = _event.Name;
-                // newEventDto.EventSourceID = _event.SourceId;
-                newEventDto.Parameters = new List<ParameterDTO>();
-
-                foreach (var parameter in _event.Parameters)
-                {
-                    ParameterDTO newParameterDto = new ParameterDTO(parameter.Id, parameter.Name, parameter.SourceId);
-                    // newParameterDto.Id = parameter.Id;
-                    // newParameterDto.ParameterName = parameter.Name;
-                    // newParameterDto.ParameterSourceID = parameter.SourceId;
-                    newEventDto.Parameters.Add(newParameterDto);
-                }
-
-                machineDto.Events.Add(newEventDto);
-            }
-
-            //MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
-
-        }
-
     }
-
-
 }
