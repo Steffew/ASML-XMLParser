@@ -65,7 +65,7 @@ html, body{
 
 .upload-buttons {
     position: absolute;
-    bottom: 2%;
+    bottom: 4%;
     right: 1%;
     width: 30%;
     display: flex;
@@ -73,16 +73,34 @@ html, body{
     gap: 10px;
 }
 
-.upload-btn1{
+.upload-btn1 {
     border: none;
-    background: none;
-    color: #0f238c;
+    background: rgba(0, 0, 0, 0.033);
+    border-radius: 6px;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+    width: 75%;
+}
+
+.upload-btn1:hover {
+    color: rgba(255, 0, 0, 1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .upload-btn2 {
-    background-color: #0f238c;
-    color: white;
-    width: 100%;
+    border: none;
+    background: rgba(0, 0, 0, 0.033);
+    border-radius: 6px;
+    width: 75%;
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.5);
+    transition: 0.5s;
+}
+
+.upload-btn2:hover {
+    color: rgba(0, 128, 0, 1);
+    background: rgba(0, 0, 0, 0.1);
 }
 
 .upload-form{
