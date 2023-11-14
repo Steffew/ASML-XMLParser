@@ -5,6 +5,7 @@
     border-color: rgba(0, 0, 0, 0.25);
     margin-bottom: 40px;
     margin-top: 40px;
+    border-radius: 4px;
 }
 
 .dashboard-totaltext {
@@ -27,6 +28,7 @@
 .datatable {
     width: 100%;
     border-collapse: collapse;
+    border-radius: 4px;
     overflow: hidden;
 }
 
@@ -43,6 +45,5 @@
 .datatable td:first-of-type {
     text-align: center;
     font-weight: 700;
-    color: #adacaa;
-    height: 20px;
+    color: rgba(0, 0, 0, 0.25);
 }
