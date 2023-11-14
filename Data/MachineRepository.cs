@@ -101,6 +101,22 @@ namespace DAL
             return dtos;
         }
 
+        public List<ParameterDTO> LoadParametersByEventID(int eventID)
+        {
+            List<ParameterDTO> dtos = new();
+            SqlCommand eventParameterCommand = new("SELECT * FROM Event_Parameter WHERE EventID = " + eventID, sqlConnection);
+            List<int> ParameterIDs = new();
+            int id;
+            sqlConnection.Open();
+            SqlDataReader eventReader = eventParameterCommand.ExecuteReader();
+            while (eventReader.Read())
+            {
+                id = eventReader.GetInt32(1);
+                ParameterIDs.Add(id);
+            }
+            return dtos;
+        }
+
 
         public int LatestUploadEventID()
         {

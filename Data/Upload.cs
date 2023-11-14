@@ -32,6 +32,7 @@ namespace DAL
                 machineId = machineCheck.MachineID;
             }
             List<string> eventNames = new();
+            List<string> parameterNames = new();
             List<EventDTO> machineEvents = machineRepository.LoadEventsByMachineID(machineId);
             foreach (EventDTO machineEvent in machineEvents)
             {
@@ -51,7 +52,11 @@ namespace DAL
                     machineEventCommand.Parameters.AddWithValue("@EventID", eventID);
                     dal.UploadData(machineEventCommand);
                 }
+                foreach(ParameterDTO paramterDTO in eventDTO.Parameters)
+                {
+                    SqlCommand parameterCommand = new("INSERT INTO dbo.Parameters(ParameterName, ParameterSource) VALUES(@ParameterName, @ParameterSource)", sqlConnection);
 
+                }
             }   
         }
     }
