@@ -2,8 +2,15 @@
 {
     public class ParameterViewModel
     {
-        public required int Id { get; set; }
-        public required string Name { get; set; }
-        public required string SourceId { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public string SourceId { get; set; }
+        public ParameterViewModel(int id, string name, string sourceId)
+        {
+            Id = id;
+            Name = name;
+            SourceId = sourceId;
+        }
+        public ParameterViewModel() { }
     }
 }
