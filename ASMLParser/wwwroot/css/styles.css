@@ -17,10 +17,12 @@
     color: white!important;
     font-size: 1em;
     font-weight: bold;
+    transition: all 0.2s;
 }
 
 .nav-text:hover{
     background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
 }
 
 .nav-logo{
@@ -76,7 +78,7 @@ html, body{
 .upload-btn1 {
     border: none;
     background: rgba(0, 0, 0, 0.033);
-    border-radius: 6px;
+    border-radius: 2px;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.5);
     transition: 0.5s;
@@ -91,7 +93,7 @@ html, body{
 .upload-btn2 {
     border: none;
     background: rgba(0, 0, 0, 0.033);
-    border-radius: 6px;
+    border-radius: 2px;
     width: 75%;
     font-weight: bold;
     color: rgba(0, 0, 0, 0.5);
