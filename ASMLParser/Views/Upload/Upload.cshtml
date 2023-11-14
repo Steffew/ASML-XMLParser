@@ -6,16 +6,12 @@
 <div class="upload-center">
     <div class="upload-div">
         <div class="upload-border">
-            <div class="upload-header">
-                <span>Upload XML</span>
-            </div>
             @using (Html.BeginForm("SaveFiles", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="upload-form">
-                    <div class="form-group">
+                    <div class="form-group dropzone-text">
                         <div id="dropzone">
                             <div action="/Upload/SaveFiles" class="dropzone" id="uploader">
-                                Drop files here or click to upload.<br />
                             </div>
                         </div>
                     </div>

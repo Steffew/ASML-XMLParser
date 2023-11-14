@@ -1,11 +1,22 @@
-﻿.bg-nav {
+﻿.dropzone-text {
+    color: rgba(0, 0, 0, 0.25);
+    font-weight: bold;
+    font-size: 24px;
+    transition: all 1s;
+}
+
+.dropzone-text:hover {
+    color: rgba(0, 128, 0, .5);
+}
+
+.bg-nav {
     background: #0f238c;
 }
 
 .nav-text{
     color: white!important;
     font-size: 1em;
-    font-weight: 600;
+    font-weight: bold;
 }
 
 .nav-text:hover{
@@ -40,25 +51,16 @@ html, body{
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 80%;
 }
 
-.upload-border{
-    background-color: white;
+.upload-border {
+    background-color: rgba(0, 0, 0, 1) !important;
     width: 50%;
     height: 50%;
     position: relative;
-}
-
-.upload-header {
-    width: 100%;
-    height: 10%;
-    background-color: #0f238c;
-    color: white;
-}
-
-.upload-header span{
-    margin-left: 1%;
+    border: dashed 2px rgba(0, 0, 0, .25) !important;
+    border-radius: 4px !important;
+    background: transparent !important;
 }
 
 .upload-buttons {
@@ -98,6 +100,10 @@ html, body{
     font-weight: bold;
     position: absolute;
     text-align: center;
+}
+
+.dropzone {
+    border: none !important;
 }
 
 .succes {
