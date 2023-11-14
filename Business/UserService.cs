@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Identity.Client;
 
 namespace Business
 {
@@ -41,6 +42,24 @@ namespace Business
 			user.Role = new Role(userDto.Role.Id, userDto.Role.Name); 
 			
 			return user;
+		}
+
+		public List<User> GetAll()
+		{
+			List<User> users = new List<User>();
+
+			List<UserDTO> userDtos = new List<UserDTO>();
+			//userDto = UserRepository.GetAll(); // TODO: repository methode toevoegen.
+
+			foreach (var userDto in userDtos)
+			{
+				User newUser = new User(userDto.Id, userDto.Name);
+				Role newRole = new Role(userDto.Role.Id, userDto.Role.Name);
+
+				newUser.Role = newRole;
+				users.Add(newUser);
+			}
+			return users;
 		}
 	}
 }
