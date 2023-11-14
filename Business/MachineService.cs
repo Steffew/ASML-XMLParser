@@ -120,5 +120,44 @@ namespace Business
 
 			return machine;
 		}
+
+		public int GetTotalAmountOfMachines()
+		{
+			ServerConnection serverConnection = new ServerConnection();
+			return serverConnection.LoadAllData().Count;
+		}
+
+		public int GetTotalAmountOfEvents()
+		{
+			int i = 0;
+			ServerConnection serverConnection = new ServerConnection();
+			foreach (var machineDto in serverConnection.LoadAllData())
+			{
+				foreach (var _event in machineDto.Events)
+				{
+					i++;
+				}
+			}
+
+			return i;
+		}
+
+		public int GetTotalAmountOfParameters()
+		{
+			int j = 0;
+			ServerConnection serverConnection = new ServerConnection();
+			foreach (var machineDto in serverConnection.LoadAllData())
+			{
+				foreach (var _event in machineDto.Events)
+				{
+					foreach (var parameter in _event.Parameters)
+					{
+						j++;
+					}
+				}
+			}
+
+			return j;
+		}
 	}
 }
