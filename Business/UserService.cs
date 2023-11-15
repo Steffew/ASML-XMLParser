@@ -82,5 +82,11 @@ namespace Business
 
             return users;
         }
+
+        public User CreateUser(string username, string password)
+        {
+            User newUser = new User(username, password);
+            return newUser;
+        }
     }
 }
