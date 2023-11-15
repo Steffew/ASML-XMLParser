@@ -27,8 +27,15 @@ namespace Business
 				machineDto.Events.Add(newEventDto);
 			}
 
-			Upload upload = new Upload();
-			upload.UploadMachine(machineDto);
+			if (!DoesMachineAlreadyExists(newMachine.Name))
+			{
+				Upload upload = new Upload();
+				upload.UploadMachine(machineDto);
+			}
+			else if (DoesMachineAlreadyExists(newMachine.Name))
+			{
+				Console.WriteLine("--------- Machine Already Exists! ---------");
+			}
 		}
 
 		//Getting machines from database
@@ -122,6 +129,16 @@ namespace Business
 			}
 
 			return machine;
+		}
+
+		public bool DoesMachineAlreadyExists(string name)
+		{
+			if (GetByName(name).Id > 0)
+			{
+				return true;
+			}
+
+			return false;
 		}
 
 		public int GetTotalAmountOfMachines()
