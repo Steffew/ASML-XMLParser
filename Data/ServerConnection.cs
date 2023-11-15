@@ -22,6 +22,15 @@ namespace DAL
             sqlConnection.Close();
         }
 
+        public SqlDataReader LoadData(SqlCommand loadCommand)
+        {
+            sqlConnection.Open();
+            loadCommand.Connection = sqlConnection;
+            SqlDataReader dataReader = loadCommand.ExecuteReader();
+            sqlConnection.Close();
+            return dataReader;
+        }
+
         public List<MachineDTO> LoadAllData()
         {
             MachineCollection DTOs = new();

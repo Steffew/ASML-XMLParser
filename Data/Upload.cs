@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 using DAL;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
+using Azure.Identity;
 
 namespace DAL
 {
@@ -74,6 +75,14 @@ namespace DAL
                     }
                 }
             }   
+        }
+
+        public void CreateUser(UserDTO userDTO)
+        {
+            SqlCommand userCommand = new("INSERT INTO [dbo].[User](UserName, Password, RoleID) VALUES(@Username, @Password, RoleID)");
+            userCommand.Parameters.AddWithValue("@Username", userDTO.Name);
+            userCommand.Parameters.AddWithValue();
+            userCommand.Parameters.AddWithValue();
         }
     }
 }

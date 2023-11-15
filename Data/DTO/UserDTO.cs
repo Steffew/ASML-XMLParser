@@ -8,8 +8,16 @@ namespace DAL.DTO
 {
     public class UserDTO
     {
-        public string UserName { get; set; }
-        public int UserID { get; set; }
-        public string Role { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
+        public string Password { get; set; }
+        public RoleDTO Role { get; set; }
+
+        public UserDTO(int id, string name, string password)
+        {
+            Id = id
+            Name = name;
+            Password = password;
+        }
     }
 }
