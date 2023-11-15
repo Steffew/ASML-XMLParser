@@ -15,10 +15,10 @@
     justify-content: space-evenly;
 }
 
-.dashboard-totaltext span {
-    font-weight: bold;
-    font-size: 36px;
-}
+    .dashboard-totaltext span {
+        font-weight: bold;
+        font-size: 36px;
+    }
 
 .table, th, td {
     border: 1px solid rgba(0, 0, 0, 0.25);
@@ -29,21 +29,20 @@
     width: 100%;
     border-collapse: collapse;
     border-radius: 4px;
-    overflow: hidden;
 }
 
-.datatable th:not(:first-of-type){
-    width: 20%;
-}
+    .datatable th:not(:first-of-type) {
+        width: 20%;
+    }
 
-.datatable th:first-of-type {
-    width: 1%;
-    text-align: center;
-    color: #adacaa;
-}
+    .datatable th:first-of-type {
+        width: 1%;
+        text-align: center;
+        color: #adacaa;
+    }
 
-.datatable td:first-of-type {
-    text-align: center;
-    font-weight: bold;
-    color: rgba(0, 0, 0, 0.25);
-}
+    .datatable td:first-of-type {
+        text-align: center;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.25);
+    }
