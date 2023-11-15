@@ -114,15 +114,26 @@ namespace DAL
                 id = eventReader.GetInt32(1);
                 ParameterIDs.Add(id);
             }
+            sqlConnection.Close();
             return dtos;
         }
 
 
         public int LatestUploadEventID()
         {
-            SqlCommand command = new("SELECT * FROM Event ORDER BY ID DESC LIMIT 1");
+            SqlCommand command = new("SELECT * FROM Event ORDER BY EventId DESC", sqlConnection);
             sqlConnection.Open();
             int id = (Int32)command.ExecuteScalar();
+            sqlConnection.Close();
+            return id;
+        }
+
+        public int LatestUploadParameterID()
+        {
+            SqlCommand command = new("SELECT * FROM Parameter ORDER BY ParameterId DESC", sqlConnection);
+            sqlConnection.Open();
+            int id = (Int32)command.ExecuteScalar();
+            sqlConnection.Close();
             return id;
         }
     }
