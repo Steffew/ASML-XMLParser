@@ -26,7 +26,9 @@ namespace Business
 
 				machineDto.Events.Add(newEventDto);
 			}
-			//MachineRepository.SaveData(machineDto); //TODO: machinerepository method toevoegen.
+
+			Upload upload = new Upload();
+			upload.UploadMachine(machineDto);
 		}
 
 		//Getting machines from database
@@ -98,7 +100,8 @@ namespace Business
 			// TODO: methode testen nadat machinerepository correct is
 
 			MachineDTO machineDto = new MachineDTO();
-			//machineDto = MachineRepository.GetByName(name); //TODO: machinerepository method toevoegen.
+			MachineRepository machineRepository = new MachineRepository();
+			machineDto = machineRepository.LoadMachineByName(name);
 			Machine machine = new Machine(machineDto.MachineName);
 			machine.Id = machineDto.MachineID;
 
