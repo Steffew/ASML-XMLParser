@@ -1,42 +1,6 @@
 ﻿.profile-div {
     background-color: white;
-    height: 30%;
-    width: 80%;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: row;
-}
-
-.profile-image {
-    height: 80%;
-    width: 25%;
-    position: absolute;
-    top: 50%;
-    left: 15%;
-    transform: translate(-50%, -50%);
-}
-
-.profile-image img{
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    height: auto;
-    max-width: 50%;
-}
-
-.profile-info {
-    height: 80%;
-    width: 65%;
-    position: absolute;
-    top: 50%;
-    left: 62.5%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    flex-direction: column;
+    height: 100%;
 }
 
 .profile-part{
@@ -47,9 +11,10 @@
 }
 
 .profile-button {
-    width: 10%;
     color: #0f238c!important;
     border-color: #0f238c!important;
+    float: right;
+    margin-top: 3%;
 }
 
 .profile-button:hover{

@@ -38,7 +38,11 @@ namespace ASMLXMLParser.Controllers
                 machineViewModels.Add(machineModel);
             }
 
-            return View(machineViewModels);
+            int totalMachines = machineService.GetTotalAmountOfMachines();
+            int totalEvents = machineService.GetTotalAmountOfEvents();
+            int totalParameters = machineService.GetTotalAmountOfParameters();
+            DashboardViewModel dashboardView = new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels);
+            return View(dashboardView);
         }
 
         public IActionResult Privacy()

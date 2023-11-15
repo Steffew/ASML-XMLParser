@@ -17,49 +17,13 @@ namespace ASMLXMLParser.Controllers
 
         public IActionResult Index()
         {
-            return View();
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult UploadFile(IFormFile file)
-        {
-            try
-            {
-                if (file == null || file.Length == 0)
-                {
-                    ViewBag.ErrorMessage = "No file selected!";
-                    return View("Index");
-                }
-
-                if (!file.ContentType.Equals("text/xml", StringComparison.OrdinalIgnoreCase) &&
-                    !file.ContentType.Equals("application/xml", StringComparison.OrdinalIgnoreCase))
-                {
-                    ViewBag.ErrorMessage = "Invalid file type. Please select an XML file.";
-                    return View("Index");
-                }
-
-                var stream = file.OpenReadStream();
-                FileService.RetrieveFileData(stream);
-
-                return View("Index");
-            }
-            catch
-            {
-                ViewBag.ErrorMessage = "An error occurred while processing the file.";
-                return View("Index");
-            }
-        }
+			ViewBag.Message = TempData["Result"];
+			return View();
+		}
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
-            return View();
-        }
-        
-        public IActionResult Upload()
-        {
-            ViewBag.Message = TempData["Result"];
             return View();
         }
         public IActionResult SaveFiles(IFormFile file)
@@ -99,7 +63,7 @@ namespace ASMLXMLParser.Controllers
             if (fileCount == 0)
             {
                 TempData["Result"] = "nofiles";
-                return RedirectToAction("Upload");
+                return RedirectToAction("Index");
             }
             else
             {
@@ -121,7 +85,7 @@ namespace ASMLXMLParser.Controllers
                             TempData["Result"] = "An error occurred while processing the file.";
                         }
                     }
-                    return RedirectToAction("Upload");
+                    return RedirectToAction("Index");
                 }
                 else
                 {
@@ -130,7 +94,7 @@ namespace ASMLXMLParser.Controllers
                         file.Delete();
                     }
                     TempData["Result"] = "noxml";
-                    return RedirectToAction("Upload");
+                    return RedirectToAction("Index");
                 }
             }
         }
@@ -144,7 +108,7 @@ namespace ASMLXMLParser.Controllers
             {
                 file.Delete();
             }
-            return RedirectToAction("Upload");
+            return RedirectToAction("Index");
         }
     }
 }
