@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using DAL;
+using Microsoft.IdentityModel.Tokens;
+using System.Net.Mail;
 
 namespace DAL
 {
@@ -16,38 +18,62 @@ namespace DAL
         public void UploadMachine(MachineDTO machine)
         {
             ServerConnection dal = new ServerConnection();
-            MachineDTO machineCheck = dal.LoadMachineByName(machine.MachineName);
+            MachineRepository machineRepository = new();
+            MachineDTO machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
             int machineId;
-
             if (machineCheck.MachineName == null)
             {
-                SqlCommand command = new SqlCommand("INSERT INTO dbo.Machine(MachineName) VALUES('" + machine.MachineName + "');");
+                SqlCommand command = new SqlCommand("INSERT INTO [dbo].[Machine](MachineName) VALUES('" + machine.MachineName + "');");
                 dal.UploadData(command);
-                machineCheck = dal.LoadMachineByName(machine.MachineName);
+                machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
                 machineId = machineCheck.MachineID;
             }
             else
             {
-                machineId = machine.MachineID;
+                machineId = machineCheck.MachineID;
             }
-            foreach(EventDTO eventDTO in machine.Events)
+            List<string> eventNames = new();
+            List<string> parameterNames = new();
+            List<EventDTO> machineEvents = machineRepository.LoadEventsByMachineID(machineId);
+            int eventID = 0;
+            foreach (EventDTO eventDTO in machine.Events)
             {
-
-            }
+                List<EventDTO> tempevents = new(machineEvents.FindAll(dto => dto.EventID == eventDTO.EventID));
+                if (tempevents.IsNullOrEmpty() || !tempevents.Exists(dto => dto.EventSourceID == eventDTO.EventSourceID))
+                {
+                    SqlCommand eventCommand = new SqlCommand("INSERT INTO [dbo].[Event](EventName, EventSource) VALUES(@EventName, @EventSourceID)");
+                    SqlCommand machineEventCommand = new("INSERT INTO [dbo].[Machine_Event](MachineID, EventID) VALUES(@MachineID, @EventID)");
+                    eventCommand.Parameters.AddWithValue("@EventName", eventDTO.EventName);
+                    eventCommand.Parameters.AddWithValue("@EventSourceID", eventDTO.EventSourceID);
+                    dal.UploadData(eventCommand);
+                    eventID = machineRepository.LatestUploadEventID();
+                    machineEventCommand.Parameters.AddWithValue("@MachineID", machineId);
+                    machineEventCommand.Parameters.AddWithValue("@EventID", eventID);
+                    dal.UploadData(machineEventCommand);
+                }
+                else
+                {
+                    EventDTO tempevent = tempevents.Find(dto => dto.EventSourceID == eventDTO.EventSourceID);
+                    eventID = tempevent.EventID;
+                }
+                List<ParameterDTO> eventParameters = machineRepository.LoadParametersByEventID(eventID);
+                foreach(ParameterDTO paramterDTO in eventDTO.Parameters)
+                {
+                    List<ParameterDTO> tempParameters = eventParameters.FindAll(dto => dto.ParameterName == paramterDTO.ParameterName);
+                    if (tempParameters.IsNullOrEmpty() || tempParameters.Exists(dto => dto.ParameterSourceID == paramterDTO.ParameterSourceID))
+                    {
+                        SqlCommand parameterCommand = new("INSERT INTO [dbo].[Parameter](ParameterName, ParameterSource) VALUES(@ParameterName, @ParameterSource)");
+                        SqlCommand eventParameterCommand = new("INSERT INTO [dbo].[Event_Parameter](EventID, ParameterID) VALUES(@EventID, @ParameterID)");
+                        parameterCommand.Parameters.AddWithValue("@ParameterName", paramterDTO.ParameterName);
+                        parameterCommand.Parameters.AddWithValue("@ParameterSource", paramterDTO.ParameterSourceID);
+                        dal.UploadData(parameterCommand);
+                        int parameterid = machineRepository.LatestUploadParameterID();
+                        eventParameterCommand.Parameters.AddWithValue("@EventID", eventID);
+                        eventParameterCommand.Parameters.AddWithValue("@ParameterID", parameterid);
+                        dal.UploadData(eventParameterCommand);
+                    }
+                }
+            }   
         }
-
-
-        public void UploadEvents(EventDTO eventDTO)
-        {
-            
-        }
-
-        public void UploadParameters()
-        {
-
-        }
-
     }
-
-
 }

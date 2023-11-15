@@ -20,6 +20,9 @@ if (!app.Environment.IsDevelopment())
 // ServerConnection test = new();
 // test.LoadAllData();
 
+// Upload Test
+UploadTest test = new();
+test.TestUpload();
 
 
 app.UseHttpsRedirection();
