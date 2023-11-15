@@ -1,5 +1,6 @@
 ﻿using DAL.DTO;
 using Microsoft.Data.SqlClient;
+using System.Reflection.PortableExecutable;
 
 namespace DAL
 {
@@ -8,32 +9,17 @@ namespace DAL
         private static string ConnectionString = "Data Source=mssqlstud.fhict.local;Initial Catalog=dbi458166_asmleda;TrustServerCertificate=True;Persist Security Info=True;User ID=dbi458166_asmleda;Password=Mr36733duBG2";
         private SqlConnection sqlConnection = new(ConnectionString);
 
+        public SqlConnection GetConnection()
+        {
+            return sqlConnection;
+        }
+
         public void UploadData(SqlCommand uploadCommand)
         {
             sqlConnection.Open();
             uploadCommand.Connection = sqlConnection;
             uploadCommand.ExecuteNonQuery();
             sqlConnection.Close();
-        }
-
-        public MachineDTO LoadMachineByName(string machineName)
-        {
-            SqlCommand command = new SqlCommand("SELECT * FROM Machine WHERE MachineName = '" + machineName + "';", sqlConnection);
-            MachineDTO machineDTO = new MachineDTO();
-
-            sqlConnection.Open();
-            SqlDataReader DataReader = command.ExecuteReader();
-            if (DataReader.HasRows)
-            {
-                while (DataReader.Read())
-                {
-                    machineDTO.MachineID = DataReader.GetInt32(0);
-                    machineDTO.MachineName = DataReader.GetString(1);
-                }
-            }
-            DataReader.Close();
-            sqlConnection.Close();
-            return machineDTO;
         }
 
         public List<MachineDTO> LoadAllData()
@@ -49,7 +35,7 @@ namespace DAL
             int lastEID = 0;
             using (sqlConnection)
             {
-                sqlConnection.Open();
+                sqlConnection.Open();   
                 SqlDataReader DataReader = LoadAllData.ExecuteReader();
                 while (DataReader.Read())
                 {
@@ -69,7 +55,6 @@ namespace DAL
                 }
                 DTOs.DebugTest();
                 sqlConnection.Close();
-
                 return DTOs.machines;
             }
         }

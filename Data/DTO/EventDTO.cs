@@ -20,6 +20,10 @@ namespace DAL.DTO
             EventName = name;
             EventSourceID = sourceid;
         }
+        public EventDTO() 
+        {
+        
+        }
 
         public override string ToString()
         {
