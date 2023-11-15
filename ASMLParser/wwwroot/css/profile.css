@@ -2,7 +2,15 @@
     background-color: white;
     height: 100%;
 }
-
+.profile-div h3{
+    margin-top: 1%;
+    margin-left: 1%;
+}
+.admin-div {
+    background-color: white;
+    height: 100%;
+    margin-top: 2%;
+}
 .profile-part{
     display: flex;
     flex-direction: column;
