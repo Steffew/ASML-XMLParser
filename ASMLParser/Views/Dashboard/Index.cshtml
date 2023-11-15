@@ -20,16 +20,15 @@
 	</div>
 </div>
 
+<div class="dashboard-div">
 @if (Model.Machines.Count == 0)
 {
-	<div class="dashboard-totalborder dashboard-totaltext">
 		<span class="fw-bold">No machines found</span>
-	</div>
 }
 else
 {
 	int machineRowNumber = 1;
-	<table class="datatable mb-5">
+	<table class="datatable">
 		<tr>
 			<th></th>
 			<th>MachineID</th>
@@ -54,3 +53,4 @@ else
 		}
 	</table>
 }
+</div>
