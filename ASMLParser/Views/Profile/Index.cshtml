@@ -4,11 +4,8 @@
 @{
 }
 <link rel="stylesheet" href="~/css/profile.css" asp-asp-append-version="true" />
-<div class="profile-div">
-    <div class="profile-image">
-        <img src="~/images/avatar.png" alt="Avatar" class="avatar">
-    </div>
-    <div class="profile-info">
+<div class="row profile-div">
+    <div class="col-9">
         <div class="profile-part">
             <label class="fw-bold">
                 Naam
@@ -25,6 +22,8 @@
                 Admin
             </span>
         </div>
+    </div>
+    <div class="col-3">
         <button type="button" class="btn btn-outline-primary profile-button">Edit</button>
     </div>
 </div>
