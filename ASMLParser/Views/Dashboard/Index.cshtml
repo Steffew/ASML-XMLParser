@@ -1,56 +1,69 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
 }
+@using System.Reflection.PortableExecutable
 @model DashboardViewModel;
 
 <div class="dashboard-totalborder">
-	<div class="dashboard-totaltext">
-		<div>
-			<h5>Total machines</h5>
-			<span>@Model.TotalMachines</span>
-		</div>
-		<div>
-			<h5>Total events</h5>
-			<span>@Model.TotalEvents</span>
-		</div>
-		<div>
-			<h5>Total parameters</h5>
-			<span>@Model.TotalParameters</span>
-		</div>
-	</div>
+    <div class="dashboard-totaltext">
+        <div>
+            <h5>Total machines</h5>
+            <span>@Model.TotalMachines</span>
+        </div>
+        <div>
+            <h5>Total events</h5>
+            <span>@Model.TotalEvents</span>
+        </div>
+        <div>
+            <h5>Total parameters</h5>
+            <span>@Model.TotalParameters</span>
+        </div>
+    </div>
 </div>
 
 <div class="dashboard-div">
-@if (Model.Machines.Count == 0)
-{
-		<span class="fw-bold text-muted">No machines found.</span>
-}
-else
-{
-	int machineRowNumber = 1;
-	<table class="datatable">
-		<tr>
-			<th></th>
-			<th>MachineID</th>
-			<th>Event</th>
-			<th>Parameter</th>
-		</tr>
-		@foreach (MachineViewModel machine in Model.Machines)
-		{
-			foreach(EventViewModel eventModel in machine.Events)
-			{
-				foreach(ParameterViewModel parameter in eventModel.Parameters)
-				{
-					<tr>
-						<td>@machineRowNumber</td>
-						<td>@machine.Name</td>
-						<td>@eventModel.Name</td>
-						<td>@parameter.Name</td>
-					</tr>
-					machineRowNumber++;
-				}
-			}
-		}
-	</table>
-}
+    @if (Model.Machines.Count == 0)
+    {
+        <span class="fw-bold text-muted">No machines found.</span>
+    }
+    else
+    {
+        int machineRowNumber = 1;
+        <table class="datatable">
+            <tr>
+                <th></th>
+                <th>MachineID</th>
+                <th>Event</th>
+                <th>Parameter</th>
+            </tr>
+            <h3>Filters</h3>
+            
+            <form>
+                @foreach (MachineViewModel machine in Model.Machines)
+                {
+                    <input type="checkbox" name=@machine.Name>
+                    <label>@machine.Name</label>
+                    <br>
+                }
+                <input type="submit" value="Pas toe">
+            </form>
+            
+            @foreach (MachineViewModel machine in Model.Machines)
+            {
+                foreach (EventViewModel eventModel in machine.Events)
+                {
+                    foreach (ParameterViewModel parameter in eventModel.Parameters)
+                    {
+                        <tr>
+                            <td>@machineRowNumber</td>
+                            <td>@machine.Name</td>
+                            <td>@eventModel.Name</td>
+                            <td>@parameter.Name</td>
+                        </tr>
+                        machineRowNumber++;
+                    }
+                }
+            }
+        </table>
+    }
 </div>
