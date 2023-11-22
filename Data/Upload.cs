@@ -21,18 +21,14 @@ namespace DAL
             ServerConnection dal = new ServerConnection();
             MachineRepository machineRepository = new();
             MachineDTO machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
-            int machineId;
-            if (machineCheck.MachineName == null)
+            if (machineCheck.MachineName != null)
             {
-                SqlCommand command = new SqlCommand("INSERT INTO [dbo].[Machine](MachineName) VALUES('" + machine.MachineName + "');");
-                dal.UploadData(command);
-                machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
-                machineId = machineCheck.MachineID;
+                machineRepository.RemoveMachineById(machineCheck.MachineID);
             }
-            else
-            {
-                machineId = machineCheck.MachineID;
-            }
+            SqlCommand command = new SqlCommand("INSERT INTO [dbo].[Machine](MachineName) VALUES('" + machine.MachineName + "');");
+            dal.UploadData(command);
+            machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
+            int machineId = machineCheck.MachineID;
             List<string> eventNames = new();
             List<string> parameterNames = new();
             List<EventDTO> machineEvents = machineRepository.LoadEventsByMachineID(machineId);
@@ -79,10 +75,10 @@ namespace DAL
 
         public void CreateUser(UserDTO userDTO)
         {
-            SqlCommand userCommand = new("INSERT INTO [dbo].[User](UserName, Password, RoleID) VALUES(@Username, @Password, RoleID)");
+            /* nSqlCommand userCommand = new("INSERT INTO [dbo].[User](UserName, Password, RoleID) VALUES(@Username, @Password, RoleID)");
             userCommand.Parameters.AddWithValue("@Username", userDTO.Name);
             userCommand.Parameters.AddWithValue();
-            userCommand.Parameters.AddWithValue();
+            userCommand.Parameters.AddWithValue();*/
         }
     }
 }

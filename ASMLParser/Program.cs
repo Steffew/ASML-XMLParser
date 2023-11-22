@@ -17,6 +17,11 @@ if (!app.Environment.IsDevelopment())
 }
 
 
+// Test if Delete works
+// UploadTest upload = new();
+// upload.deleteTest(false);
+
+
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 

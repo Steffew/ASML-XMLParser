@@ -1,7 +1,9 @@
 ﻿using DAL.DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -135,6 +137,14 @@ namespace DAL
             int id = (Int32)command.ExecuteScalar();
             sqlConnection.Close();
             return id;
+        }
+
+        public void RemoveMachineById(int machineid)
+        {
+            SqlCommand deleteProcedure = new("DeleteMachineAndChildren");
+            deleteProcedure.CommandType = CommandType.StoredProcedure;
+            deleteProcedure.Parameters.AddWithValue("@MachineID", machineid);
+            con.UploadData(deleteProcedure);
         }
     }
     

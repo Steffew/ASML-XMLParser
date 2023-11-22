@@ -15,7 +15,7 @@ namespace DAL.DTO
 
         public UserDTO(int id, string name, string password)
         {
-            Id = id
+            Id = id;
             Name = name;
             Password = password;
         }
