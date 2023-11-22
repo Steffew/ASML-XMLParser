@@ -16,9 +16,11 @@ namespace DAL
 {
     public class Upload
     {
+
+        ServerConnection dal = new ServerConnection();
+
         public void UploadMachine(MachineDTO machine)
         {
-            ServerConnection dal = new ServerConnection();
             MachineRepository machineRepository = new();
             MachineDTO machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
             if (machineCheck.MachineName != null)
@@ -75,10 +77,16 @@ namespace DAL
 
         public void CreateUser(UserDTO userDTO)
         {
-            /* nSqlCommand userCommand = new("INSERT INTO [dbo].[User](UserName, Password, RoleID) VALUES(@Username, @Password, RoleID)");
+            SqlCommand userCommand = new("INSERT INTO [dbo].[User](UserName, Password, RoleID) VALUES(@Username, @Password, RoleID)");
             userCommand.Parameters.AddWithValue("@Username", userDTO.Name);
-            userCommand.Parameters.AddWithValue();
-            userCommand.Parameters.AddWithValue();*/
+            userCommand.Parameters.AddWithValue("@Password", userDTO.Password);
+            userCommand.Parameters.AddWithValue("@RoleId", userDTO.Role.Id);
+            dal.UploadData(userCommand);
+        }
+
+        public void CreateRole(RoleDTO roleDTO)
+        {
+            SqlCommand roleCommand = new("INSERT INTO Role()");
         }
     }
 }
