@@ -1,5 +1,6 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
+    List<string> filters = new List<string>();
 }
 @using System.Reflection.PortableExecutable
 @model DashboardViewModel;
@@ -38,7 +39,7 @@
             </tr>
             <h3>Filters</h3>
             
-            <form>
+            <form asp-action="Filter" asp-controller="Dashboard" method="post">
                 @foreach (MachineViewModel machine in Model.Machines)
                 {
                     <input type="checkbox" name=@machine.Name>

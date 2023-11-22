@@ -55,5 +55,22 @@ namespace ASMLXMLParser.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult Filter(IFormCollection formCollection)
+        {
+            List<string> checkedFilters = new List<string>();
+            
+            foreach (var key in formCollection.Keys)
+            {
+                if (key != "__RequestVerificationToken")
+                {
+                    Console.WriteLine(key);
+                    checkedFilters.Add(key);
+                }
+            }
+            return RedirectToAction(nameof(Index));
+        }
     }
 }
