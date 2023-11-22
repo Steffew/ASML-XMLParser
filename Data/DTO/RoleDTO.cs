@@ -10,5 +10,12 @@ namespace DAL.DTO
     {
         public string Name { get; set; }
         public int Id { get; set; }
+
+        
+        public RoleDTO(int id, string name) 
+        {
+            Id = id;
+            Name = name;
+        }
     }
 }

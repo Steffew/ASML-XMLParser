@@ -39,8 +39,9 @@ namespace DAL
             SqlDataReader dataReader = con.LoadData(getusers);
             sqlConnection.Open();
             while (dataReader.Read()) 
-            {   
-                UserDTO dto = new(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2));
+            {
+                RoleDTO role = new(dataReader.GetInt32(3), dataReader.GetString(5));
+                UserDTO dto = new(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), role);
                 users.Add(dto);
             }
             sqlConnection.Close();

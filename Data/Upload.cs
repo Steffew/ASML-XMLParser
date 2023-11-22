@@ -86,7 +86,8 @@ namespace DAL
 
         public void CreateRole(RoleDTO roleDTO)
         {
-            SqlCommand roleCommand = new("INSERT INTO Role()");
+            SqlCommand roleCommand = new("INSERT INTO Role(RoleName) VALUES(@RoleName)");
+            roleCommand.Parameters.AddWithValue("@RoleName", roleDTO.Name);
         }
     }
 }
