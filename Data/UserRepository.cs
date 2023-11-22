@@ -29,6 +29,7 @@ namespace DAL
                 UserDTO dto = new(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2));
                 users.Add(dto);
             }
+            dataReader.Close();
             sqlConnection.Close();
             return users;
         }
@@ -44,6 +45,7 @@ namespace DAL
                 UserDTO dto = new(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), role);
                 users.Add(dto);
             }
+            dataReader.Close();
             sqlConnection.Close();
             return users;
         }
