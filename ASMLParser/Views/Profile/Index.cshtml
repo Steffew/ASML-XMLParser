@@ -1,4 +1,4 @@
-﻿@model UserViewModel;
+﻿@model ProfileViewModel;
 <link rel="stylesheet" href="~/css/profile.css" asp-asp-append-version="true" />
 <div class="row profile-div">
     <div class="col-9">
@@ -8,7 +8,7 @@
                 Naam
             </label>
             <span>
-                @Model.Name
+                @Model.CurrentUser.Name
             </span>
         </div>
         <div class="profile-part">
@@ -16,7 +16,7 @@
                 Role
             </label>
             <span>
-                @Model.Role.Name
+                @Model.CurrentUser.Role.Name
             </span>
         </div>
     </div>
@@ -24,12 +24,30 @@
         <button type="button" class="btn btn-outline-primary profile-button">Edit</button>
     </div>
 </div>
-@if(Model.Role.Name == "Admin")
+@if(Model.CurrentUser.Role.Name == "Admin")
 {
     <div class="row admin-div">
         <div class="col">
             <h3>Admin information</h3>
             <p>Bla bla admin dingen</p>
         </div>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Handle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <th scope="row">1</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>@mdo</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 }

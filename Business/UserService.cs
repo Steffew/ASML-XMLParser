@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using DAL;
 
 namespace Business
 {
@@ -12,6 +13,7 @@ namespace Business
     {
         //TODO: string role naar bool IsAdmin in UserDto en User.cs 
         //TODO: checken wat dadelijk de daadwerkelijke benaming is.
+        UserRepository userRepository = new UserRepository();
 
         public bool checkIfAdmin()
         {
@@ -30,16 +32,12 @@ namespace Business
             }
         }
 
-        public User GetById(int id)
+        public User GetByName(string name)
         {
             UserDTO userDto = new UserDTO();
-            //userDto = UserRepository.GetById(int id); // TODO: repository methode toevoegen.
-
-            // RoleDTO roleDto = new RoleDTO();
-            // user.Role = new Role(roleDto.Id, roleDto.Name); 
+            userDto = userRepository.LoadUserByName(name); // TODO: repository methode toevoegen.
 
             User user = new User(userDto.Id, userDto.Name);
-
             user.Role = new Role(userDto.Role.Id, userDto.Role.Name);
 
             return user;
@@ -47,8 +45,6 @@ namespace Business
 
         public void UpdateUserRole(int userId, Role role)
         {
-            //UserRepository userRepository = new UserRepository();
-
             RoleDTO roleDto = new RoleDTO();
             roleDto.Name = role.Name;
             roleDto.Id = role.Id;
@@ -68,15 +64,11 @@ namespace Business
         {
             List<User> users = new List<User>();
 
-            List<UserDTO> userDtos = new List<UserDTO>();
-            //userDto = UserRepository.GetAll(); // TODO: repository methode toevoegen.
-
-            foreach (var userDto in userDtos)
+            List<UserDTO> userDtos = userRepository.LoadAllUsers();
+            foreach (UserDTO userDto in userDtos)
             {
                 User newUser = new User(userDto.Id, userDto.Name);
-                Role newRole = new Role(userDto.Role.Id, userDto.Role.Name);
-
-                newUser.Role = newRole;
+                newUser.Role = new Role(userDto.Role.Id, userDto.Role.Name);
                 users.Add(newUser);
             }
 
