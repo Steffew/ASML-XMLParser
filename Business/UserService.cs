@@ -10,10 +10,10 @@ namespace Business
 {
     public class UserService
     {
-        //TODO: string role naar bool IsAdmin in UserDto en User.cs 
+        //TODO: string role naar bool IsAdmin in UserDto en User.cs
         //TODO: checken wat dadelijk de daadwerkelijke benaming is.
 
-        public bool checkIfAdmin()
+        public bool CheckIfAdmin()
         {
             //Repository repository =  new Repository():
 
@@ -36,7 +36,7 @@ namespace Business
             //userDto = UserRepository.GetById(int id); // TODO: repository methode toevoegen.
 
             // RoleDTO roleDto = new RoleDTO();
-            // user.Role = new Role(roleDto.Id, roleDto.Name); 
+            // user.Role = new Role(roleDto.Id, roleDto.Name);
 
             User user = new User(userDto.Id, userDto.Name);
 
