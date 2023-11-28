@@ -9,18 +9,18 @@ namespace Business
 		//Create and sending machines to DAL layer
 		public void CreateAndSend(Machine newMachine)
 		{
-			MachineDTO machineDto = new MachineDTO();
+			MachineDTO machineDto = new();
 			machineDto.MachineName = newMachine.Name;
 			machineDto.Events = new List<EventDTO>();
 
 			foreach (var _event in newMachine.Events)
 			{
-				EventDTO newEventDto = new EventDTO(_event.Id, _event.Name, _event.SourceId);
+				EventDTO newEventDto = new(_event.Id, _event.Name, _event.SourceId);
 				newEventDto.Parameters = new List<ParameterDTO>();
 
 				foreach (var parameter in _event.Parameters)
 				{
-					ParameterDTO newParameterDto = new ParameterDTO(parameter.Id, parameter.Name, parameter.SourceId);
+					ParameterDTO newParameterDto = new(parameter.Id, parameter.Name, parameter.SourceId);
 					newEventDto.Parameters.Add(newParameterDto);
 				}
 
@@ -29,7 +29,7 @@ namespace Business
 
 			if (!DoesMachineAlreadyExists(newMachine.Name))
 			{
-				Upload upload = new Upload();
+				Upload upload = new();
 				upload.UploadMachine(machineDto);
 			}
 			else if (DoesMachineAlreadyExists(newMachine.Name))
@@ -41,16 +41,15 @@ namespace Business
 		//Getting machines from database
 		public List<Machine> GetAll()
         {
-            List<MachineDTO> machineDtos = new List<MachineDTO>();
-            ServerConnection serverConnection = new ServerConnection();
+			MachineRepository machineRepository = new();
 
-            machineDtos = serverConnection.LoadAllData();
+            List<MachineDTO>  machineDtos = machineRepository.LoadAllMachines();
 
             List<Machine> machines = new List<Machine>();
 
             foreach (MachineDTO machineDto in machineDtos)
             {
-                Machine machine = new Machine(machineDto.MachineName);
+                Machine machine = new(machineDto.MachineName);
                 machine.Id = machineDto.MachineID;
                 machine.Events = new List<Event>();
 
@@ -62,7 +61,7 @@ namespace Business
 
                     foreach (var parameter in _event.Parameters)
                     {
-                        Parameter newParameter = new Parameter(parameter.ParameterName, parameter.ParameterSourceID);
+                        Parameter newParameter = new(parameter.ParameterName, parameter.ParameterSourceID);
                         newParameter.Id = parameter.ParameterID;
                         newEvent.Parameters.Add(newParameter);
                     }
@@ -120,7 +119,7 @@ namespace Business
 
 				foreach (var parameter in _event.Parameters)
 				{
-					Parameter newParameter = new Parameter(parameter.ParameterName, parameter.ParameterSourceID);
+					Parameter newParameter = new(parameter.ParameterName, parameter.ParameterSourceID);
 					newParameter.Id = parameter.ParameterID;
 					newEvent.Parameters.Add(newParameter);
 				}
@@ -143,15 +142,15 @@ namespace Business
 
 		public int GetTotalAmountOfMachines()
 		{
-			ServerConnection serverConnection = new ServerConnection();
-			return serverConnection.LoadAllData().Count;
+			MachineRepository repo = new();
+			return repo.LoadAllMachines().Count;
 		}
 
 		public int GetTotalAmountOfEvents()
 		{
 			int i = 0;
-			ServerConnection serverConnection = new ServerConnection();
-			foreach (var machineDto in serverConnection.LoadAllData())
+            MachineRepository repo = new();
+            foreach (var machineDto in repo.LoadAllMachines())
 			{
 				foreach (var _event in machineDto.Events)
 				{
@@ -165,8 +164,8 @@ namespace Business
 		public int GetTotalAmountOfParameters()
 		{
 			int j = 0;
-			ServerConnection serverConnection = new ServerConnection();
-			foreach (var machineDto in serverConnection.LoadAllData())
+            MachineRepository repo = new();
+            foreach (var machineDto in repo.LoadAllMachines())
 			{
 				foreach (var _event in machineDto.Events)
 				{

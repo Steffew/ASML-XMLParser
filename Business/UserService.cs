@@ -17,7 +17,7 @@ namespace Business
         {
             //Repository repository =  new Repository():
 
-            UserDTO userDto = new UserDTO();
+            UserDTO userDto = new();
             //userDto = repository.GetUser();
 
             if (userDto.Role.Name == "Admin")
@@ -32,7 +32,7 @@ namespace Business
 
         public User GetById(int id)
         {
-            UserDTO userDto = new UserDTO();
+            UserDTO userDto = new();
             //userDto = UserRepository.GetById(int id); // TODO: repository methode toevoegen.
 
             // RoleDTO roleDto = new RoleDTO();
@@ -49,9 +49,7 @@ namespace Business
         {
             //UserRepository userRepository = new UserRepository();
 
-            RoleDTO roleDto = new RoleDTO();
-            roleDto.Name = role.Name;
-            roleDto.Id = role.Id;
+            RoleDTO roleDto = new(role.Id, role.Name);
 
             try
             {
@@ -73,8 +71,8 @@ namespace Business
 
             foreach (var userDto in userDtos)
             {
-                User newUser = new User(userDto.Id, userDto.Name);
-                Role newRole = new Role(userDto.Role.Id, userDto.Role.Name);
+                User newUser = new(userDto.Id, userDto.Name);
+                Role newRole = new(userDto.Role.Id, userDto.Role.Name);
 
                 newUser.Role = newRole;
                 users.Add(newUser);

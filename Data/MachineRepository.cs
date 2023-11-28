@@ -57,8 +57,8 @@ namespace DAL
 
         public MachineDTO LoadMachineByName(string machineName)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM Machine WHERE MachineName = '" + machineName + "';", sqlConnection);
-            MachineDTO machineDTO = new MachineDTO();
+            SqlCommand command = new("SELECT * FROM Machine WHERE MachineName = '" + machineName + "';", sqlConnection);
+            MachineDTO machineDTO = new();
             SqlDataReader DataReader = con.LoadData(command);
             sqlConnection.Open();
             if (DataReader.HasRows)
@@ -75,8 +75,8 @@ namespace DAL
         }
         public EventDTO LoadEventByName(string eventName)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM Event WHERE MachineName = '" + eventName + "';", sqlConnection);
-            EventDTO eventDTO = new EventDTO();
+            SqlCommand command = new ("SELECT * FROM Event WHERE MachineName = '" + eventName + "';", sqlConnection);
+            EventDTO eventDTO = new ();
             SqlDataReader DataReader = con.LoadData(command);
             sqlConnection.Open();
             if (DataReader.HasRows)
@@ -93,8 +93,8 @@ namespace DAL
         }
         public ParameterDTO LoadParameterByName(string parameterName)
         {
-            SqlCommand command = new SqlCommand("SELECT * FROM Parameter WHERE MachineName = '" + parameterName + "';", sqlConnection);
-            ParameterDTO parameterDTO = new ParameterDTO();
+            SqlCommand command = new("SELECT * FROM Parameter WHERE MachineName = '" + parameterName + "';", sqlConnection);
+            ParameterDTO parameterDTO = new();
             sqlConnection.Open();
             SqlDataReader DataReader = con.LoadData(command);
             if (DataReader.HasRows)
