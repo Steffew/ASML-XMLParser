@@ -113,10 +113,9 @@ namespace Business
             return machine;
         }
 
-        public int GetTotalMachines()
+        public int GetTotalMachines(List<Machine> machines)
         {
-            ServerConnection serverConnection = new ServerConnection();
-            return serverConnection.LoadAllData().Count;
+            return machines.Count;
         }
 
         public int GetTotalEvents()
