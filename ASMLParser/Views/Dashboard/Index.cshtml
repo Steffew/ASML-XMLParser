@@ -42,10 +42,10 @@
             </tr>
             <h3>Filters</h3>
             <form asp-action="Filter" asp-controller="Dashboard" method="post">
-                <a class="btn btn-primary m-1 col-sm-1" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+                <a class="btn btn-primary m-1 col-sm-1" data-toggle="collapse" href="#collapseDiv" role="button" aria-expanded="false" aria-controls="collapseDiv">
                     Name ▼
                 </a>
-                <div class="collapse" id="collapseExample">
+                <div class="collapse" id="collapseDiv">
                     <div class="row">
                         <div class="border border-secondary rounded p-2 bg-white col-sm-auto m-3">
                             @foreach (string machineName in Model.MachineNames)
@@ -56,8 +56,9 @@
                             }
                         </div>
                     </div>
+                    <input class="btn btn-success m-1 col-sm-1" type="submit" value="Pas toe">
                 </div>
-                <input class="btn btn-success m-1 col-sm-1" type="submit" value="Pas toe">
+                
             </form>
             @foreach (MachineViewModel machine in Model.Machines)
             {
