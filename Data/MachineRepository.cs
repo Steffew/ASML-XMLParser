@@ -32,7 +32,6 @@ namespace DAL
             int lastMID = 0;
             int lastEID = 0;
             SqlDataReader DataReader = con.LoadData(loadCommand);
-            sqlConnection.Open();
             while (DataReader.Read())
             {
                 machineID = DataReader.GetInt32(0);
