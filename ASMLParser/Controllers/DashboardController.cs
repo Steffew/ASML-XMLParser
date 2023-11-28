@@ -14,8 +14,16 @@ namespace ASMLXMLParser.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index()
+        public IActionResult Index(List<string> filters)
         {
+            if (filters != null)
+            {
+                foreach (var filter in filters)
+                {
+                    Console.WriteLine($"FLT: {filter}");
+                }
+            }
+
             List<MachineViewModel> machineViewModels = new List<MachineViewModel>();
             MachineService machineService = new MachineService();
             machineService.GetAll();
@@ -23,17 +31,20 @@ namespace ASMLXMLParser.Controllers
             foreach (Machine machine in machineService.GetAll())
             {
                 List<EventViewModel> events = new();
-                foreach(Event machineEvent in machine.Events)
+                foreach (Event machineEvent in machine.Events)
                 {
                     List<ParameterViewModel> parameters = new();
-                    foreach(Parameter parameter in machineEvent.Parameters)
+                    foreach (Parameter parameter in machineEvent.Parameters)
                     {
                         ParameterViewModel machineParameter = new(parameter.Id, parameter.Name, parameter.SourceId);
                         parameters.Add(machineParameter);
                     }
-                    EventViewModel eventView = new(machineEvent.Id, machineEvent.Name, machineEvent.SourceId,parameters);
+
+                    EventViewModel eventView = new(machineEvent.Id, machineEvent.Name, machineEvent.SourceId,
+                        parameters);
                     events.Add(eventView);
                 }
+
                 MachineViewModel machineModel = new(machine.Id, machine.Name, events);
                 machineViewModels.Add(machineModel);
             }
@@ -41,7 +52,8 @@ namespace ASMLXMLParser.Controllers
             int totalMachines = machineService.GetTotalAmountOfMachines();
             int totalEvents = machineService.GetTotalAmountOfEvents();
             int totalParameters = machineService.GetTotalAmountOfParameters();
-            DashboardViewModel dashboardView = new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels);
+            DashboardViewModel dashboardView =
+                new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels);
             return View(dashboardView);
         }
 
@@ -55,22 +67,22 @@ namespace ASMLXMLParser.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Filter(IFormCollection formCollection)
         {
             List<string> checkedFilters = new List<string>();
-            
+
             foreach (var key in formCollection.Keys)
             {
                 if (key != "__RequestVerificationToken")
                 {
-                    Console.WriteLine(key);
                     checkedFilters.Add(key);
                 }
             }
-            return RedirectToAction(nameof(Index));
+
+            return RedirectToAction(nameof(Index), new { filters = checkedFilters });
         }
     }
 }
