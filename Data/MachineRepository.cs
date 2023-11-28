@@ -1,7 +1,9 @@
 ﻿using DAL.DTO;
 using Microsoft.Data.SqlClient;
+using Microsoft.VisualBasic.FileIO;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,13 +20,47 @@ namespace DAL
             sqlConnection = con.GetConnection();
         }
 
+        public List<MachineDTO> LoadAllMachines()
+        {
+            MachineCollection DTOs = new();
+            SqlCommand loadCommand = new("SELECT Machine.MachineID, Machine.MachineName, Event.EventID, Event.EventName, Event.EventSource, " +
+                "Parameter.ParameterID, Parameter.ParameterName, Parameter.ParameterSource FROM Machine_Event " +
+                "INNER JOIN Event ON Event.EventID = Machine_Event.EventID INNER JOIN Machine on Machine.MachineID = Machine_Event.MachineID " +
+                "INNER JOIN Event_Parameter on Event.EventID = Event_Parameter.EventID " +
+                "INNER JOIN Parameter on Event_Parameter.ParameterID = Parameter.ParameterID");
+            int machineID, eventID;
+            int lastMID = 0;
+            int lastEID = 0;
+            SqlDataReader DataReader = con.LoadData(loadCommand);
+            sqlConnection.Open();
+            while (DataReader.Read())
+            {
+                machineID = DataReader.GetInt32(0);
+                if (machineID != lastMID)
+                {
+                    DTOs.AddMachine(machineID, DataReader.GetString(1));
+                    lastMID = machineID;
+                }
+                eventID = DataReader.GetInt32(2);
+                if (eventID != lastEID)
+                {
+                    DTOs.AddEvent(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
+                    lastEID = eventID;
+                }
+                DTOs.AddParameter(machineID, eventID, DataReader.GetInt32(5), DataReader.GetString(6), DataReader.GetString(7));
+            }
+            DataReader.Close();
+            sqlConnection.Close();
+            DTOs.DebugTest();
+            return DTOs.machines;
+        }
 
         public MachineDTO LoadMachineByName(string machineName)
         {
             SqlCommand command = new SqlCommand("SELECT * FROM Machine WHERE MachineName = '" + machineName + "';", sqlConnection);
             MachineDTO machineDTO = new MachineDTO();
+            SqlDataReader DataReader = con.LoadData(command);
             sqlConnection.Open();
-            SqlDataReader DataReader = command.ExecuteReader();
             if (DataReader.HasRows)
             {
                 while (DataReader.Read())
@@ -41,8 +77,8 @@ namespace DAL
         {
             SqlCommand command = new SqlCommand("SELECT * FROM Event WHERE MachineName = '" + eventName + "';", sqlConnection);
             EventDTO eventDTO = new EventDTO();
+            SqlDataReader DataReader = con.LoadData(command);
             sqlConnection.Open();
-            SqlDataReader DataReader = command.ExecuteReader();
             if (DataReader.HasRows)
             {
                 while (DataReader.Read())
@@ -60,7 +96,7 @@ namespace DAL
             SqlCommand command = new SqlCommand("SELECT * FROM Parameter WHERE MachineName = '" + parameterName + "';", sqlConnection);
             ParameterDTO parameterDTO = new ParameterDTO();
             sqlConnection.Open();
-            SqlDataReader DataReader = command.ExecuteReader();
+            SqlDataReader DataReader = con.LoadData(command);
             if (DataReader.HasRows)
             {
                 while (DataReader.Read())
@@ -81,8 +117,8 @@ namespace DAL
             List<int> EventIDs = new();
             int id;
             sqlConnection.Open();
-            SqlDataReader machineReader = MachineEventcommand.ExecuteReader();
-            while(machineReader.Read())
+            SqlDataReader machineReader = con.LoadData(MachineEventcommand);
+            while (machineReader.Read())
             {
                 id = machineReader.GetInt32(1);
                 EventIDs.Add(id);
@@ -91,7 +127,7 @@ namespace DAL
             foreach (int eventID in EventIDs)
             {
                 SqlCommand eventCommand = new("SELECT * FROM Event WHERE EventID = " + eventID, sqlConnection);
-                SqlDataReader eventReader = eventCommand.ExecuteReader();
+                SqlDataReader eventReader = con.LoadData(eventCommand);
                 eventReader.Read();
                 EventDTO dto = new(eventReader.GetInt32(0), eventReader.GetString(1), eventReader.GetString(2));
                 eventReader.Close();
@@ -108,12 +144,13 @@ namespace DAL
             List<int> ParameterIDs = new();
             int id;
             sqlConnection.Open();
-            SqlDataReader eventReader = eventParameterCommand.ExecuteReader();
+            SqlDataReader eventReader = con.LoadData(eventParameterCommand);
             while (eventReader.Read())
             {
                 id = eventReader.GetInt32(1);
                 ParameterIDs.Add(id);
             }
+            eventReader.Close();
             sqlConnection.Close();
             return dtos;
         }
@@ -123,7 +160,10 @@ namespace DAL
         {
             SqlCommand command = new("SELECT * FROM Event ORDER BY EventId DESC", sqlConnection);
             sqlConnection.Open();
-            int id = (Int32)command.ExecuteScalar();
+            SqlDataReader dataReader = con.LoadData(command);
+            dataReader.Read();
+            int id = dataReader.GetInt32(0);
+            dataReader.Close();
             sqlConnection.Close();
             return id;
         }
@@ -132,9 +172,20 @@ namespace DAL
         {
             SqlCommand command = new("SELECT * FROM Parameter ORDER BY ParameterId DESC", sqlConnection);
             sqlConnection.Open();
-            int id = (Int32)command.ExecuteScalar();
+            SqlDataReader dataReader = con.LoadData(command);
+            dataReader.Read();
+            int id = dataReader.GetInt32(0);
+            dataReader.Close();
             sqlConnection.Close();
             return id;
+        }
+
+        public void RemoveMachineById(int machineid)
+        {
+            SqlCommand deleteProcedure = new("DeleteMachineAndChildren");
+            deleteProcedure.CommandType = CommandType.StoredProcedure;
+            deleteProcedure.Parameters.AddWithValue("@MachineID", machineid);
+            con.UploadData(deleteProcedure);
         }
     }
     

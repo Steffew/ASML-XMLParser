@@ -1,5 +1,6 @@
 ﻿using DAL.DTO;
 using Microsoft.Data.SqlClient;
+using System.Data;
 using System.Reflection.PortableExecutable;
 
 namespace DAL
@@ -22,41 +23,13 @@ namespace DAL
             sqlConnection.Close();
         }
 
-        public List<MachineDTO> LoadAllData()
+        public SqlDataReader LoadData(SqlCommand loadCommand)
         {
-            MachineCollection DTOs = new();
-            SqlCommand LoadAllData = new("SELECT Machine.MachineID, Machine.MachineName, Event.EventID, Event.EventName, Event.EventSource, " +
-                "Parameter.ParameterID, Parameter.ParameterName, Parameter.ParameterSource FROM Machine_Event " +
-                "INNER JOIN Event ON Event.EventID = Machine_Event.EventID INNER JOIN Machine on Machine.MachineID = Machine_Event.MachineID " +
-                "INNER JOIN Event_Parameter on Event.EventID = Event_Parameter.EventID " +
-                "INNER JOIN Parameter on Event_Parameter.ParameterID = Parameter.ParameterID", sqlConnection);
-            int machineID, eventID;
-            int lastMID = 0;
-            int lastEID = 0;
-            using (sqlConnection)
-            {
-                sqlConnection.Open();   
-                SqlDataReader DataReader = LoadAllData.ExecuteReader();
-                while (DataReader.Read())
-                {
-                    machineID = DataReader.GetInt32(0);
-                    if (machineID != lastMID)
-                    {
-                        DTOs.AddMachine(machineID, DataReader.GetString(1));
-                        lastMID = machineID;
-                    }
-                    eventID = DataReader.GetInt32(2);
-                    if (eventID != lastEID)
-                    {
-                        DTOs.AddEvent(machineID, eventID, DataReader.GetString(3), DataReader.GetString(4));
-                        lastEID = eventID;
-                    }
-                    DTOs.AddParameter(machineID, eventID, DataReader.GetInt32(5), DataReader.GetString(6), DataReader.GetString(7));
-                }
-                DTOs.DebugTest();
-                sqlConnection.Close();
-                return DTOs.machines;
-            }
+            sqlConnection.Open();
+            loadCommand.Connection = sqlConnection;
+            SqlDataReader dataReader = loadCommand.ExecuteReader();
+            sqlConnection.Close();
+            return dataReader;
         }
     }
 }

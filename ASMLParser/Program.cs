@@ -16,13 +16,10 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Test LoadAllData
-// ServerConnection test = new();
-// test.LoadAllData();
 
-// Upload Test
-UploadTest test = new();
-test.TestUpload();
+// Test if Delete works
+// UploadTest upload = new();
+// upload.deleteTest(false);
 
 
 app.UseHttpsRedirection();
