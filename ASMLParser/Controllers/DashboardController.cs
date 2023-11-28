@@ -24,7 +24,10 @@ namespace ASMLXMLParser.Controllers
             
             foreach (var machine in machineService.GetAll())
             {
-                machineNames.Add(machine.Name);
+                if (!machineNames.Contains(machine.Name))
+                {
+                    machineNames.Add(machine.Name);
+                }
             }
             
             var machines = machineService.GetAll();
@@ -64,7 +67,7 @@ namespace ASMLXMLParser.Controllers
             int totalEvents = machineService.GetTotalAmountOfEvents();
             int totalParameters = machineService.GetTotalAmountOfParameters();
             DashboardViewModel dashboardView =
-                new DashboardViewModel(totalMachines, machineNames, totalEvents, totalParameters, machineViewModels);
+                new DashboardViewModel(totalMachines, machineNames, filters, totalEvents, totalParameters, machineViewModels);
             return View(dashboardView);
         }
 
