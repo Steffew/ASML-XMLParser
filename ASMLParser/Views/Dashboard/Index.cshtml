@@ -42,24 +42,55 @@
             </tr>
             <h4>Filters</h4>
             <form asp-action="Filter" asp-controller="Dashboard" method="post">
-                <a class="btn btn-primary m-1 col-sm-1" data-toggle="collapse" href="#collapseDiv" role="button" aria-expanded="false" aria-controls="collapseDiv">
+                <a class="btn btn-primary m-1 col-sm-1" data-toggle="collapse" href="#collapseDivMachineName" role="button" aria-expanded="false" aria-controls="collapseDivMachineName">
                     Name ▼
                 </a>
-                <div class="collapse" id="collapseDiv">
+                <div class="collapse" id="collapseDivMachineName">
                     <div class="row">
                         <div class="border border-secondary rounded p-2 bg-white col-sm-auto m-3">
-                            @foreach (string machineName in Model.MachineNames)
+                            @foreach (string machineName in Model.FilterViewModel.MachineNames)
                             {
-                                <input @(Model.Filters.Contains(machineName) ? "checked" : "") type="checkbox" name="@machineName">
+                                <input @(Model.FilterViewModel.MachineNameFilters.Contains(machineName) ? "checked" : "") type="checkbox" name="n_@machineName">
                                 <label>@machineName</label>
                                 <br>
                             }
                         </div>
                     </div>
-                    <input class="btn btn-success m-1 col-sm-1" type="submit" value="Pas toe">
                 </div>
-                
+                <a class="btn btn-primary m-1 col-sm-1" data-toggle="collapse" href="#collapseDivEventName" role="button" aria-expanded="false" aria-controls="collapseDivEventName">
+                    Event ▼
+                </a>
+                <div class="collapse" id="collapseDivEventName">
+                    <div class="row">
+                        <div class="border border-secondary rounded p-2 bg-white col-sm-auto m-3">
+                            @foreach (string eventName in Model.FilterViewModel.EventNames)
+                            {
+                                <input @(Model.FilterViewModel.MachineNameFilters.Contains(eventName) ? "checked" : "") type="checkbox" name="e_@eventName">
+                                <label>@eventName</label>
+                                <br>
+                            }
+                        </div>
+                    </div>
+                </div>
+
+                <a class="btn btn-primary m-1 col-sm-1" data-toggle="collapse" href="#collapseDivParameterName" role="button" aria-expanded="false" aria-controls="collapseDivParameterName">
+                    Param. ▼
+                </a>
+                <div class="collapse" id="collapseDivParameterName">
+                    <div class="row">
+                        <div class="border border-secondary rounded p-2 bg-white col-sm-auto m-3">
+                            @foreach (string parameterName in Model.FilterViewModel.ParameterNames)
+                            {
+                                <input @(Model.FilterViewModel.MachineNameFilters.Contains(parameterName) ? "checked" : "") type="checkbox" name="p_@parameterName">
+                                <label>@parameterName</label>
+                                <br>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <input class="btn btn-success m-1 col-sm-1" type="submit" value="Pas toe">
             </form>
+
             @foreach (MachineViewModel machine in Model.Machines)
             {
                 foreach (EventViewModel eventModel in machine.Events)

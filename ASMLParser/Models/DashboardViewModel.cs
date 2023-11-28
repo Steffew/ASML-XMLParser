@@ -8,14 +8,14 @@
 		public int TotalEvents { get; set; }
 		public int TotalParameters { get; set; }
 		public List<MachineViewModel> Machines { get; set; }
-		public DashboardViewModel(int totalMachines, List<string> machineNames, List<string> filters, int totalEvents, int totalParameters, List<MachineViewModel> machines)
+		public FilterViewModel FilterViewModel { get; set; }
+		public DashboardViewModel(int totalMachines, int totalEvents, int totalParameters, List<MachineViewModel> machines, FilterViewModel filterViewModel)
 		{
 			TotalMachines = totalMachines;
-			MachineNames = machineNames;
-			Filters = filters;
 			TotalEvents = totalEvents;
 			TotalParameters = totalParameters;
 			Machines = machines;
+			FilterViewModel = filterViewModel;
 		}
 	}
 }

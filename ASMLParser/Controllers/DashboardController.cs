@@ -2,6 +2,7 @@
 using Business;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
+using System.Security.Cryptography;
 
 namespace ASMLXMLParser.Controllers
 {
@@ -14,33 +15,48 @@ namespace ASMLXMLParser.Controllers
             _logger = logger;
         }
 
-        public IActionResult Index(List<string> filters)
+        public IActionResult Index(List<string> filtersName, List<string> filtersEvent, List<string> filtersParameter)
         {
-
-
             List<MachineViewModel> machineViewModels = new List<MachineViewModel>();
             MachineService machineService = new MachineService();
             List<string> machineNames = new List<string>();
-            
+            List<string> eventNames = new List<string>();
+            List<string> parameterNames = new List<string>();
+
             foreach (var machine in machineService.GetAll())
             {
                 if (!machineNames.Contains(machine.Name))
                 {
                     machineNames.Add(machine.Name);
                 }
-            }
-            
-            var machines = machineService.GetAll();
-            
-            if (filters.Any())
-            {
-                foreach (var filter in filters)
-                {
-                    machines = machines.Where(m => filters.Any(filter => m.Name == filter)).ToList();
 
+                foreach (var _event in machine.Events)
+                {
+                    if (!eventNames.Contains(_event.Name))
+                    {
+                        eventNames.Add(_event.Name);
+                    }
+
+                    foreach (var parameter in _event.Parameters)
+                    {
+                        if (!parameterNames.Contains(parameter.Name))
+                        {
+                            parameterNames.Add(parameter.Name);
+                        }
+                    }
                 }
-                
             }
+
+
+            var machines = machineService.GetAll();
+
+            if (filtersName.Any())
+            {
+                    machines = machines.Where(m => filtersName.Any(filter => m.Name == filter)).ToList();
+                    //TODO: filteren toevoegen voor events en parameters.
+            }
+
+            FilterViewModel filterViewModel = new FilterViewModel(machineNames, filtersName, eventNames, parameterNames);
 
             foreach (Machine machine in machines)
             {
@@ -67,7 +83,7 @@ namespace ASMLXMLParser.Controllers
             int totalEvents = machineService.GetTotalAmountOfEvents();
             int totalParameters = machineService.GetTotalAmountOfParameters();
             DashboardViewModel dashboardView =
-                new DashboardViewModel(totalMachines, machineNames, filters, totalEvents, totalParameters, machineViewModels);
+                new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels, filterViewModel);
             return View(dashboardView);
         }
 
@@ -86,17 +102,30 @@ namespace ASMLXMLParser.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Filter(IFormCollection formCollection)
         {
-            List<string> checkedFilters = new List<string>();
+            List<string> checkedNameFilters = new List<string>();
+            List<string> checkedEventFilters = new List<string>();
+            List<string> checkedParameterFilters = new List<string>();
 
             foreach (var key in formCollection.Keys)
             {
                 if (key != "__RequestVerificationToken")
                 {
-                    checkedFilters.Add(key);
+                    if (key.StartsWith("n_"))
+                    {
+                        checkedNameFilters.Add(key.Substring(2));
+                    }
+                    if (key.StartsWith("e_"))
+                    {
+                        checkedEventFilters.Add(key.Substring(2));
+                    }
+                    if (key.StartsWith("p_"))
+                    {
+                        checkedParameterFilters.Add(key.Substring(2));
+                    }
                 }
             }
 
-            return RedirectToAction(nameof(Index), new { filters = checkedFilters });
+            return RedirectToAction(nameof(Index), new { filtersName = checkedNameFilters, filtersEvent = checkedEventFilters, filtersParameter = checkedParameterFilters});
         }
     }
 }
