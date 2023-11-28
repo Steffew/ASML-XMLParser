@@ -5,8 +5,6 @@ namespace Business
 {
     public class MachineService
     {
-        //TODO: methode toevoegen die dto's omvormt naar models.
-        //Create and sending machines to DAL layer
         public void CreateAndSend(Machine newMachine)
         {
             MachineDTO machineDto = new MachineDTO();
@@ -28,7 +26,6 @@ namespace Business
             }
         }
 
-        //Getting machines from database
         public List<Machine> GetAll()
         {
             List<MachineDTO> machineDtos = new List<MachineDTO>();
@@ -66,10 +63,7 @@ namespace Business
 
         public Machine GetById(int id)
         {
-            // TODO: methode testen nadat machinerepository correct is
-
             MachineDTO machineDto = new MachineDTO();
-            //machineDto = MachineRepository.GetById(id); //TODO: machinerepository method toevoegen.
             Machine machine = new Machine(machineDto.MachineName);
             machine.Id = machineDto.MachineID;
 
@@ -94,8 +88,6 @@ namespace Business
 
         public Machine GetByName(string name)
         {
-            // TODO: methode testen nadat machinerepository correct is
-
             MachineDTO machineDto = new MachineDTO();
             MachineRepository machineRepository = new MachineRepository();
             machineDto = machineRepository.LoadMachineByName(name);
@@ -121,13 +113,13 @@ namespace Business
             return machine;
         }
 
-        public int GetTotalAmountOfMachines()
+        public int GetTotalMachines()
         {
             ServerConnection serverConnection = new ServerConnection();
             return serverConnection.LoadAllData().Count;
         }
 
-        public int GetTotalAmountOfEvents()
+        public int GetTotalEvents()
         {
             int i = 0;
             ServerConnection serverConnection = new ServerConnection();
@@ -142,7 +134,7 @@ namespace Business
             return i;
         }
 
-        public int GetTotalAmountOfParameters()
+        public int GetTotalParameters()
         {
             int j = 0;
             ServerConnection serverConnection = new ServerConnection();

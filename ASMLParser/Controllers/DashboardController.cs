@@ -23,24 +23,24 @@ namespace ASMLXMLParser.Controllers
             foreach (Machine machine in machineService.GetAll())
             {
                 List<EventViewModel> events = new();
-                foreach(Event machineEvent in machine.Events)
+                foreach (Event machineEvent in machine.Events)
                 {
                     List<ParameterViewModel> parameters = new();
-                    foreach(Parameter parameter in machineEvent.Parameters)
+                    foreach (Parameter parameter in machineEvent.Parameters)
                     {
                         ParameterViewModel machineParameter = new(parameter.Id, parameter.Name, parameter.SourceId);
                         parameters.Add(machineParameter);
                     }
-                    EventViewModel eventView = new(machineEvent.Id, machineEvent.Name, machineEvent.SourceId,parameters);
+                    EventViewModel eventView = new(machineEvent.Id, machineEvent.Name, machineEvent.SourceId, parameters);
                     events.Add(eventView);
                 }
                 MachineViewModel machineModel = new(machine.Id, machine.Name, events);
                 machineViewModels.Add(machineModel);
             }
 
-            int totalMachines = machineService.GetTotalAmountOfMachines();
-            int totalEvents = machineService.GetTotalAmountOfEvents();
-            int totalParameters = machineService.GetTotalAmountOfParameters();
+            int totalMachines = machineService.GetTotalMachines();
+            int totalEvents = machineService.GetTotalEvents();
+            int totalParameters = machineService.GetTotalParameters();
             DashboardViewModel dashboardView = new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels);
             return View(dashboardView);
         }
