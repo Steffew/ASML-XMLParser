@@ -14,6 +14,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ASML Unit Tests", "..\ASML Unit Tests\ASML Unit Tests.csproj", "{32BCC34A-0170-409D-A964-422688FEE0AA}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -32,6 +34,10 @@ Global
 		{FB66231D-2E95-4A12-B228-6C7DE0B1224D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FB66231D-2E95-4A12-B228-6C7DE0B1224D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FB66231D-2E95-4A12-B228-6C7DE0B1224D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32BCC34A-0170-409D-A964-422688FEE0AA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32BCC34A-0170-409D-A964-422688FEE0AA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32BCC34A-0170-409D-A964-422688FEE0AA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32BCC34A-0170-409D-A964-422688FEE0AA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
