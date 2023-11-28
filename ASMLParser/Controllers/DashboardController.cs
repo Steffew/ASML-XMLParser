@@ -33,7 +33,8 @@ namespace ASMLXMLParser.Controllers
             {
                 foreach (var filter in filters)
                 {
-                    machines = machines.Where(m => m.Name == filter).ToList();
+                    machines = machines.Where(m => filters.Any(filter => m.Name == filter)).ToList();
+
                 }
                 
             }
