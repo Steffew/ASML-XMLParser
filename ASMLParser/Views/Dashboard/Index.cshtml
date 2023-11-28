@@ -40,10 +40,10 @@
             <h3>Filters</h3>
             
             <form asp-action="Filter" asp-controller="Dashboard" method="post">
-                @foreach (MachineViewModel machine in Model.Machines)
+                @foreach (string machineName in Model.MachineNames)
                 {
-                    <input type="checkbox" name=@machine.Name>
-                    <label>@machine.Name</label>
+                    <input type="checkbox" name=@machineName>
+                    <label>@machineName</label>
                     <br>
                 }
                 <input type="submit" value="Pas toe">

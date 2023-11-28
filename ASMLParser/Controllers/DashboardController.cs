@@ -16,19 +16,29 @@ namespace ASMLXMLParser.Controllers
 
         public IActionResult Index(List<string> filters)
         {
-            if (filters != null)
-            {
-                foreach (var filter in filters)
-                {
-                    Console.WriteLine($"FLT: {filter}");
-                }
-            }
+
 
             List<MachineViewModel> machineViewModels = new List<MachineViewModel>();
             MachineService machineService = new MachineService();
-            machineService.GetAll();
+            List<string> machineNames = new List<string>();
+            
+            foreach (var machine in machineService.GetAll())
+            {
+                machineNames.Add(machine.Name);
+            }
+            
+            var machines = machineService.GetAll();
+            
+            if (filters.Any())
+            {
+                foreach (var filter in filters)
+                {
+                    machines = machines.Where(m => m.Name == filter).ToList();
+                }
+                
+            }
 
-            foreach (Machine machine in machineService.GetAll())
+            foreach (Machine machine in machines)
             {
                 List<EventViewModel> events = new();
                 foreach (Event machineEvent in machine.Events)
@@ -53,7 +63,7 @@ namespace ASMLXMLParser.Controllers
             int totalEvents = machineService.GetTotalAmountOfEvents();
             int totalParameters = machineService.GetTotalAmountOfParameters();
             DashboardViewModel dashboardView =
-                new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels);
+                new DashboardViewModel(totalMachines, machineNames, totalEvents, totalParameters, machineViewModels);
             return View(dashboardView);
         }
 
