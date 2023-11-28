@@ -12,7 +12,7 @@ namespace DAL.DTO
         public int Id { get; set; }
         public string Password { get; set; }
         public RoleDTO Role { get; set; }
-
+      
         public UserDTO(int id, string name, string password)
         {
             Id = id;

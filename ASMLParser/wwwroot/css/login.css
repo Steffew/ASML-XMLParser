@@ -1,0 +1,50 @@
+﻿html, body {
+    height: 75%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-div {
+    width: 500px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.75);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    border-radius: 4px;
+}
+
+.login-form {
+    width: 100%;
+    background: rgba(0, 0, 0, .05);
+    border: 1px solid rgba(0, 0, 0, 0.25);
+}
+
+.login-form + .login-form {
+    margin-top: 10px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.button-wrapper {
+    flex: 1;
+}
+
+.generic-button {
+    width: 100%;
+    color: rgba(255, 255, 255, 0.95);
+    transition: all 0.2s linear;
+    background-color: rgba(15, 35, 140, 1);
+    border-style: none;
+    border-radius: 4px;
+}
+
+.generic-button:hover {
+    width: 100%;
+    color: rgba(255, 255, 255, 1);
+    background-color: rgba(19, 44, 178, 1);
+}

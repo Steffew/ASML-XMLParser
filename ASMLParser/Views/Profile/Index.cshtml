@@ -1,30 +1,35 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
+﻿@model UserViewModel;
 <link rel="stylesheet" href="~/css/profile.css" asp-asp-append-version="true" />
-<div class="profile-div">
-    <div class="profile-image">
-        <img src="~/images/avatar.png" alt="Avatar" class="avatar">
-    </div>
-    <div class="profile-info">
+<div class="row profile-div">
+    <div class="col-9">
+        <h3>Profile information</h3>
         <div class="profile-part">
             <label class="fw-bold">
                 Naam
             </label>
             <span>
-                Tim
+                @Model.Name
             </span>
         </div>
         <div class="profile-part">
             <label class="fw-bold">
-                Rol
+                Role
             </label>
             <span>
-                Admin
+                @Model.Role.Name
             </span>
         </div>
+    </div>
+    <div class="col-3">
         <button type="button" class="btn btn-outline-primary profile-button">Edit</button>
     </div>
 </div>
+@if(Model.Role.Name == "Admin")
+{
+    <div class="row admin-div">
+        <div class="col">
+            <h3>Admin information</h3>
+            <p>Bla bla admin dingen</p>
+        </div>
+    </div>
+}

@@ -1,49 +1,53 @@
 ﻿.dashboard-totalborder {
     border-width: 1px;
     border-style: solid;
-    background-color: white;
-    border-color: #adacaa;
+    background-color: rgba(255, 255, 255, 0.50);
+    border-color: rgba(0, 0, 0, 0.25);
     margin-bottom: 40px;
     margin-top: 40px;
+    border-radius: 4px;
 }
+
 .dashboard-totaltext {
-    padding-top: 20px;
-    text-align: center !important;
-    line-height: 80px;
+    padding-top: 5px;
+    text-align: center;
     display: flex;
     justify-content: space-evenly;
 }
-.dashboard-totaltext span {
-    font-weight: bold;
-    font-size: 50px;
+
+    .dashboard-totaltext span {
+        font-weight: bold;
+        font-size: 36px;
+    }
+
+.dashboard-div {
+    max-height: 70vh !important;
+    overflow: auto;
 }
+
 .table, th, td {
-    border: 1px solid black;
-    background-color: white;
+    border: 1px solid rgba(0, 0, 0, 0.25);
+    background-color: rgba(255, 255, 255, 0.50);
 }
+
 .datatable {
     width: 100%;
     border-collapse: collapse;
-    border-radius: 5px;
-    border-style: hidden;
-    box-shadow: 0 0 0 1px #666;
-    overflow: hidden;
+    border-radius: 4px;
 }
-.datatable th, td {
-    padding-left: 5px;
-}
-.datatable th:not(:first-of-type){
-    width: 20%;
-}
-.datatable th:first-of-type {
-    width: 2%;
-    text-align: center;
-    color: #adacaa;
-}
-.datatable td:first-of-type {
-    text-align: center;
-    color: #adacaa;
-    height: 20px;
-}
-body {
-}
+
+    .datatable th:not(:first-of-type) {
+        width: 20%;
+    }
+
+    .datatable th:first-of-type {
+        width: 1%;
+        text-align: center;
+        color: #adacaa;
+    }
+
+    .datatable td:first-of-type {
+        text-align: center;
+        font-weight: bold;
+        color: rgba(0, 0, 0, 0.25);
+    }

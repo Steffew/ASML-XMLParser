@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using ASMLXMLParser.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace ASMLXMLParser.Controllers
 {
@@ -6,7 +7,9 @@ namespace ASMLXMLParser.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            RoleViewModel role = new RoleViewModel(1, "Admin");
+            UserViewModel user = new UserViewModel(1, "Tim", role);
+            return View(user);
         }
     }
 }

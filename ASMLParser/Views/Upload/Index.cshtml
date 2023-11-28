@@ -1,14 +1,50 @@
 ﻿@{
     ViewData["Title"] = "Upload";
 }
-
-<div class="text-center mt-5">
-    <h1 class="display-6">Upload XML</h1>
-    <hr>
-    <form asp-action="UploadFile" asp-controller="Upload" method="POST" enctype="multipart/form-data">
-        <input name="file" type="file" accept="application/xml">
-        <button type="submit">Submit</button>
-    </form>
-    <br/>
-    <p class="fw-bold alert-danger rounded-2">@ViewBag.ErrorMessage</p>
+<script src="/js/dropzone.min.js"></script>
+<link rel="stylesheet" href="/css/dropzone.min.css" type="text/css" />
+<div class="upload-center">
+    <div class="upload-div">
+        <div class="upload-border">
+            @using (Html.BeginForm("SaveFiles", "Upload", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="upload-form">
+                    <div class="form-group dropzone-text">
+                        <div id="dropzone">
+                            <div action="/Upload/SaveFiles" class="dropzone" id="uploader">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="upload-buttons">
+                    <button class="upload-btn1" asp-action="CancelFiles" asp-controller="Upload">
+                        Cancel
+                    </button>
+                    <button class="upload-btn2" asp-action="ProcessFiles" asp-controller="Upload">
+                        Upload
+                    </button>
+                </div>
+            }
+            <div class="result-message">
+            @switch (ViewBag.Message)
+            {
+                case "noxml":
+                    <span class="error">
+                        Please upload only XML files!
+                    </span>
+                    break;
+                case "succes":
+                    <span class="succes">
+                        XML files uploaded!
+                    </span>
+                    break;
+                case "nofiles":
+                    <span class="error">
+                        Please upload a file!
+                    </span>
+                    break;
+                }
+            </div>
+        </div>
+    </div>
 </div>

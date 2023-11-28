@@ -1,12 +1,10 @@
 ﻿using System.Xml;
-using DAL;
 using DAL.DTO;
 
 namespace Business
 {
     public class FileService
     {
-        public List<Machine> Machines = new List<Machine>();
         public void RetrieveFileData(Stream stream)
         {
             XmlDocument document = new XmlDocument();
@@ -15,41 +13,38 @@ namespace Business
             XmlNamespaceManager nsManager = new XmlNamespaceManager(document.NameTable);
             nsManager.AddNamespace("ns", "Cimetrix.EDAConnect.E134-0707");
 
+            XmlNode machineNode = document.SelectSingleNode("/ns:DCP", nsManager);
             XmlNodeList eventNodes = document.SelectNodes("/ns:DCP/ns:Event", nsManager);
-            //todo: List of machine should be saved and loaded from db.
-            Machine newMachine = new Machine();
+            
+            string machineName = machineNode.Attributes["Name"].Value;
+            Console.WriteLine($"Machine: {machineName}");
+            
+            Machine newMachine = new Machine(machineName);
             
             foreach (XmlNode eventNode in eventNodes)
             {
-                string eventId = eventNode.Attributes["Id"].Value;
+                string eventName = eventNode.Attributes["Id"].Value;
+                string eventSourceId = eventNode.Attributes["SourceId"].Value;
                 
-                Event newEvent = new Event(eventId);
+                Event newEvent = new Event(eventName, eventSourceId);
                 newMachine.Events.Add(newEvent);
                 
-                Console.WriteLine($"Event: {eventId}");
+                Console.WriteLine($"Event: {eventName} / {eventSourceId}");
                 
                 foreach (XmlNode parameterNode in eventNode.SelectNodes("ns:Parameters/ns:Parameter", nsManager))
                 {
-                    string name = parameterNode.Attributes["Name"].Value;
-                    string sourceId = parameterNode.Attributes["SourceId"].Value;
+                    string parameterName = parameterNode.Attributes["Name"].Value;
+                    string parameterSourceId = parameterNode.Attributes["SourceId"].Value;
                     
-                    Parameter newParameter = new Parameter(name, sourceId);
+                    Parameter newParameter = new Parameter(parameterName, parameterSourceId);
                     newEvent.Parameters.Add(newParameter);
                     
-                    Console.WriteLine($"Parameter: {name} / {sourceId}");
+                    Console.WriteLine($"Parameter: {parameterName} / {parameterSourceId}");
                 }
-                
                 Console.WriteLine();
             }
-            Machines.Add(newMachine);
-            Upload dal = new Upload();
-            MachineDTO invoer = new MachineDTO(1, "test2");
-            dal.UploadMachine(invoer);
-        }
-
-        public void SaveFileData()
-        {
-            
+            MachineService machineService = new MachineService();
+			machineService.CreateAndSend(newMachine);
         }
     }
 }

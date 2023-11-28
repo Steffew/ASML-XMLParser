@@ -1,62 +1,56 @@
 ﻿@{
     ViewData["Title"] = "Dashboard";
 }
-
+@model DashboardViewModel;
 
 <div class="dashboard-totalborder">
 	<div class="dashboard-totaltext">
 		<div>
 			<h5>Total machines</h5>
-			<span>14</span>
+			<span>@Model.TotalMachines</span>
 		</div>
 		<div>
 			<h5>Total events</h5>
-			<span>14</span>
+			<span>@Model.TotalEvents</span>
 		</div>
 		<div>
 			<h5>Total parameters</h5>
-			<span>14</span>
+			<span>@Model.TotalParameters</span>
 		</div>
 	</div>
 </div>
 
-
-<table class="datatable">
-	<tr>
-		<th></th>
-		<th>MachineID</th>
-		<th>Event</th>
-		<th>Parameter</th>
-	</tr>
-
-	@for (int i = 0; i <= 10; i++)
-	{
+<div class="dashboard-div">
+@if (Model.Machines.Count == 0)
+{
+		<span class="fw-bold text-muted">No machines found.</span>
+}
+else
+{
+	int machineRowNumber = 1;
+	<table class="datatable">
 		<tr>
-			<td>@i</td>
-			<td>SMOKE_Template</td>
-			<td>@GetRandomEvent()</td>
-			<td>@GetRandomParameter()</td>
+			<th></th>
+			<th>MachineID</th>
+			<th>Event</th>
+			<th>Parameter</th>
 		</tr>
-	}
-	@functions {
-		// Function to generate random machine events
-		string GetRandomEvent()
+		@foreach (MachineViewModel machine in Model.Machines)
 		{
-			string[] events = {"Power On", "Error", "Running", "Idle", "Shutdown"};
-			return events[new Random().Next(0, events.Length)];
+			foreach(EventViewModel eventModel in machine.Events)
+			{
+				foreach(ParameterViewModel parameter in eventModel.Parameters)
+				{
+					<tr>
+						<td>@machineRowNumber</td>
+						<td>@machine.Name</td>
+						<td>@eventModel.Name</td>
+						<td>@parameter.Name</td>
+					</tr>
+					machineRowNumber++;
+				}
+			}
 		}
-
-		// Function to generate random machine parameters
-		string GetRandomParameter()
-		{
-			string[] parameters = {"Temperature", "Pressure", "Voltage", "Speed", "Flow Rate"};
-			return parameters[new Random().Next(0, parameters.Length)];
-		}
-	}
-
-</table>
-
-
-	<h1 style=""></h1>
-
-
+	</table>
+}
+</div>
