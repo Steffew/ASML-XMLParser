@@ -37,8 +37,9 @@ namespace ASMLXMLParser.Controllers
                 MachineViewModel machineModel = new(machine.Id, machine.Name, events);
                 machineViewModels.Add(machineModel);
             }
+            
 
-            int totalMachines = machineService.GetTotalMachines();
+            int totalMachines = machineService.GetTotalMachines(machineService.GetAll());
             int totalEvents = machineService.GetTotalEvents();
             int totalParameters = machineService.GetTotalParameters();
             DashboardViewModel dashboardView = new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels);
