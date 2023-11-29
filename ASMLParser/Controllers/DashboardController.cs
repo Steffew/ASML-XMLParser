@@ -78,16 +78,26 @@ namespace ASMLXMLParser.Controllers
                 List<EventViewModel> events = new();
                 foreach (Event machineEvent in machine.Events)
                 {
+
                     List<ParameterViewModel> parameters = new();
                     foreach (Parameter parameter in machineEvent.Parameters)
                     {
-                        ParameterViewModel machineParameter = new(parameter.Id, parameter.Name, parameter.SourceId);
-                        parameters.Add(machineParameter);
+                        if (!filtersParameter.Any() || filtersParameter.Contains(parameter.Name))
+                        {
+                            
+                            ParameterViewModel machineParameter = new(parameter.Id, parameter.Name, parameter.SourceId);
+                            parameters.Add(machineParameter);
+                        }
+
                     }
 
-                    EventViewModel eventView = new(machineEvent.Id, machineEvent.Name, machineEvent.SourceId,
-                        parameters);
-                    events.Add(eventView);
+                    if (!filtersEvent.Any() || filtersEvent.Contains(machineEvent.Name))
+                    {
+                        EventViewModel eventView = new(machineEvent.Id, machineEvent.Name, machineEvent.SourceId,
+                            parameters);
+                        events.Add(eventView);
+                    }
+
                 }
 
                 MachineViewModel machineModel = new(machine.Id, machine.Name, events);
