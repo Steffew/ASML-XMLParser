@@ -9,13 +9,13 @@ namespace DAL.DTO
 {
     public class RoleDTO
     {
-        public string RoleName { get; set; }
-        public int RoleId { get; set; }
+        public string Name { get; set; }
+        public int Id { get; set; }
 
         public RoleDTO(int id, string name)
         {
-            RoleId = id;
-            RoleName = name;
+            Id = id;
+            Name = name;
         }
         public RoleDTO()
         {
