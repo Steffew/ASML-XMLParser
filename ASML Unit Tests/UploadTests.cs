@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop.Implementation;
 using Moq;
+using System.Runtime.InteropServices;
 using System.Text;
 using System.Xml;
 
@@ -15,7 +16,7 @@ namespace ASML_Unit_Tests
     public class Tests
     {
         private Mock<ILogger<DashboardController>> _logger;
-        private readonly FileService FileService = new FileService();
+        private FileService serviceTest;
         private Mock<IWebHostEnvironment> hostEnv;
         private UploadController uploadcontroller;
         private Mock<IFormFile> mockfile;
@@ -23,18 +24,19 @@ namespace ASML_Unit_Tests
         [SetUp]
         public void Setup()
         {
+            serviceTest = new();
             _logger = new();
             hostEnv = new();
             mockfile = new();
             MockFileSetup();
+            var tempData = HostEnvSetup();
             uploadcontroller = new(_logger.Object, hostEnv.Object);
-            
+            uploadcontroller.TempData = tempData;
         }
 
         public void MockFileSetup()
         {
             var filecontent = "Unit Test";
-            var filename = "UnitTest.XML";
             var ms = new MemoryStream();
             var writer = new StreamWriter(ms);
             writer.Write(filecontent);
@@ -42,19 +44,21 @@ namespace ASML_Unit_Tests
             ms.Position = 0;
 
             mockfile.Setup(_ => _.OpenReadStream()).Returns(ms);
-            mockfile.Setup(_ => _.FileName).Returns(filename);
             mockfile.Setup(_ => _.Length).Returns(ms.Length);
         }
 
-        [Test]
-        public void TestUploadView()
+        public TempDataDictionary HostEnvSetup()
         {
-            // Arrange
+            hostEnv.Setup(_ => _.WebRootPath).Returns("~\\ASMLParser\\wwwroot");
             var httpContext = new DefaultHttpContext();
             var tempData = new TempDataDictionary(httpContext, Mock.Of<ITempDataProvider>());
             tempData["Result"] = "success";
-            uploadcontroller.TempData = tempData;
+            return tempData;
+        }
 
+        [Test]
+        public void TestIfControllerLoads()
+        {
             // Act
             var result = uploadcontroller.Index() as ViewResult;
 
@@ -66,12 +70,13 @@ namespace ASML_Unit_Tests
         public void TestIfUploadedFilesGetSaved()
         {
             // Arrange
+            var filename = "Test.xml";
+            mockfile.Setup(_ => _.FileName).Returns(filename);
             var file = mockfile.Object;
             var filecontent = "Unit Test";
             var contentBytes = Encoding.UTF8.GetBytes(filecontent);
             var stream = new MemoryStream(contentBytes);
             mockfile.Setup(f => f.OpenReadStream()).Returns(stream);
-            hostEnv.Setup(_ => _.WebRootPath).Returns("~\\ASMLParser\\wwwroot");
             string filepath = Path.Combine("~\\ASMLParser\\wwwroot" + "Files");
 
             // Act 
@@ -83,13 +88,36 @@ namespace ASML_Unit_Tests
             using (var reader = new StreamReader(stream))
             {
                 var actualContent = reader.ReadToEnd();
-                Assert.AreEqual(filecontent, actualContent);
+                Assert.AreEqual(actualContent, filecontent);
             }
         }
 
         [Test]
-        public void test1() 
+        public void UploadWithNoFiles() 
         {
+            // Act
+            uploadcontroller.ProcessFiles();
+            var tempdata = uploadcontroller.TempData;
+
+            // Assert
+            Assert.AreEqual("nofiles", tempdata["Result"]);
+        }
+
+        [Test]
+        public void UploadFileThatsNotAnXml()
+        {
+            // Arrange
+            var filename = "NotAnXml.pdf";
+            mockfile.Setup(_ => _.FileName).Returns(filename);
+            var file = mockfile.Object;
+
+            // Act 
+            uploadcontroller.SaveFiles(file);
+            uploadcontroller.ProcessFiles();
+            var tempdata = uploadcontroller.TempData;
+
+            // Arrange
+            Assert.AreEqual("noxml", tempdata["Result"]);
 
         }
     }
