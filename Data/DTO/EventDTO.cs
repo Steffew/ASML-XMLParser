@@ -14,6 +14,7 @@ namespace DAL.DTO
         public string EventSourceID { get; set; }
         public List<ParameterDTO> Parameters { get; set; } = new();
 
+
         public EventDTO(int id, string name, string sourceid)
         {
             EventID = id;
