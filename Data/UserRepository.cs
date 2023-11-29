@@ -52,7 +52,7 @@ namespace DAL
 
         public UserDTO GetUserById(int id)
         {
-            SqlCommand getUser = new(("SELECT [UserID], [UserName], [Password], Role.RoleName FROM [dbo].[User] INNER JOIN Role on [dbo].[User].[RoleID] = Role.RoleID WHERE [UserId] = " + id);
+            SqlCommand getUser = new("SELECT [UserID], [UserName], [Password], Role.RoleName FROM [dbo].[User] INNER JOIN Role on [dbo].[User].[RoleID] = Role.RoleID WHERE [UserId] = " + id);
             SqlDataReader dataReader = con.LoadData(getUser);
             dataReader.Read();
             RoleDTO role = new(dataReader.GetInt32(3), dataReader.GetString(5));
@@ -63,7 +63,7 @@ namespace DAL
 
         public UserDTO GetUserByName(string username)
         {
-            SqlCommand getUser = new(("SELECT [UserID], [UserName], [Password], Role.RoleName FROM [dbo].[User] INNER JOIN Role on [dbo].[User].[RoleID] = Role.RoleID WHERE [UserName0 = " + username);
+            SqlCommand getUser = new("SELECT [UserID], [UserName], [Password], Role.RoleName FROM [dbo].[User] INNER JOIN Role on [dbo].[User].[RoleID] = Role.RoleID WHERE [UserName0 = " + username);
             SqlDataReader dataReader = con.LoadData(getUser);
             dataReader.Read();
             RoleDTO role = new(dataReader.GetInt32(3), dataReader.GetString(5));
