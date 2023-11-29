@@ -65,7 +65,7 @@
                         <div class="border border-secondary rounded p-2 bg-white col-sm-auto m-3">
                             @foreach (string eventName in Model.FilterViewModel.EventNames)
                             {
-                                <input @(Model.FilterViewModel.MachineNameFilters.Contains(eventName) ? "checked" : "") type="checkbox" name="e_@eventName">
+                                <input @(Model.FilterViewModel.MachineEventFilters.Contains(eventName) ? "checked" : "") type="checkbox" name="e_@eventName">
                                 <label>@eventName</label>
                                 <br>
                             }
@@ -81,7 +81,7 @@
                         <div class="border border-secondary rounded p-2 bg-white col-sm-auto m-3">
                             @foreach (string parameterName in Model.FilterViewModel.ParameterNames)
                             {
-                                <input @(Model.FilterViewModel.MachineNameFilters.Contains(parameterName) ? "checked" : "") type="checkbox" name="p_@parameterName">
+                                <input @(Model.FilterViewModel.MachineParameterFilters.Contains(parameterName) ? "checked" : "") type="checkbox" name="p_@parameterName">
                                 <label>@parameterName</label>
                                 <br>
                             }

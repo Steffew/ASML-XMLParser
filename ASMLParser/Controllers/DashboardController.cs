@@ -52,11 +52,25 @@ namespace ASMLXMLParser.Controllers
 
             if (filtersName.Any())
             {
-                    machines = machines.Where(m => filtersName.Any(filter => m.Name == filter)).ToList();
-                    //TODO: filteren toevoegen voor events en parameters.
+                machines = machines.Where(m => filtersName.Any(filter => m.Name == filter))
+                    .ToList();
             }
 
-            FilterViewModel filterViewModel = new FilterViewModel(machineNames, filtersName, eventNames, parameterNames);
+            if (filtersEvent.Any())
+            {
+                machines = machines.Where(m => m.Events.Any(evt => filtersEvent.Any(filter => evt.Name == filter)))
+                    .ToList();
+            }
+
+            if (filtersParameter.Any())
+            {
+                machines = machines.Where(m =>
+                        m.Events.Any(evt => evt.Parameters.Any(p => filtersParameter.Any(filter => p.Name == filter))))
+                    .ToList();
+            }
+
+            FilterViewModel filterViewModel =
+                new FilterViewModel(machineNames, filtersName, eventNames, filtersEvent, parameterNames, filtersParameter);
 
             foreach (Machine machine in machines)
             {
@@ -114,10 +128,12 @@ namespace ASMLXMLParser.Controllers
                     {
                         checkedNameFilters.Add(key.Substring(2));
                     }
+
                     if (key.StartsWith("e_"))
                     {
                         checkedEventFilters.Add(key.Substring(2));
                     }
+
                     if (key.StartsWith("p_"))
                     {
                         checkedParameterFilters.Add(key.Substring(2));
@@ -125,7 +141,12 @@ namespace ASMLXMLParser.Controllers
                 }
             }
 
-            return RedirectToAction(nameof(Index), new { filtersName = checkedNameFilters, filtersEvent = checkedEventFilters, filtersParameter = checkedParameterFilters});
+            return RedirectToAction(nameof(Index),
+                new
+                {
+                    filtersName = checkedNameFilters, filtersEvent = checkedEventFilters,
+                    filtersParameter = checkedParameterFilters
+                });
         }
     }
 }
