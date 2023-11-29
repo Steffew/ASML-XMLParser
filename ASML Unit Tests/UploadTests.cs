@@ -39,5 +39,16 @@ namespace ASML_Unit_Tests
             // Assert
             Assert.IsNull(result.ViewName);
         }
+
+        [Test]
+        public void TestIfUploadedFilesGetSaved()
+        {
+            // Arrange
+
+            // Act
+
+            // Assert
+            Assert.
+        }
     }
 }
