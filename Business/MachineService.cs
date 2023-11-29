@@ -55,7 +55,7 @@ namespace Business
 
                 foreach (var _event in machineDto.Events)
                 {
-                    Event newEvent = new Event(_event.EventName, _event.EventSourceID);
+                    Event newEvent = new(_event.EventName, _event.EventSourceID);
                     newEvent.Id = _event.EventID;
                     newEvent.Parameters = new List<Parameter>();
 
