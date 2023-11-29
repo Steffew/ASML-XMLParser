@@ -11,5 +11,6 @@ namespace DAL.DTO
         public string Name { get; set; }
         public int Id { get; set; }
         public RoleDTO Role { get; set; }
+        public bool IsActive { get; set; }
     }
 }

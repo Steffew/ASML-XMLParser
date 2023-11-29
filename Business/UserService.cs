@@ -13,14 +13,14 @@ namespace Business
         //TODO: string role naar bool IsAdmin in UserDto en User.cs
         //TODO: checken wat dadelijk de daadwerkelijke benaming is.
 
-        public bool CheckIfAdmin()
+
+        //getActiveUser -> checked alleen wie actief is
+        //role wordt gehaald uit DTO
+        public bool CheckIfUserIsActive() //moet nog gechecked worden
         {
-            //Repository repository =  new Repository():
+            UserDTO userDto = GetActiveUser();
 
-            UserDTO userDto = new UserDTO();
-            //userDto = repository.GetUser();
-
-            if (userDto.Role.Name == "Admin")
+            if (userDto != null && userDto.IsActive)
             {
                 return true;
             }
@@ -29,58 +29,84 @@ namespace Business
                 return false;
             }
         }
-
-        public User GetById(int id)
+        private UserDTO GetActiveUser()
         {
-            UserDTO userDto = new UserDTO();
-            //userDto = UserRepository.GetById(int id); // TODO: repository methode toevoegen.
-
-            // RoleDTO roleDto = new RoleDTO();
-            // user.Role = new Role(roleDto.Id, roleDto.Name);
-
-            User user = new User(userDto.Id, userDto.Name);
-
-            user.Role = new Role(userDto.Role.Id, userDto.Role.Name);
-
-            return user;
+            UserDTO activeUser = new UserDTO
+            {
+                IsActive = true 
+            };
+            return activeUser;
         }
 
-        public void UpdateUserRole(int userId, Role role)
-        {
-            //UserRepository userRepository = new UserRepository();
-
-            RoleDTO roleDto = new RoleDTO();
-            roleDto.Name = role.Name;
-            roleDto.Id = role.Id;
-
-            try
+        //dit weg -> active user in de plaats
+        /*public bool CheckIfAdmin() //1 methode role check
             {
-                //userRepository.UpdateUserRole(userId, roleDto);
-            }
-            catch (Exception e)
+                //Repository repository =  new Repository():
+
+                UserDTO userDto = new UserDTO();
+                //userDto = repository.GetUser();
+
+                if (userDto.Role.Name == "Admin")
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }*/
+
+            public User GetById(int id)
             {
-                Console.WriteLine(e);
-                throw;
-            }
-        }
+                UserDTO userDto = new UserDTO();
+                //userDto = UserRepository.GetById(int id); // TODO: repository methode toevoegen.
 
-        public List<User> GetAll()
-        {
-            List<User> users = new List<User>();
+                // RoleDTO roleDto = new RoleDTO();
+                // user.Role = new Role(roleDto.Id, roleDto.Name);
 
-            List<UserDTO> userDtos = new List<UserDTO>();
-            //userDto = UserRepository.GetAll(); // TODO: repository methode toevoegen.
+                User user = new User(userDto.Id, userDto.Name);
 
-            foreach (var userDto in userDtos)
-            {
-                User newUser = new User(userDto.Id, userDto.Name);
-                Role newRole = new Role(userDto.Role.Id, userDto.Role.Name);
+                user.Role = new Role(userDto.Role.Id, userDto.Role.Name);
 
-                newUser.Role = newRole;
-                users.Add(newUser);
+                return user;
             }
 
-            return users;
+            public void UpdateUserRole(int userId, Role role)
+            {
+                //UserRepository userRepository = new UserRepository();
+
+                RoleDTO roleDto = new RoleDTO();
+                roleDto.Name = role.Name;
+                roleDto.Id = role.Id;
+
+                try
+                {
+                    //userRepository.UpdateUserRole(userId, roleDto);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                    throw;
+                }
+            }
+
+            public List<User> GetAll()
+            {
+                List<User> users = new List<User>();
+
+                List<UserDTO> userDtos = new List<UserDTO>();
+                //userDto = UserRepository.GetAll(); // TODO: repository methode toevoegen.
+
+                foreach (var userDto in userDtos)
+                {
+                    User newUser = new User(userDto.Id, userDto.Name);
+                    Role newRole = new Role(userDto.Role.Id, userDto.Role.Name);
+
+                    newUser.Role = newRole;
+                    users.Add(newUser);
+                }
+
+                return users;
+            }
         }
     }
-}
