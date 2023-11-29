@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<DCP Id="779075fc-38b0-4d01-ba1d-6cd340da9bd9" Name="UnitTest" Persistent="True" Interval="0" Defined="True" DefinedBy="Me" TimeDefined="2012-05-21T13:56:07.028+02:00"
+   xmlns="Cimetrix.EDAConnect.E134-0707">
+   <Description />
+   <Event Id="E40-1106:PJSM:1:Initial-Queued" SourceId="Equipment/Exposure">
+      <Parameters>
+         <Parameter Name="LotId" SourceId="Equipment/Exposure" />
+         <Parameter Name="LotStateNr" SourceId="Equipment/Exposure" />
+      </Parameters>
+   </Event>
+   <Event Id="E40-1106:PJSM:4:PreProcessing-Processing" SourceId="Equipment/Exposure">
+      <Parameters>
+         <Parameter Name="LotId" SourceId="Equipment/Exposure" />
+         <Parameter Name="LotStateNr" SourceId="Equipment/Exposure" />
+      </Parameters>
+   </Event>
+   <Event Id="E40-1106:PJSM:6:Processing-FullyProcessed" SourceId="Equipment/Exposure">
+      <Parameters>
+         <Parameter Name="LotId" SourceId="Equipment/Exposure" />
+         <Parameter Name="LotStateNr" SourceId="Equipment/Exposure" />
+         <Parameter Name="LotResult" SourceId="Equipment/Exposure" />
+      </Parameters>
+   </Event>
+   <Event Id="LotProcessing:WaferStarted" SourceId="Equipment/Exposure">
+      <Parameters>
+         <Parameter Name="LotId" SourceId="Equipment/Exposure" />
+         <Parameter Name="WfrResult" SourceId="Equipment/Exposure" />
+      </Parameters>
+   </Event>
+   <Event Id="LotProcessing:ImageStarted" SourceId="Equipment/Exposure">
+      <Parameters>
+         <Parameter Name="ImgId" SourceId="Equipment/Exposure" />
+      </Parameters>
+   </Event>
+   <Event Id="LotProcessing:ImageDone" SourceId="Equipment/Exposure">
+      <Parameters>
+         <Parameter Name="ImgId" SourceId="Equipment/Exposure" />
+         <Parameter Name="ImgDone" SourceId="Equipment/Exposure" />
+         <Parameter Name="Comment" SourceId="Equipment/Exposure" />
+      </Parameters>
+   </Event>
+   <Event Id="LotProcessing:WaferDone" SourceId="Equipment/Exposure">
+      <Parameters>
+         <Parameter Name="LotId" SourceId="Equipment/Exposure" />
+         <Parameter Name="WfrResult" SourceId="Equipment/Exposure" />
+         <Parameter Name="LotSize" SourceId="Equipment/Exposure" />
+      </Parameters>
+   </Event>
+</DCP>
+
