@@ -70,7 +70,8 @@ namespace ASMLXMLParser.Controllers
             }
 
             FilterViewModel filterViewModel =
-                new FilterViewModel(machineNames, filtersName, eventNames, filtersEvent, parameterNames, filtersParameter);
+                new FilterViewModel(machineNames, filtersName, eventNames, filtersEvent, parameterNames,
+                    filtersParameter);
 
             foreach (Machine machine in machines)
             {
@@ -93,11 +94,38 @@ namespace ASMLXMLParser.Controllers
                 machineViewModels.Add(machineModel);
             }
 
-            int totalMachines = machineService.GetTotalAmountOfMachines();
-            int totalEvents = machineService.GetTotalAmountOfEvents();
-            int totalParameters = machineService.GetTotalAmountOfParameters();
+            // int totalMachines = machineService.GetTotalAmountOfMachines(); //TODO: methode met machines toevoegen.
+            // int totalEvents = machineService.GetTotalAmountOfEvents();
+            // int totalParameters = machineService.GetTotalAmountOfParameters();
+
+            List<string> uniqueMachines = new List<string>();
+            List<string> uniqueParameters = new List<string>();
+            List<string> uniqueEvents = new List<string>();
+
+            foreach (var machine in machines)
+            {
+                if (!uniqueMachines.Contains(machine.Name))
+                {
+                    uniqueMachines.Add(machine.Name);
+                }
+                foreach (var _event in machine.Events)
+                {
+                    if (!uniqueEvents.Contains(_event.Name))
+                    {
+                        uniqueEvents.Add(_event.Name);
+                    }
+                    foreach (var parameter in _event.Parameters)
+                    {
+                        if (!uniqueParameters.Contains(parameter.Name))
+                        {
+                            uniqueParameters.Add(parameter.Name);
+                        }
+                    }
+                }
+            }
+
             DashboardViewModel dashboardView =
-                new DashboardViewModel(totalMachines, totalEvents, totalParameters, machineViewModels, filterViewModel);
+                new DashboardViewModel(uniqueMachines.Count, uniqueEvents.Count, uniqueParameters.Count, machineViewModels, filterViewModel);
             return View(dashboardView);
         }
 
