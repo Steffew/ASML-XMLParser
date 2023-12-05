@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-using DAL;
 
 namespace Business
 {
@@ -13,13 +12,12 @@ namespace Business
     {
         //TODO: string role naar bool IsAdmin in UserDto en User.cs 
         //TODO: checken wat dadelijk de daadwerkelijke benaming is.
-        UserRepository userRepository = new UserRepository();
 
         public bool checkIfAdmin()
         {
             //Repository repository =  new Repository():
 
-            UserDTO userDto = new UserDTO();
+            UserDTO userDto = new();
             //userDto = repository.GetUser();
 
             if (userDto.Role.Name == "Admin")
@@ -32,12 +30,16 @@ namespace Business
             }
         }
 
-        public User GetByName(string name)
+        public User GetById(int id)
         {
-            UserDTO userDto = new UserDTO();
-            userDto = userRepository.LoadUserByName(name); // TODO: repository methode toevoegen.
+            UserDTO userDto = new();
+            //userDto = UserRepository.GetById(int id); // TODO: repository methode toevoegen.
+
+            // RoleDTO roleDto = new RoleDTO();
+            // user.Role = new Role(roleDto.Id, roleDto.Name); 
 
             User user = new User(userDto.Id, userDto.Name);
+
             user.Role = new Role(userDto.Role.Id, userDto.Role.Name);
 
             return user;
@@ -45,9 +47,9 @@ namespace Business
 
         public void UpdateUserRole(int userId, Role role)
         {
-            RoleDTO roleDto = new RoleDTO();
-            roleDto.Name = role.Name;
-            roleDto.Id = role.Id;
+            //UserRepository userRepository = new UserRepository();
+
+            RoleDTO roleDto = new(role.Id, role.Name);
 
             try
             {
@@ -64,11 +66,15 @@ namespace Business
         {
             List<User> users = new List<User>();
 
-            List<UserDTO> userDtos = userRepository.LoadAllUsers();
-            foreach (UserDTO userDto in userDtos)
+            List<UserDTO> userDtos = new List<UserDTO>();
+            //userDto = UserRepository.GetAll(); // TODO: repository methode toevoegen.
+
+            foreach (var userDto in userDtos)
             {
-                User newUser = new User(userDto.Id, userDto.Name);
-                newUser.Role = new Role(userDto.Role.Id, userDto.Role.Name);
+                User newUser = new(userDto.Id, userDto.Name);
+                Role newRole = new(userDto.Role.Id, userDto.Role.Name);
+
+                newUser.Role = newRole;
                 users.Add(newUser);
             }
 
