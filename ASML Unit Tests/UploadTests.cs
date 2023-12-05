@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.ViewFeatures;
 using Microsoft.Extensions.Logging;
 using Microsoft.JSInterop.Implementation;
 using Moq;
+using NuGet.ContentModel;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Xml;
@@ -96,10 +97,11 @@ namespace ASML_Unit_Tests
         public void UploadWithNoFiles() 
         {
             // Act
-            uploadcontroller.ProcessFiles();
+            var result = uploadcontroller.ProcessFiles();
             var tempdata = uploadcontroller.TempData;
 
             // Assert
+            Assert.IsNotNull(result);
             Assert.AreEqual("nofiles", tempdata["Result"]);
         }
 
@@ -113,12 +115,37 @@ namespace ASML_Unit_Tests
 
             // Act 
             uploadcontroller.SaveFiles(file);
-            uploadcontroller.ProcessFiles();
+            var result = uploadcontroller.ProcessFiles();
             var tempdata = uploadcontroller.TempData;
 
-            // Arrange
+            // Assert
+            Assert.IsNotNull(result);
             Assert.AreEqual("noxml", tempdata["Result"]);
 
         }
+
+        [Test]
+        public void CancelFilesTest()
+        {
+            // Arrange
+            var filename = "Test.xml";
+            mockfile.Setup(_ => _.FileName).Returns(filename);
+            var file = mockfile.Object;
+            var filecontent = "Unit Test";
+            var contentBytes = Encoding.UTF8.GetBytes(filecontent);
+            var stream = new MemoryStream(contentBytes);
+            mockfile.Setup(f => f.OpenReadStream()).Returns(stream);
+            string filepath = Path.Combine("~\\ASMLParser\\wwwroot" + "Files");
+
+            // Act
+            uploadcontroller.SaveFiles(file);
+            var result = uploadcontroller.CancelFiles();
+
+            // Assert
+            Assert.IsNotNull(result);
+            Assert.IsFalse(File.Exists(filepath));
+        }
+
+        // Could potentially test uploading a file, but not sure if that's necessary
     }
 }
