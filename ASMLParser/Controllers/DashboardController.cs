@@ -104,31 +104,38 @@ namespace ASMLXMLParser.Controllers
                 machineViewModels.Add(machineModel);
             }
 
-            // int totalMachines = machineService.GetTotalAmountOfMachines(); //TODO: methode met machines toevoegen.
-            // int totalEvents = machineService.GetTotalAmountOfEvents();
-            // int totalParameters = machineService.GetTotalAmountOfParameters();
-
             List<string> uniqueMachines = new List<string>();
             List<string> uniqueParameters = new List<string>();
             List<string> uniqueEvents = new List<string>();
 
             foreach (var machine in machines)
             {
-                if (!uniqueMachines.Contains(machine.Name))
+                if (filtersName.Count == 0 || filtersName.Contains(machine.Name)) //Neemt nu ook de filters mee in de bepaling van het aantal machines, events en parameters.
                 {
-                    uniqueMachines.Add(machine.Name);
-                }
-                foreach (var _event in machine.Events)
-                {
-                    if (!uniqueEvents.Contains(_event.Name))
+                    if (!uniqueMachines.Contains(machine.Name))
                     {
-                        uniqueEvents.Add(_event.Name);
+                        uniqueMachines.Add(machine.Name);
                     }
-                    foreach (var parameter in _event.Parameters)
+
+                    foreach (var _event in machine.Events)
                     {
-                        if (!uniqueParameters.Contains(parameter.Name))
+                        if (filtersEvent.Count == 0 || filtersEvent.Contains(_event.Name))
                         {
-                            uniqueParameters.Add(parameter.Name);
+                            if (!uniqueEvents.Contains(_event.Name))
+                            {
+                                uniqueEvents.Add(_event.Name);
+                            }
+
+                            foreach (var parameter in _event.Parameters)
+                            {
+                                if (filtersParameter.Count == 0 || filtersParameter.Contains(parameter.Name))
+                                {
+                                    if (!uniqueParameters.Contains(parameter.Name))
+                                    {
+                                        uniqueParameters.Add(parameter.Name);
+                                    }
+                                }
+                            }
                         }
                     }
                 }
