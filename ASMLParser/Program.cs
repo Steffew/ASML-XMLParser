@@ -16,15 +16,6 @@ if (!app.Environment.IsDevelopment())
     app.UseHsts();
 }
 
-// Test LoadAllData
-// ServerConnection test = new();
-// test.LoadAllData();
-
-// Upload Test
-UploadTest test = new();
-test.TestUpload();
-
-
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 
