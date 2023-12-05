@@ -1,16 +1,4 @@
-using ASMLXMLParser.Controllers;
-using Business;
-using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.ViewFeatures;
-using Microsoft.Extensions.Logging;
-using Microsoft.JSInterop.Implementation;
 using Moq;
-using NuGet.ContentModel;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Xml;
 
 namespace ASML_Unit_Tests
 {

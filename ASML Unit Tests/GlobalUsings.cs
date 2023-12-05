@@ -1,1 +1,13 @@
 global using NUnit.Framework;
+global using ASMLXMLParser.Controllers;
+global using Business;
+global using Microsoft.AspNetCore.Hosting;
+global using Microsoft.AspNetCore.Http;
+global using Microsoft.AspNetCore.Mvc;
+global using Microsoft.AspNetCore.Mvc.ViewFeatures;
+global using Microsoft.Extensions.Logging;
+global using Microsoft.JSInterop.Implementation;
+global using NuGet.ContentModel;
+global using System.Runtime.InteropServices;
+global using System.Text;
+global using System.Xml;
