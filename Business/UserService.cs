@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using DAL;
 
 namespace Business
 {
@@ -67,7 +68,8 @@ namespace Business
             List<User> users = new List<User>();
 
             List<UserDTO> userDtos = new List<UserDTO>();
-            //userDto = UserRepository.GetAll(); // TODO: repository methode toevoegen.
+            UserRepository userRepository = new UserRepository();
+            userDtos = userRepository.GetUsersAndRoles(); // TODO: repository methode toevoegen.
 
             foreach (var userDto in userDtos)
             {
