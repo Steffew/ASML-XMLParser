@@ -10,28 +10,27 @@ using System.Threading.Tasks;
 using DAL;
 using Microsoft.IdentityModel.Tokens;
 using System.Net.Mail;
+using Azure.Identity;
 
 namespace DAL
 {
     public class Upload
     {
+
+        ServerConnection dal = new ServerConnection();
+
         public void UploadMachine(MachineDTO machine)
         {
-            ServerConnection dal = new ServerConnection();
             MachineRepository machineRepository = new();
             MachineDTO machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
-            int machineId;
-            if (machineCheck.MachineName == null)
+            if (machineCheck.MachineName != null)
             {
-                SqlCommand command = new SqlCommand("INSERT INTO [dbo].[Machine](MachineName) VALUES('" + machine.MachineName + "');");
-                dal.UploadData(command);
-                machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
-                machineId = machineCheck.MachineID;
+                machineRepository.RemoveMachineById(machineCheck.MachineID);
             }
-            else
-            {
-                machineId = machineCheck.MachineID;
-            }
+            SqlCommand command = new SqlCommand("INSERT INTO [dbo].[Machine](MachineName) VALUES('" + machine.MachineName + "');");
+            dal.UploadData(command);
+            machineCheck = machineRepository.LoadMachineByName(machine.MachineName);
+            int machineId = machineCheck.MachineID;
             List<string> eventNames = new();
             List<string> parameterNames = new();
             List<EventDTO> machineEvents = machineRepository.LoadEventsByMachineID(machineId);
@@ -74,6 +73,21 @@ namespace DAL
                     }
                 }
             }   
+        }
+
+        public void CreateUser(UserDTO userDTO)
+        {
+            SqlCommand userCommand = new("INSERT INTO [dbo].[User](UserName, Password, RoleID) VALUES(@Username, @Password, RoleID)");
+            userCommand.Parameters.AddWithValue("@Username", userDTO.Name);
+            userCommand.Parameters.AddWithValue("@Password", userDTO.Password);
+            userCommand.Parameters.AddWithValue("@RoleId", userDTO.Role.Id);
+            dal.UploadData(userCommand);
+        }
+
+        public void CreateRole(RoleDTO roleDTO)
+        {
+            SqlCommand roleCommand = new("INSERT INTO Role(RoleName) VALUES(@RoleName)");
+            roleCommand.Parameters.AddWithValue("@RoleName", roleDTO.Name);
         }
     }
 }
