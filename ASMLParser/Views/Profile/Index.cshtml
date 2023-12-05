@@ -31,22 +31,32 @@
             <h3>Admin panel</h3>
             <p>Bla bla admin dingen</p>
         </div>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">First</th>
-                    <th scope="col">Last</th>
-                    <th scope="col">Handle</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <th scope="row">1</th>
-                    <td>Mark</td>
-                    <td>Otto</td>
-                </tr>
-            </tbody>
-        </table>
+        @if(Model.Users.Count != 0)
+        {
+            <span>No users found</span>
+        }
+        else
+        {
+            int userNumber = 1;
+            <table>
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Username</th>
+                        <th scope="col">Edit</th>
+                    </tr>
+                </thead>
+            @foreach(UserViewModel user in Model.Users)
+            {
+                <tbody>
+                    <tr>
+                        <th scope="row">@userNumber++</th>
+                        <td>@user.Name</td>
+                        <td>Edit</td>
+                    </tr>
+                </tbody>
+            }
+            </table>
+        }
     </div>
 }
