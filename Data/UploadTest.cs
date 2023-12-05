@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -39,41 +38,6 @@ namespace DAL
             testmachine.Events.Add(event1);
             testmachine.Events.Add(event2);
             Upload upload = new();
-            upload.UploadMachine(testmachine);
-        }
-
-        public void deleteTest(bool EenTwee)
-        {
-            Upload upload = new();
-            MachineDTO testmachine = new();
-            testmachine.MachineName = "DeleteTestMachine";
-            if (EenTwee)
-            {
-                EventDTO event1 = new();
-                ParameterDTO parameter1 = new();
-                ParameterDTO parameter2 = new();
-                event1.EventName = "OutdatedEvent";
-                event1.EventSourceID = "OutdatedEventSource";
-                parameter1.ParameterName = "OutdatedParameter1";
-                parameter2.ParameterName = "OutdatedParameter2";
-                parameter1.ParameterSourceID = "OutdatedParameterSource1";
-                parameter2.ParameterSourceID = "OutdatedParameterSource1";
-                event1.Parameters.Add(parameter1);
-                event1.Parameters.Add(parameter2);
-                testmachine.Events.Add(event1);
-
-            }
-            else
-            {
-                EventDTO event1 = new();
-                ParameterDTO parameter1 = new();
-                event1.EventName = "NewEvent";
-                event1.EventSourceID = "OutdatedShouldBeDeleted";
-                parameter1.ParameterName = "NewParameter";
-                parameter1.ParameterSourceID = "ONly1ParameterShouldBeLeft";
-                event1.Parameters.Add(parameter1);
-                testmachine.Events.Add(event1);
-            }
             upload.UploadMachine(testmachine);
         }
     }
