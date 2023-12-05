@@ -20,14 +20,7 @@ namespace Business
         {
             UserDTO userDto = GetActiveUser();
 
-            if (userDto != null && userDto.IsActive)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return userDto != null && userDto.IsActive;
         }
         private UserDTO GetActiveUser()
         {
