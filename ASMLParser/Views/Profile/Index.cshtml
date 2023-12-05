@@ -21,7 +21,7 @@
         </div>
     </div>
     <div class="col-3">
-        <button type="button" class="btn btn-outline-primary profile-button">Edit</button>
+        <button asp-action="Edit" type="button" class="btn btn-outline-primary profile-button">Edit</button>
     </div>
 </div>
 @if(Model.CurrentUser.Role.Name == "Admin")
@@ -31,7 +31,7 @@
             <h3>Admin panel</h3>
             <p>Bla bla admin dingen</p>
         </div>
-        @if(Model.Users.Count != 0)
+        @if(Model.Users.Count == 0)
         {
             <span>No users found</span>
         }
@@ -50,11 +50,12 @@
             {
                 <tbody>
                     <tr>
-                        <th scope="row">@userNumber++</th>
+                        <th scope="row">@userNumber</th>
                         <td>@user.Name</td>
                         <td>Edit</td>
                     </tr>
                 </tbody>
+                userNumber++;
             }
             </table>
         }
