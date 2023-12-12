@@ -42,7 +42,7 @@ namespace DAL
                 DTOs.AddParameter(machineID, eventID, DataReader.GetInt32(5), DataReader.GetString(6), DataReader.GetString(7));
             }
             DataReader.Close();
-            DTOs.DebugTest();
+            // DTOs.DebugTest();
             return DTOs.machines;
         }
 
