@@ -104,45 +104,25 @@ namespace ASMLXMLParser.Controllers
                 machineViewModels.Add(machineModel);
             }
 
-            List<string> uniqueMachines = new List<string>();
-            List<string> uniqueParameters = new List<string>();
-            List<string> uniqueEvents = new List<string>();
+            List<String> uniqueMachineNames = new List<string>();
+            List<String> uniqueEventNames = new List<string>();
+            List<String> uniqueParameterNames = new List<string>();
 
-            foreach (var machine in machines)
+            foreach (var machineViewModel in machineViewModels)
             {
-                if (filtersName.Count == 0 || filtersName.Contains(machine.Name)) //Neemt nu ook de filters mee in de bepaling van het aantal machines, events en parameters.
+                foreach (var eventModel in machineViewModel.Events)
                 {
-                    if (!uniqueMachines.Contains(machine.Name))
+                    foreach (var parameter in eventModel.Parameters)
                     {
-                        uniqueMachines.Add(machine.Name);
-                    }
-
-                    foreach (var _event in machine.Events)
-                    {
-                        if (filtersEvent.Count == 0 || filtersEvent.Contains(_event.Name))
-                        {
-                            if (!uniqueEvents.Contains(_event.Name))
-                            {
-                                uniqueEvents.Add(_event.Name);
-                            }
-
-                            foreach (var parameter in _event.Parameters)
-                            {
-                                if (filtersParameter.Count == 0 || filtersParameter.Contains(parameter.Name))
-                                {
-                                    if (!uniqueParameters.Contains(parameter.Name))
-                                    {
-                                        uniqueParameters.Add(parameter.Name);
-                                    }
-                                }
-                            }
-                        }
+                        uniqueMachineNames.Add(machineViewModel.Name);
+                        uniqueEventNames.Add(eventModel.Name);
+                        uniqueParameterNames.Add(parameter.Name);
                     }
                 }
             }
 
             DashboardViewModel dashboardView =
-                new DashboardViewModel(uniqueMachines.Count, uniqueEvents.Count, uniqueParameters.Count, machineViewModels, filterViewModel);
+                new DashboardViewModel(uniqueMachineNames.Distinct().Count(), uniqueEventNames.Distinct().Count(), uniqueParameterNames.Distinct().Count(), machineViewModels, filterViewModel);
             return View(dashboardView);
         }
 
