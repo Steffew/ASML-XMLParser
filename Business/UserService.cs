@@ -34,7 +34,8 @@ namespace Business
         public User GetById(int id)
         {
             UserDTO userDto = new();
-            //userDto = UserRepository.GetById(int id); // TODO: repository methode toevoegen.
+            UserRepository userRepository = new UserRepository();
+            userDto = userRepository.GetUserById(id); // TODO: repository methode toevoegen.
 
             // RoleDTO roleDto = new RoleDTO();
             // user.Role = new Role(roleDto.Id, roleDto.Name); 

@@ -23,5 +23,12 @@ namespace ASMLXMLParser.Controllers
             ProfileViewModel profile = new ProfileViewModel(admin, usersView);
             return View(profile);
         }
+        public IActionResult EditAdmin(int id)
+        {
+            User user = userService.GetById(id);
+            RoleViewModel roleModel = new RoleViewModel(user.Role.Id, user.Role.Name);
+            UserViewModel userModel = new UserViewModel(user.Id, user.Name, roleModel);
+            return View(userModel);
+        }
     }
 }
