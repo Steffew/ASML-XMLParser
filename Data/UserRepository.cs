@@ -25,6 +25,20 @@ namespace DAL
             dataReader.Close();
             return users;
         }
+
+        public List<RoleDTO> GetRoles()
+        {
+            List<RoleDTO> roles = new();
+            SqlCommand getRoles = new("SELECT * FROM Role");
+            SqlDataReader roleReader = con.LoadData(getRoles);
+            while (roleReader.Read()) 
+            {
+                RoleDTO dto = new(roleReader.GetInt32(0), roleReader.GetString(1));
+                roles.Add(dto);
+            }
+            roleReader.Close();
+            return roles;
+        }
         public List<UserDTO> GetUsersAndRoles() 
         {
             List<UserDTO> users = new();
@@ -62,6 +76,15 @@ namespace DAL
             UserDTO user = new(dataReader.GetInt32(0), dataReader.GetString(1), dataReader.GetString(2), role);
             dataReader.Close();
             return user;
+        }
+
+        public void UpdateUser(UserDTO user)
+        {
+            SqlCommand update = new("UPDATE User SET UserName = @UserName, Password = @Password, RoleID = @RoleID WHERE Id = " + user.Id);
+            update.Parameters.AddWithValue("@UserName", user.Name);
+            update.Parameters.AddWithValue("@Password", user.Password);
+            update.Parameters.AddWithValue("@RoleID", user.Role.Id);
+            con.UploadData(update);
         }
     }
 }
