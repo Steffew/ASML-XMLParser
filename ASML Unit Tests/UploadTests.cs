@@ -133,7 +133,5 @@ namespace ASML_Unit_Tests
             Assert.IsNotNull(result);
             Assert.IsFalse(File.Exists(filepath));
         }
-
-        // Could potentially test uploading a file, but not sure if that's necessary
     }
 }
