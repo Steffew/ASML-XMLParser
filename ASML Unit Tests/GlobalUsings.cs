@@ -1,6 +1,7 @@
 global using NUnit.Framework;
 global using ASMLXMLParser.Controllers;
 global using Business;
+global using DAL;
 global using Microsoft.AspNetCore.Hosting;
 global using Microsoft.AspNetCore.Http;
 global using Microsoft.AspNetCore.Mvc;
