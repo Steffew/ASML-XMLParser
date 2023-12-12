@@ -1,22 +1,24 @@
-﻿@model UserViewModel;
+﻿@model EditViewModel;
 <link rel="stylesheet" href="~/css/profile.css" asp-asp-append-version="true" />
 <div class="row profile-div">
     <div class="col-9">
-        <form>
+        <form asp-action="EditExistingUser" asp-controller="Profile" method="POST">
             <h3>Edit profile information</h3>
             <div class="profile-part">
                 <label for="username" class="fw-bold">
                     Naam
                 </label>
-                <input id="username" name="username" type="text" value="@Model.Name">
+                <input id="username" name="username" type="text" value="@Model.User.Name">
             </div>
             <div class="profile-part">
                 <label for="role" class="fw-bold">
                     Role
                 </label>
-                <span>
+                <br />
+                @foreach(RoleViewModel role in Model.Roles)
+                {
                     
-                </span>
+                }
             </div>
         </form>
     </div>

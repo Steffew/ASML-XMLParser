@@ -28,7 +28,15 @@ namespace ASMLXMLParser.Controllers
             User user = userService.GetById(id);
             RoleViewModel roleModel = new RoleViewModel(user.Role.Id, user.Role.Name);
             UserViewModel userModel = new UserViewModel(user.Id, user.Name, roleModel);
-            return View(userModel);
+            List<Role> allRoles = userService.GetAllRoles();
+            List<RoleViewModel> allRoleModels = new List<RoleViewModel>();
+            foreach(Role role in allRoles)
+            {
+                RoleViewModel tempRoleModel = new RoleViewModel(role.Id, role.Name);
+                allRoleModels.Add(tempRoleModel);
+            }
+            EditViewModel editViewModel = new EditViewModel(userModel, allRoleModels);
+            return View(editViewModel);
         }
     }
 }
