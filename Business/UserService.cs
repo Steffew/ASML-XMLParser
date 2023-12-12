@@ -11,8 +11,14 @@ namespace Business
 {
     public class UserService
     {
+        private readonly UserRepository UserRepository;
         //TODO: string role naar bool IsAdmin in UserDto en User.cs 
         //TODO: checken wat dadelijk de daadwerkelijke benaming is.
+
+        public UserService()
+        {
+            UserRepository = new UserRepository();
+        }
 
         public bool checkIfAdmin()
         {
@@ -29,6 +35,22 @@ namespace Business
             {
                 return false;
             }
+        }
+
+        public List<Role> GetAllRoles()
+        {
+            List<RoleDTO> roleDtos = new List<RoleDTO>();
+            roleDtos = UserRepository.GetRoles();
+
+            List<Role> roles = new List<Role>();
+            
+            foreach (var roleDto in roleDtos)
+            {
+                Role newRole = new Role(roleDto.Id, roleDto.Name);
+                roles.Add(newRole);
+            }
+
+            return roles;
         }
 
         public User GetById(int id)
