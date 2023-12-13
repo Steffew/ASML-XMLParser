@@ -27,7 +27,7 @@ namespace DAL
         {
             sqlConnection.Open();
             loadCommand.Connection = sqlConnection;
-            SqlDataReader dataReader = loadCommand.ExecuteReader();
+            SqlDataReader dataReader = loadCommand.ExecuteReader(CommandBehavior.CloseConnection);
             return dataReader;
         }
     }
