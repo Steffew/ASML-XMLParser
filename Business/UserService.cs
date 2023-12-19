@@ -53,6 +53,20 @@ namespace Business
             return roles;
         }
 
+        public void Update(User currentUser, string newName, Role newRole)
+        {
+            RoleDTO newRoleDto = new RoleDTO(newRole.Id, newRole.Name);
+            
+            UserDTO userDto = new UserDTO()
+            {
+                Id = currentUser.Id,
+                Name = newName,
+                Role = newRoleDto,
+            };
+            
+            UserRepository.UpdateUser(userDto);
+        }
+
         public User GetById(int id)
         {
             UserDTO userDto = new();
