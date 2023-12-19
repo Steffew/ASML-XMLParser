@@ -10,7 +10,7 @@ namespace ASMLXMLParser.Controllers
         UserService userService = new UserService();
         public IActionResult Index()
         {
-            RoleViewModel role = new RoleViewModel(1, "Admin");
+            RoleViewModel role = new RoleViewModel(2, "Admin");
             UserViewModel admin = new UserViewModel(1, "Tim", role);
             List<User> allUsers = userService.GetAll();
             List<UserViewModel> usersView = new List<UserViewModel>();
@@ -20,6 +20,7 @@ namespace ASMLXMLParser.Controllers
                 UserViewModel userView = new UserViewModel(user.Id, user.Name, roleView);
                 usersView.Add(userView);
             }
+            
             ProfileViewModel profile = new ProfileViewModel(admin, usersView);
             return View(profile);
         }
@@ -37,6 +38,22 @@ namespace ASMLXMLParser.Controllers
             }
             EditViewModel editViewModel = new EditViewModel(userModel, allRoleModels);
             return View(editViewModel);
+        }
+        public IActionResult EditExistingUser(int id, string username, string userRole)
+        {
+            User user = userService.GetById(id);
+            user.SetName(username);
+            List<Role> allRoles = userService.GetAllRoles();
+            foreach(Role role in allRoles)
+            {
+                if(role.Name == userRole)
+                {
+                    user.SetRole(role);
+                }
+            }
+            userService.Update(user);
+            TempData["UpdateStatus"] = true;
+            return RedirectToAction("Index");
         }
     }
 }

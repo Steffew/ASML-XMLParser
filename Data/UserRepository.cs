@@ -80,10 +80,7 @@ namespace DAL
 
         public void UpdateUser(UserDTO user)
         {
-            SqlCommand update = new("UPDATE User SET UserName = @UserName, Password = @Password, RoleID = @RoleID WHERE Id = " + user.Id);
-            update.Parameters.AddWithValue("@UserName", user.Name);
-            update.Parameters.AddWithValue("@Password", user.Password);
-            update.Parameters.AddWithValue("@RoleID", user.Role.Id);
+            SqlCommand update = new($"UPDATE [User] SET UserName = '{user.Name}', RoleID = {user.Role.Id.ToString()} WHERE UserId = " + user.Id);
             con.UploadData(update);
         }
     }

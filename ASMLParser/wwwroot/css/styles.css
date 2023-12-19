@@ -134,3 +134,7 @@ html, body {
 .error {
     color: red;
 }
+.user-role{
+    display: flex;
+    flex-direction: row;
+}

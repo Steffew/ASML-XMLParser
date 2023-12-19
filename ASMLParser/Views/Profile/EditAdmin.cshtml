@@ -1,7 +1,8 @@
 ﻿@model EditViewModel;
 <link rel="stylesheet" href="~/css/profile.css" asp-asp-append-version="true" />
 <div class="row profile-div">
-    <div class="col-9">
+    <div class="col-4"></div>
+    <div class="col-4" align="center">
         <form asp-action="EditExistingUser" asp-controller="Profile" method="POST">
             <h3>Edit profile information</h3>
             <div class="profile-part">
@@ -14,15 +15,23 @@
                 <label for="role" class="fw-bold">
                     Role
                 </label>
-                <br />
                 @foreach(RoleViewModel role in Model.Roles)
                 {
-                    
+                    <div class="user-role">
+                        @if(Model.User.Role.Name == role.Name)
+                        {
+                            <input type="radio" id="userRole" name="userRole" value="@role.Name" checked>
+                        }
+                        else
+                        {
+                            <input type="radio" id="userRole" name="userRole" value="@role.Name">
+                        }
+                        <label for="@role.Name">@role.Name</label>
+                    </div>
                 }
+                <button asp-route-id="@Model.User.Id" asp-action="EditExistingUser" asp-controller="Profile" type="submit" class="btn btn-outline-primary profile-button">Edit</button> <button asp-controller="Profile" asp-action="Index" class="btn btn-outline-danger">Go back</button>
             </div>
         </form>
     </div>
-    <div class="col-3">
-        <button asp-action="Edit" type="button" class="btn btn-outline-primary profile-button">Edit</button>
-    </div>
+    <div class="col-4"></div>
 </div>

@@ -30,6 +30,10 @@
         <div class="col">
             <h3>Admin panel</h3>
         </div>
+        @if(ViewBag.Message != null)
+        {
+            <span class="succes">@ViewBag.Message</span>
+        }
         @if(Model.Users.Count == 0)
         {
             <span>No users found</span>
@@ -42,7 +46,8 @@
                     <tr>
                         <th scope="col">#</th>
                         <th scope="col">Username</th>
-                        <th scope="col"><a class="btn btn-primary" asp-action="EditAdmin" asp-controller="Profile">Edit</a></th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Edit</th>
                     </tr>
                 </thead>
             @foreach(UserViewModel user in Model.Users)
@@ -51,7 +56,8 @@
                     <tr>
                         <th scope="row">@userNumber</th>
                         <td>@user.Name</td>
-                        <td>Edit</td>
+                        <td>@user.Role.Name</td>
+                        <td><a class="btn btn-primary" asp-route-id="@user.Id" asp-action="EditAdmin" asp-controller="Profile">Edit</a></td>
                     </tr>
                 </tbody>
                 userNumber++;

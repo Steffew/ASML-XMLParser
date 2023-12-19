@@ -11,5 +11,13 @@ public class User
         Id = id;
         Name = name;
     }
+    public void SetRole(Role role)
+    {
+        Role = role;
+    }
+    public void SetName(string name)
+    {
+        Name = name;
+    }
 }
 
