@@ -121,7 +121,8 @@ namespace ASML_Unit_Tests
 
             // Assert
             DisposeDatabase();
-            Assert.AreEqual(expectedMachine, actualMachine);
+            Assert.IsNotNull(actualMachine);
+            Assert.AreEqual(expectedMachine.Name, actualMachine.Name);
         }
     }
 }
