@@ -19,34 +19,6 @@ namespace ASMLXMLParser.Controllers
         {
             List<MachineViewModel> machineViewModels = new List<MachineViewModel>();
             MachineService machineService = new MachineService();
-            List<string> machineNames = new List<string>();
-            List<string> eventNames = new List<string>();
-            List<string> parameterNames = new List<string>();
-
-            foreach (var machine in machineService.GetAll())
-            {
-                if (!machineNames.Contains(machine.Name))
-                {
-                    machineNames.Add(machine.Name);
-                }
-
-                foreach (var _event in machine.Events)
-                {
-                    if (!eventNames.Contains(_event.Name))
-                    {
-                        eventNames.Add(_event.Name);
-                    }
-
-                    foreach (var parameter in _event.Parameters)
-                    {
-                        if (!parameterNames.Contains(parameter.Name))
-                        {
-                            parameterNames.Add(parameter.Name);
-                        }
-                    }
-                }
-            }
-
 
             var machines = machineService.GetAll();
 
@@ -68,10 +40,6 @@ namespace ASMLXMLParser.Controllers
                         m.Events.Any(evt => evt.Parameters.Any(p => filtersParameter.Any(filter => p.Name == filter))))
                     .ToList();
             }
-
-            FilterViewModel filterViewModel =
-                new FilterViewModel(machineNames, filtersName, eventNames, filtersEvent, parameterNames,
-                    filtersParameter);
 
             foreach (Machine machine in machines)
             {
@@ -120,6 +88,11 @@ namespace ASMLXMLParser.Controllers
                     }
                 }
             }
+            
+
+            FilterViewModel filterViewModel =
+                new FilterViewModel(uniqueMachineNames.Distinct().ToList(), filtersName, uniqueEventNames.Distinct().ToList(), filtersEvent, uniqueParameterNames.Distinct().ToList(),
+                    filtersParameter);
 
             DashboardViewModel dashboardView =
                 new DashboardViewModel(uniqueMachineNames.Distinct().Count(), uniqueEventNames.Distinct().Count(), uniqueParameterNames.Distinct().Count(), machineViewModels, filterViewModel);
