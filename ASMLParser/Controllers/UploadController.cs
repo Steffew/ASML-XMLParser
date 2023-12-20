@@ -73,6 +73,7 @@ namespace ASMLXMLParser.Controllers
                     string machineName = file.Name.Length >= 8
                         ? file.Name.Substring(file.Name.Length - 8, 4)
                         : file.Name;
+                    onlyXml = false;
 
                     try
                     {
@@ -81,16 +82,16 @@ namespace ASMLXMLParser.Controllers
                         FileService.RetrieveFileData(fileToDeletePath, machineName);
                         stream.Close();
                         file.Delete();
-                        TempData["Result"] = "success";
                     }
                     catch
                     {
                         TempData["Result"] = "An error occurred while processing the file.";
+                        return RedirectToAction("Index");
                     }
                 }
                 else
                 {
-                    onlyXml = false;
+                    onlyXml = true;
                 }
             }
 
@@ -100,15 +101,16 @@ namespace ASMLXMLParser.Controllers
             }
             else if (!onlyXml)
             {
-                foreach (FileInfo file in files)
-                {
-                    file.Delete();
-                }
                 TempData["Result"] = "noxml";
+            }
+            else
+            {
+                TempData["Result"] = "success";
             }
 
             return RedirectToAction("Index");
         }
+
 
 
         public IActionResult CancelFiles()
