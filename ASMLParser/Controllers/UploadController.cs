@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Business;
 using System.IO;
+using DAL;
 
 namespace ASMLXMLParser.Controllers
 {
@@ -36,15 +37,26 @@ namespace ASMLXMLParser.Controllers
                 {
                     Directory.CreateDirectory(FilePath);
                 }
+
                 var fileName = file.FileName;
-                var filePath = Path.Combine(FilePath, fileName);
-                using (FileStream fs = System.IO.File.Create(filePath))
+                if (fileName.Length >= 8 && fileName.EndsWith(".xml", StringComparison.OrdinalIgnoreCase))
                 {
-                    file.CopyTo(fs);
+                    var machineName = fileName.Substring(fileName.Length - 8, 4);
+                    var filePath = Path.Combine(FilePath, machineName);
+
+                    using (FileStream fs = System.IO.File.Create(filePath))
+                    {
+                        file.CopyTo(fs);
+                    }
+
+                    FileService.RetrieveFileData(filePath, machineName);
                 }
             }
+
             return NoContent();
         }
+
+
         public IActionResult ProcessFiles()
         {
             var fileDic = "Files";
@@ -53,51 +65,52 @@ namespace ASMLXMLParser.Controllers
             FileInfo[] files = directory.GetFiles();
             int fileCount = files.Count();
             bool onlyXml = true;
+
             foreach (FileInfo file in files)
             {
-                if (file.Extension != ".xml")
+                if (file.Extension.ToLower() == ".xml")
+                {
+                    string machineName = file.Name.Length >= 8
+                        ? file.Name.Substring(file.Name.Length - 8, 4)
+                        : file.Name;
+
+                    try
+                    {
+                        string fileToDeletePath = file.FullName;
+                        FileStream stream = file.OpenRead();
+                        FileService.RetrieveFileData(fileToDeletePath, machineName);
+                        stream.Close();
+                        file.Delete();
+                        TempData["Result"] = "success";
+                    }
+                    catch
+                    {
+                        TempData["Result"] = "An error occurred while processing the file.";
+                    }
+                }
+                else
                 {
                     onlyXml = false;
                 }
             }
+
             if (fileCount == 0)
             {
                 TempData["Result"] = "nofiles";
-                return RedirectToAction("Index");
             }
-            else
+            else if (!onlyXml)
             {
-                if (onlyXml)
+                foreach (FileInfo file in files)
                 {
-                    foreach (FileInfo file in files)
-                    {
-                        try
-                        {
-
-                            FileStream stream = file.OpenRead();
-                            FileService.RetrieveFileData(stream);
-                            stream.Close();
-                            file.Delete();
-                            TempData["Result"] = "succes";
-                        }
-                        catch
-                        {
-                            TempData["Result"] = "An error occurred while processing the file.";
-                        }
-                    }
-                    return RedirectToAction("Index");
+                    file.Delete();
                 }
-                else
-                {
-                    foreach (FileInfo file in files)
-                    {
-                        file.Delete();
-                    }
-                    TempData["Result"] = "noxml";
-                    return RedirectToAction("Index");
-                }
+                TempData["Result"] = "noxml";
             }
+
+            return RedirectToAction("Index");
         }
+
+
         public IActionResult CancelFiles()
         {
             var fileDic = "Files";

@@ -5,22 +5,22 @@ namespace Business
 {
     public class FileService
     {
-        public void RetrieveFileData(Stream stream)
+        public void RetrieveFileData(string filePath, string machineName)
         {
             XmlDocument document = new XmlDocument();
-            document.Load(stream);
+            using (FileStream stream = File.OpenRead(filePath))
+            {
+                document.Load(stream);
+            }
 
             XmlNamespaceManager nsManager = new XmlNamespaceManager(document.NameTable);
             nsManager.AddNamespace("ns", "Cimetrix.EDAConnect.E134-0707");
 
             XmlNode machineNode = document.SelectSingleNode("/ns:DCP", nsManager);
             XmlNodeList eventNodes = document.SelectNodes("/ns:DCP/ns:Event", nsManager);
-            
-            string machineName = machineNode.Attributes["Name"].Value;
-            Console.WriteLine($"Machine: {machineName}");
-            
+
             Machine newMachine = new Machine(machineName);
-            
+
             foreach (XmlNode eventNode in eventNodes)
             {
                 string eventName = eventNode.Attributes["Id"].Value;
@@ -44,7 +44,7 @@ namespace Business
                 Console.WriteLine();
             }
             MachineService machineService = new MachineService();
-			machineService.CreateAndSend(newMachine);
+            machineService.CreateAndSend(newMachine);
         }
     }
 }
